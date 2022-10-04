@@ -1,0 +1,11 @@
+.hero {
+    display: flex;
+
+    .content {
+        max-width: 40rem;
+
+        h1 {
+            font-size: 3rem;
+        }
+    }
+}
