@@ -17,7 +17,7 @@ export function Hero() {
     }, [])
 
     return (    
-        <section className={style.hero}>
+        <section className={style.hero} style={{backgroundImage: `url(${anime?.cover})`}}>
             { anime ? (
                 <>
                 <Image 
