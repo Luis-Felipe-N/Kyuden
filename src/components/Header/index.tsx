@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import style from "./style.module.scss"
 import { FaChevronDown } from 'react-icons/fa'
+import { DropdownGenres } from "./DropdownGenres";
 
 export function Header() {
     return (
@@ -17,30 +18,7 @@ export function Header() {
                 <nav className={style.menu}>
                     <ul className={style.menuContainer}>
                         <li className={style.menu__item}>
-                            <span>Gêneros <FaChevronDown/> </span>
-
-                            <ul className={style.dropdown}>
-                                <li className={style.dropdown__item}>
-                                    <Link href={'acao'}>
-                                        <a>Ação</a>
-                                    </Link>
-                                </li>
-                                <li className={style.dropdown__item}>
-                                    <Link href={'/acao'}>
-                                        <a>Comédia</a>
-                                    </Link>
-                                </li>
-                                <li className={style.dropdown__item}>
-                                    <Link href={'/acao'}>
-                                        <a>Shounen</a>
-                                    </Link>
-                                </li>
-                                <li className={style.dropdown__item}>
-                                    <Link href={'/acao'}>
-                                        <a>Yuri</a>
-                                    </Link>
-                                </li>
-                            </ul>
+                            <DropdownGenres />                             
                         </li>
                         <li className={style.menu__item}>
                             <Link href={"/minha-lista"}>Minha lista</Link>

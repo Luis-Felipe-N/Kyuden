@@ -29,5 +29,5 @@ export interface IAnimes {
     description: string;
     cover?: string;
     post: string;
-    trailerYtId?: string;
+    youtubeVideoId?: string;
 }

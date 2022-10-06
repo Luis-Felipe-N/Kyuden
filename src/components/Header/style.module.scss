@@ -19,55 +19,30 @@
             list-style: none;
             display: flex;
 
-            .menu__item a, .menu__item span {
+            .menu__item > a, .menu__item p {
+                cursor: pointer;
                 padding: 1rem;
                 transition: .2s;
                 font-weight: 600;
+                display: block;
 
+                // background-color: red;
                 &:hover {
                     color: var(--red-700);
                 }
             }
 
-            // .menu__item span {
-            //     display: inline-flex;
-            // }
+            .menu__item p {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
 
             .menu__item:first-child:hover {
                 .dropdown {
                     max-height: 100%;
                     visibility: visible;
                     opacity: 1;
-                }
-            }
-
-            .dropdown {
-                list-style: none;
-                box-shadow: 0 0 3px 0px var(--gray-800);
-                max-width: 200px;
-                width: 100%;
-                transition: .2s;
-                margin-top: 1rem;
-                z-index: 2;
-                position: absolute;
-                background-color: var(--gray-900);
-                border-radius: 5px;
-
-                max-height: 0;
-                visibility: hidden;
-                opacity: 0;
-                padding: 1rem;
-
-                .dropdown__item a {
-                    font-weight: 500;
-                    padding: .5rem 1rem;
-                    display: block;
-
-                    &:hover {
-                        background-color: var(--red-900);
-                        border-radius: 5px;
-                        color: var(--gray-50);
-                    }
                 }
             }
         }

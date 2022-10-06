@@ -9,7 +9,7 @@ export function Hero() {
 
     useEffect(() => {
         const getAnime = async () => {
-            const { data } = await api.get('/animes/love-lab')
+            const { data } = await api.get('/animes/taishou-otome-otogibanashi')
             console.log(data)
             setAnime(data.anime)
         }
@@ -18,7 +18,18 @@ export function Hero() {
     }, [])
 
     return (    
-        <section className={style.heroContainer} style={{backgroundImage: `linear-gradient(1.68deg, #171923 6%, rgba(23, 25, 35, 0) 90.54%), url(${anime?.cover}) `}}>
+        <section className={style.heroContainer} style={{backgroundImage: `linear-gradient(1.68deg, #171923 6%, rgba(23, 25, 35, 0) 90.54%), url(${anime?.cover || 'banner.png'}) `}}>
+            {/* { anime?.youtubeVideoId && (
+                <div className={style.trailer}>
+                    <iframe src={`https://www.youtube.com/embed/${anime.youtubeVideoId}?&autoplay=1&playsinline=1&controls=0`} 
+                        title="YouTube video player" 
+                        frameBorder="0" 
+                        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowFullScreen
+                        
+                        ></iframe>
+                </div>
+            )} */}
             <div className={style.hero}>
                 { anime ? (
                     <>
@@ -28,6 +39,7 @@ export function Hero() {
                         height={315}
                         alt={`Foto da capa do anime ${anime.title}`}
                         title={`Foto da capa do anime ${anime.title}`}
+                        priority
                     />
                     <div className={style.content}>
                         <h1>{anime.title}</h1>

@@ -1,32 +1,60 @@
 .heroContainer {
     background: rgb(23,25,35);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    position: relative;
     
-}
+    .trailer {
+        z-index: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
 
-.hero {
-    max-width: 1300px;
-    display: flex;
-    min-height:70vh;
-    margin: auto;
-    align-items: flex-end;
-    justify-content: flex-start;
-
-    padding: 2rem 15px 4rem;
-    .content {
-        max-width: 50rem;
-        margin-left: 1rem;
-
-        h1 {
-            font-size: 3.625rem;
-            line-height: 1.6;
-        }
-
-        p {
-            font-size: .9rem;
+        iframe {
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            height: 100%;
         }
     }
 
-    img {
-        border-radius: 5px;
+    .hero {
+        position: relative;
+        z-index: 2;
+        max-width: 1300px;
+        min-height:70vh;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: flex-start;
+    
+        padding: 2rem 15px 4rem;
+    
+    
+        .content {
+            max-width: 50rem;
+            margin-left: 1rem;
+    
+            h1 {
+                font-size: 3.625rem;
+                line-height: 1;
+                margin-bottom: 1rem;
+            }
+    
+            p {
+                font-size: .9rem;
+            }
+        }
+    
+        img {
+            border-radius: 5px;
+        }
     }
 }
+
