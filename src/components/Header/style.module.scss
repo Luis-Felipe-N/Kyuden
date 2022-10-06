@@ -8,6 +8,8 @@
         display: flex;
         align-items: center;
         gap: 2rem;
+
+        padding: 0 15px;
     }
 
     .menu {
@@ -27,9 +29,9 @@
                 }
             }
 
-            .menu__item span {
-                display: inline-flex;
-            }
+            // .menu__item span {
+            //     display: inline-flex;
+            // }
 
             .menu__item:first-child:hover {
                 .dropdown {
@@ -41,14 +43,14 @@
 
             .dropdown {
                 list-style: none;
-                box-shadow: 0 0 3px 0px var(--gray-700);
+                box-shadow: 0 0 3px 0px var(--gray-800);
                 max-width: 200px;
                 width: 100%;
                 transition: .2s;
                 margin-top: 1rem;
                 z-index: 2;
                 position: absolute;
-                background-color: var(--gray-800);
+                background-color: var(--gray-900);
                 border-radius: 5px;
 
                 max-height: 0;
@@ -76,5 +78,9 @@
         display: flex;
         align-items: center;
         gap: 1rem;
+
+        img {
+            box-shadow: 0 0 0 2px var(--gray-900), 0 0 0 4px var(--red-900);
+        }
     }
 }

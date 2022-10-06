@@ -1,0 +1,15 @@
+.popularAnimesContainer {
+    padding: 1rem;
+
+    .popularAnime {
+        overflow: auto;
+        max-width: 1300px;
+        margin: auto;
+
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+
+        
+    }
+}
