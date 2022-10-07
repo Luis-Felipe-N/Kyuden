@@ -1,0 +1,10 @@
+.carouselContainer {
+    max-width: var(--max-width);
+    margin: auto;
+
+    .carousel {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+}

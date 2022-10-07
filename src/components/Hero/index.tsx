@@ -9,7 +9,7 @@ export function Hero() {
 
     useEffect(() => {
         const getAnime = async () => {
-            const { data } = await api.get('/animes/taishou-otome-otogibanashi')
+            const { data } = await api.get('/animes/dorohedoro')
             console.log(data)
             setAnime(data.anime)
         }

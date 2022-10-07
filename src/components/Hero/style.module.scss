@@ -25,8 +25,7 @@
 
     .hero {
         position: relative;
-        z-index: 2;
-        max-width: 1300px;
+        max-width: var(--max-width);
         min-height:70vh;
         margin: auto;
         display: flex;
@@ -35,11 +34,11 @@
         justify-content: flex-start;
     
         padding: 2rem 15px 4rem;
-    
+        gap: 1rem;
     
         .content {
             max-width: 50rem;
-            margin-left: 1rem;
+            // margin-left: 1rem;
     
             h1 {
                 font-size: 3.625rem;
