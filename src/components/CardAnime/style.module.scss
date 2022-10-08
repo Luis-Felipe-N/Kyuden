@@ -3,13 +3,22 @@
     cursor: pointer;
     border-radius: 5px;
 
+    a {
+        display: flex;
+        flex-direction: column;
+    }
+
     img {
         line-height: 0;
         border-radius: 5px;
+
         &:hover {
-            box-shadow: 0 0 0 4px var(--gray-900), 0 0 0 6px var(--red-900);
-            // transform: scale(2);
+            box-shadow: 0 0 0 4px var(--gray-900), 0 0 0 6px var(--primary-600);
         }
+    }
+
+    strong {
+        margin-top: .5rem;
     }
 
 }
