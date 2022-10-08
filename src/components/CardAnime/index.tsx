@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/future/image"
 import Link from "next/link"
 import { useState } from "react"
 import { IAnimes } from "../../@types/Anime"
@@ -17,7 +17,6 @@ export function CardAnime({ anime }: ICardAnimesProps) {
                 src={anime.post}
                 width={210}
                 height={315}
-                objectFit="cover"
                 alt={`Poste do anime ${anime.title}`}
             />
             </Link>

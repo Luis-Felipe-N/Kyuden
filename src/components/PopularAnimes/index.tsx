@@ -4,18 +4,12 @@ import { api } from "../../service/api"
 import { CardPopularAnime } from "./CardPopularAnime"
 import style from "./style.module.scss"
 
-export function PopularAnimes() {
-    const [ animes, setAnimes ] = useState<IAnimes[]>()
+interface IPopularAnimesProps {
+    animes: IAnimes[]
+}
 
-    useEffect(() => {
-        const getAnimePopular = async () => {
-            const { data } = await api.get("/animes/popular")
-            setAnimes(data.animes)
-        }
-
-        getAnimePopular()
-    }, [])
-
+export function PopularAnimes({ animes }: IPopularAnimesProps) {
+    
     return (
         <section className={style.popularAnimesContainer}>
             <div className={style.popularAnime}>

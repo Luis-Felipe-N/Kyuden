@@ -10,7 +10,10 @@ export function CardPopularAnime({ anime }: ICardAnimesProps) {
     return (
         <div className={style.cardPopular} style={{backgroundImage: `linear-gradient(180deg, rgba(23, 25, 35, 0) -7.34%, rgba(23, 25, 35, 1) 99.99%, rgba(23, 25, 35, 1) 100%), url(${anime?.cover}) `}}>
             <div className={style.infos}>
-                <button>
+                <button
+                    title={`Assistir ${anime.title}`}
+                    aria-label={`Assistir ${anime.title}`}
+                >
                     <FaPlay />
                 </button>
                 <div className={style.infos__content}>

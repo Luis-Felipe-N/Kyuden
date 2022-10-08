@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/future/image";
 import Link from "next/link";
 import style from "./style.module.scss"
 import { FaChevronDown } from 'react-icons/fa'
@@ -18,10 +18,13 @@ export function Header() {
                 <nav className={style.menu}>
                     <ul className={style.menuContainer}>
                         <li className={style.menu__item}>
-                            <DropdownGenres />                             
+                            <Link href={"/"}>Inicio</Link>
                         </li>
                         <li className={style.menu__item}>
-                            <Link href={"/minha-lista"}>Minha lista</Link>
+                            <Link href={"/minha-lista"}>Doação</Link>
+                        </li>
+                        <li className={style.menu__item}>
+                            <DropdownGenres />                             
                         </li>
                     </ul>
                 </nav>
