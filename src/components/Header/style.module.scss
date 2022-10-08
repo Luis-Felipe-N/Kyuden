@@ -11,53 +11,29 @@
 
         padding: 0 15px;
 
-        .menu {
-            flex: 1;
-    
-            .menuContainer {
-                list-style: none;
-                display: flex;
-    
-                .menu__item > a, .menu__item p {
-                    cursor: pointer;
-                    padding: 1rem;
-                    transition: .2s;
-                    font-weight: 600;
-                    display: block;
-    
-                    &:hover {
-                        color: var(--primary-400);
-                    }
-                }
-    
-                .menu__item p {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                }
-    
-                .menu__item:first-child:hover {
-                    .dropdown {
-                        max-height: 100%;
-                        visibility: visible;
-                        opacity: 1;
-                    }
-                }
-            }
-        }
-
-        .user {
-            font-family: 'Oswald', sans-serif;
+        .userAndSearch {
             display: flex;
-            align-items: center;
-            gap: 1rem;
-    
-            img {
-                object-fit: cover;
-                border-radius: 100%;
-                box-shadow: 0 0 0 3px var(--gray-900), 0 0 0 5px var(--primary-600);
+            justify-content: end;
+            flex: 1;
+            .user {
+                font-family: 'Oswald', sans-serif;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                // border-left: 2px solid var(--gray-100);
+                // padding-left: 1rem;
+        
+                img {
+                    object-fit: cover;
+                    border-radius: 100%;
+                    box-shadow: 0 0 0 3px var(--gray-900), 0 0 0 5px var(--primary-600);
+                }
             }
         }
-    }    
+    }  
+    
+    .buttonMobile {
+        display: none;
+    }
 }
-
