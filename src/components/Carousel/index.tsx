@@ -9,7 +9,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-// import required modules
 import { Navigation } from "swiper";
 
 interface ICarouselAnimes {
@@ -18,51 +17,41 @@ interface ICarouselAnimes {
 
 export function CarouselAnimes({ genre }: ICarouselAnimes) {
   const [ animes, setAnimes ] = useState<IAnimes[]>()
+  const containerCarouselRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const getAnimesRow = async () => {
-      const { data } = await api.get(`animes/`)
-
+      const { data } = await api.get(`animes/genre/${genre}`)
+      console.log(data)
       setAnimes(data.animes)
     }
 
     getAnimesRow()
-  }, [])
+  }, [genre])
 
   return (
     <section className={style.row}>
-      <div className={style.carouselContainer}>
-        <h1>{genre}</h1>
-          <Swiper
-            slidesPerView={1400 / 220}
-            spaceBetween={5}
-            // pagination={{
-            //   clickable: true,
-            // }}
-            modules={[Navigation]}
-            className="mySwiper"
-            loop={true}
-          >
-            { animes && animes.map(anime => (
-              <SwiperSlide key={anime.slug}>
-                <CardAnime anime={anime} />
-              </SwiperSlide>
-              
-            ))}
+
+    <div className={`${style.headerCarousel} container`}>
+      <h2>{genre}</h2>
+    </div>
+    
+    
+      <div ref={containerCarouselRef} className={`${style.carouselContainer} container `}>
+        <Swiper
+          slidesPerView={(containerCarouselRef.current?.clientWidth || 1400) / 235}
+          modules={[Navigation]}
+          className={style.carousel}
+        >
+          { animes && animes.map(anime => (
+            <SwiperSlide key={anime.slug}>
+              <CardAnime anime={anime} />
+            </SwiperSlide>
             
-            {/* <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            <SwiperSlide>Slide 5</SwiperSlide>
-            <SwiperSlide>Slide 6</SwiperSlide>
-            <SwiperSlide>Slide 7</SwiperSlide>
-            <SwiperSlide>Slide 8</SwiperSlide>
-            <SwiperSlide>Slide 9</SwiperSlide> */}
-          </Swiper>
-        </div>
-    </section>
+          ))}
+          
+        </Swiper>
+      </div>
+  </section>
   );
 }
-
-
-

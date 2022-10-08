@@ -1,10 +1,17 @@
-.carouselContainer {
-    max-width: var(--max-width);
-    margin: auto;
+
+.row {
+    overflow: hidden;
+
+    .headerCarousel {
+        h2 {
+            color: var(--primary-100);
+            font-weight: 500;
+        }
+
+        margin-block: 1rem;
+    }   
 
     .carousel {
-        // display: flex;
-        // gap: 1rem;
-        // align-items: center;
+        overflow: visible !important;
     }
 }
