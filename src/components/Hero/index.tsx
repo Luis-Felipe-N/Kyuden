@@ -12,13 +12,13 @@ interface IHeroProps {
 
 export function Hero({ anime }: IHeroProps) {
 
-    const backgroundImage = !anime.youtubeVideoId ? `url(${anime.cover || 'banner.png'})` : ''
+    const backgroundImage = !anime.youtubeVideoId ? `, url(${anime.cover || 'banner.png'})` : ''
     console.log(backgroundImage)
     return (    
         <section 
             className={style.heroContainer} 
             style={{
-                backgroundImage: `linear-gradient(1.68deg, rgba(23, 25, 35, 0.99) 20%, rgba(23, 25, 35, 0) 80%), ${backgroundImage}`
+                backgroundImage: `linear-gradient(1.68deg, rgba(23, 25, 35, 0.99) 20%, rgba(23, 25, 35, 0) 80%) ${backgroundImage}`
                 }}>
             { anime?.youtubeVideoId && (
                 <div className={style.trailer}>
