@@ -1,5 +1,5 @@
 .popularAnimesContainer {
-    padding: 1rem;
+    padding: 1rem 15px;
 
     .popularAnime {
         overflow: auto;
@@ -8,7 +8,7 @@
         margin: auto;
 
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         gap: 2rem;        
     }
 }

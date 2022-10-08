@@ -1,5 +1,5 @@
 .headerContainer {
-    border-bottom: solid var(--red-900) 2px;
+    border-bottom: solid var(--primary-600) 2px;
 
     .header {
         max-width: var(--max-width);
@@ -26,7 +26,7 @@
                     display: block;
     
                     &:hover {
-                        color: var(--red-700);
+                        color: var(--primary-400);
                     }
                 }
     
@@ -55,7 +55,7 @@
             img {
                 object-fit: cover;
                 border-radius: 100%;
-                box-shadow: 0 0 0 3px var(--gray-900), 0 0 0 5px var(--red-900);
+                box-shadow: 0 0 0 3px var(--gray-900), 0 0 0 5px var(--primary-600);
             }
         }
     }    

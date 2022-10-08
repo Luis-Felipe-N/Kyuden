@@ -50,7 +50,7 @@ export function DropdownGenres() {
                     <Link href={'/generos'}>
                         <a>
                             <MdFilter9Plus />
-                            outros
+                            Outros
                         </a>
                     </Link>
                 </DropdownMenu.Item>

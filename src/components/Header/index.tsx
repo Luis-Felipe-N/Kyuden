@@ -8,12 +8,9 @@ export function Header() {
     return (
         <header className={style.headerContainer}>
             <div className={style.header}>
-                <Image
-                    src="/logo.png"
-                    width={102}
-                    height={39}
-                    alt="Logo escrito ANIMx"
-                />
+                <h1>
+                    Meu kyuden
+                </h1>
 
                 <nav className={style.menu}>
                     <ul className={style.menuContainer}>

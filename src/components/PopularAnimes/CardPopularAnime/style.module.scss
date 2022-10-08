@@ -1,7 +1,6 @@
 .cardPopular {
     flex-shrink: 0;
     width: 27.5rem;
-    // width: 100%;
     height: 14.0625rem;
     border-radius: 7px;
     position: relative;
@@ -32,7 +31,7 @@
             cursor: pointer;
 
             &:hover {
-                box-shadow: 0 0 0 2px var(--gray-900), 0 0 0 4px var(--red-900);
+                box-shadow: 0 0 0 2px var(--gray-900), 0 0 0 4px var(--primary-600);
             }
         }
 
