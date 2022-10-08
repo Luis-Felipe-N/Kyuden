@@ -1,7 +1,7 @@
 import { GetStaticProps } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { FaPlay } from "react-icons/fa"
+import { FaPlay, FaPlus } from "react-icons/fa"
 import { IAnimes } from "../../@types/Anime"
 
 import style from './style.module.scss'
@@ -18,7 +18,7 @@ export function Hero({ anime }: IHeroProps) {
         <section 
             className={style.heroContainer} 
             style={{
-                backgroundImage: `linear-gradient(1.68deg, rgba(23, 25, 35, 0.99) 20%, rgba(23, 25, 35, 0) 80%) ${backgroundImage}`
+                backgroundImage: `linear-gradient(1.68deg, rgba(23, 25, 35, 0.99) 20%, rgba(23, 25, 35, 0) 80%), ${backgroundImage}`
                 }}>
             { anime?.youtubeVideoId && (
                 <div className={style.trailer}>
@@ -45,12 +45,22 @@ export function Hero({ anime }: IHeroProps) {
                     <div className={style.content}>
                         <h1>{anime.title}</h1>
                         <p>{anime.description}</p>
-                        <Link href={anime.slug}>
-                            <a>
-                                <FaPlay />
-                                Assistir
-                            </a>
-                        </Link>
+                        <div className={style.containerBtns}>
+                            <button
+                                title={`Adicionar ${anime.title} na minha lista`}
+                                aria-label={`Adicionar ${anime.title} na minha lista`}
+                                className={style.btnAddList}
+                            >
+                                <FaPlus />
+                            </button>
+                            <Link href={anime.slug}>
+                                <a>
+                                    <FaPlay />
+                                    Assistir
+                                </a>
+                            </Link>
+                        </div>
+                       
                     </div>
                     </>
                 ) : (
