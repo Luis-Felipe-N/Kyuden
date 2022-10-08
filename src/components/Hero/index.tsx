@@ -24,8 +24,9 @@ export function Hero({ anime }: IHeroProps) {
                 <div className={style.trailer}>
                     <iframe 
                         // src={`https://www.youtube.com/embed/${anime.youtubeVideoId}?autoplay=1&controls=0`} 
-                        src={`https://www.youtube.com/embed/${anime.youtubeVideoId}?autoplay=1&mute=1&enablejsapi=1&controls=0&loop=1`} 
+                        src={`https://www.youtube.com/embed/${anime.youtubeVideoId}?autoplay=1&mute=1&controls=0playlist&version=3&loop=1&playlist=${anime.youtubeVideoId}`} 
                         frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         >
                         
                     </iframe>
