@@ -35,7 +35,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
       props: {
-          animeHero: animes[1],
+          animeHero: animes[0],
           popularAnimes: animes
       },
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import style from "./style.module.scss"
 import { Navigation } from "./Navigation";
 import useWindowDimesions from "../../hooks/useWindowDimensions";
+import { NavigationMobile } from "./NavigationMobile";
 // import { useWindowDimesions } from "../../hooks/useWindowDimensions";
 
 export function Header() {
@@ -19,7 +20,7 @@ export function Header() {
                 </h1>
 
                 { isMobile ? (
-                    <h1>.</h1>
+                    <NavigationMobile />
                 ) : (
                     <Navigation />
                 )}
