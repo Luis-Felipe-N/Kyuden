@@ -47,22 +47,25 @@ a {
   --gray-50:  #EEEEF2;
 
   --max-width: 1400px;
+
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Oswald', sans-serif;
 }
 
 
 body {
   background-color: var(--gray-900);
   color: var(--gray-50);
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-primary);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Oswald', sans-serif;
+  font-family: var(--font-secondary);
 }
 
 button, input, textarea {
   font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-primary);
   font-weight: 400;
 }
 

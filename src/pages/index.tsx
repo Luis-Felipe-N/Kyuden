@@ -19,9 +19,10 @@ export default function Home({animeHero, popularAnimes}: IHomeProps) {
     <main>
       <Hero anime={animeHero}/>
       <PopularAnimes animes={popularAnimes} />
-      {/* <CarouselAnimes genre='yuri' />
+      <CarouselAnimes genre='Yuri' />
+      <CarouselAnimes genre='Sem Censura' />
       <CarouselAnimes genre='Ação' />
-      <CarouselAnimes genre='Terror' /> */}
+      <CarouselAnimes genre='Terror' />
     </main>
   )
 }
