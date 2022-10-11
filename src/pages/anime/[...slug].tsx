@@ -8,6 +8,7 @@ import Image from "next/future/image"
 import { SelectSeason } from "../../components/SelectSeason"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import { convertMillisecondsInMinutes } from "../../components/utils/convertTime"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -113,7 +114,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                                 />
                                             </div>
                                             <strong>{episode.title}</strong>
-                                            <i>{episode.duration}</i>
+                                            <i>{episode.duration > 0 && convertMillisecondsInMinutes(episode.duration)}</i>
                                         </a>
                                     </Link>
                                 ))

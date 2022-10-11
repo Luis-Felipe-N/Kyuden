@@ -23,6 +23,7 @@
 
         &__genres {
             overflow: auto;
+            flex-wrap: wrap;
             display: flex;
             gap: .5rem;
             list-style: none;
@@ -38,6 +39,7 @@
             flex-direction:column;
 
             strong {
+                margin-top: .5rem;
                 font-weight: 600;
                 font-size: .8rem;
             }
