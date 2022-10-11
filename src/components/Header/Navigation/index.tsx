@@ -82,6 +82,12 @@ export function Navigation() {
             </NavigationMenu.Sub>
           </NavigationMenu.Content>
         </NavigationMenu.Item>
+
+        <NavigationMenu.Item className={style.item}>
+          <Link href="/pesquisa">
+            <a>Pesquisa</a>
+          </Link>
+        </NavigationMenu.Item>
       </NavigationMenu.List>
 
       <NavigationMenu.Viewport />

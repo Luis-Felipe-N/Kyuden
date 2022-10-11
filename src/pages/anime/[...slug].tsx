@@ -98,7 +98,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                         <div className={style.season__episodes}>
                             { episodes ? (
                                 episodes.map(episode => (
-                                    <Link key={episode.id} href={`animes/${anime.slug}/episode/${episode.id}`}>
+                                    <Link key={episode.id} href={`/episodio/${episode.id}`}>
                                         <a className={style.season__episodesCard}>
                                             <div className={style.season__episodesCard_cover}>
                                                 <div className={style.season__episodesCard_play}>

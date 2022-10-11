@@ -24,7 +24,6 @@ export function CardAnime({ anime }: ICardAnimesProps) {
                     <strong>{ anime.title }</strong>
                 </a>
             </Link>
-            {/* <span>{anime.rating}</span> */}
         </div>
     )
 }

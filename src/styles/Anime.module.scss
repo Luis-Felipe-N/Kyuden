@@ -120,8 +120,9 @@
             background-color: var(--primary-400);
             height: 2.5rem;
             width: 2.5rem;
-            line-height: 2.5rem;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border-radius: 100%;
         }
 

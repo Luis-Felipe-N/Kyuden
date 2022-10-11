@@ -22,36 +22,42 @@ export function CarouselAnimes({ genre }: ICarouselAnimes) {
   useEffect(() => {
     const getAnimesRow = async () => {
       const { data } = await api.get(`animes/genre/${genre}`)
-      console.log(data)
+      console.log(data.animes)
       setAnimes(data.animes)
     }
 
     getAnimesRow()
   }, [genre])
 
-  return (
-    <section className={style.row}>
-
-    <div className={`${style.headerCarousel} container`}>
-      <h2>{genre}</h2>
-    </div>
-    
-    
-      <div ref={containerCarouselRef} className={`${style.carouselContainer} container `}>
-        <Swiper
-          slidesPerView={(containerCarouselRef.current?.clientWidth || 1400) / 235}
-          modules={[Navigation]}
-          className={style.carousel}
-        >
-          { animes && animes.map(anime => (
-            <SwiperSlide key={anime.slug}>
-              <CardAnime anime={anime} />
-            </SwiperSlide>
-            
-          ))}
-          
-        </Swiper>
+  if (animes?.length) {
+    return (
+      <section className={style.row}>
+  
+      <div className={`${style.headerCarousel} container`}>
+        <h2>{genre}</h2>
       </div>
-  </section>
-  );
+      
+      
+        <div ref={containerCarouselRef} className={`${style.carouselContainer} container `}>
+          <Swiper
+            slidesPerView={(containerCarouselRef.current?.clientWidth || 1400) / 235}
+            modules={[Navigation]}
+            className={style.carousel}
+          >
+            { animes && animes.map(anime => (
+              <SwiperSlide key={anime.slug}>
+                <CardAnime anime={anime} />
+              </SwiperSlide>
+              
+            ))}
+            
+          </Swiper>
+        </div>
+    </section>
+    );
+  } else {
+    return null
+  }
+
+  
 }
