@@ -15,12 +15,15 @@ export function Header() {
     return (
         <header className={style.headerContainer}>
             <div className={style.header}>
-                <h1>
-                    Meu kyuden
-                </h1>
-
+                <Link href="/">
+                    <a>
+                        <h1>
+                            Kyuden
+                        </h1>
+                    </a>
+                </Link>
                 { isMobile ? (
-                    <NavigationMobile />
+                    null
                 ) : (
                     <Navigation />
                 )}
