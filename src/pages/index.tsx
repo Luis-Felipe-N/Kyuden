@@ -1,4 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
+import Head from 'next/head'
 import { IAnimes } from '../@types/Anime'
 import { CarouselAnimes } from '../components/Carousel'
 import { Hero } from '../components/Hero'
@@ -16,14 +17,18 @@ interface IHomeProps {
 export default function Home({animeHero, popularAnimes}: IHomeProps) { 
 
   return (
+    <>
+    <Head>
+      <title>Kyuden :: Inicio</title>
+    </Head>
     <main>
       <Hero anime={animeHero}/>
       <PopularAnimes animes={popularAnimes} />
-      <CarouselAnimes genre='Yuri' />
-      <CarouselAnimes genre='Sem Censura' />
+      <CarouselAnimes genre='Comédia' />
       <CarouselAnimes genre='Ação' />
       <CarouselAnimes genre='Terror' />
     </main>
+    </>
   )
 }
 

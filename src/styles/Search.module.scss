@@ -4,8 +4,8 @@
 
     &__input {
         position: relative;
-        background: rgb(85,60,154);
-        background: linear-gradient(-30deg, rgba(85,60,154,1) 10%, rgba(128,90,213,1) 100%); 
+        background: var(--primary-700);
+        background: linear-gradient(-30deg, var(--primary-700) 10%, var(--primary-500) 100%); 
         padding-block: 2rem;
         border-radius: 10px;
         min-height: 17.18rem;

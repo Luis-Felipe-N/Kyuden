@@ -34,16 +34,16 @@ a {
   --primary-800: #44337A;
   --primary-900: #322659;
 
-  // --primary-50: #F0FFF4;
-  // --primary-100: #C6F6D5;
-  // --primary-200: #9AE6B4;
-  // --primary-300: #68D391;
-  // --primary-400: #48BB78;
-  // --primary-500: #38A169;
-  // --primary-600: #2F855A;
-  // --primary-700: #276749;
-  // --primary-800: #22543D;
-  // --primary-900: #1C4532;
+  --primary-50: #F0FFF4;
+  --primary-100: #C6F6D5;
+  --primary-200: #9AE6B4;
+  --primary-300: #68D391;
+  --primary-400: #48BB78;
+  --primary-500: #38A169;
+  --primary-600: #2F855A;
+  --primary-700: #276749;
+  --primary-800: #22543D;
+  --primary-900: #1C4532;
 
 
   // --primary-50: #FFFAF0;
@@ -84,6 +84,7 @@ a {
   --gray-50:  #EEEEF2;
 
   --max-width: 1400px;
+  --mobile-breakpoint: 700px;
 
   --font-primary: 'Poppins', sans-serif;
   --font-secondary: 'Oswald', sans-serif;

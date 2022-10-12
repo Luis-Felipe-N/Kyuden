@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { FaPlay, FaPlus } from "react-icons/fa"
 import { IAnimes } from "../../@types/Anime"
+import { Skeleton } from "../Skeleton"
 
 import style from './style.module.scss'
 
@@ -65,7 +66,7 @@ export function Hero({ anime }: IHeroProps) {
                     </div>
                     </>
                 ) : (
-                    "carregando"
+                    <Skeleton />
                 )}
             </div>
         </section>

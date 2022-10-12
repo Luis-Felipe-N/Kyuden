@@ -1,5 +1,6 @@
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/future/image"
+import Head from "next/head"
 import Link from "next/link"
 import { useEffect } from "react"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
@@ -29,6 +30,10 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     // }, [episode?.linkEmbed])
 
     return (
+        <>
+        <Head>
+            <title>Kyuden :: Assistindo {anime.title}</title>
+        </Head>
         <main className={`${style.episode} container`}>
             { episode && (
                 <>
@@ -78,6 +83,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                 </>
             )}
         </main>
+        </>
     )
 }
 

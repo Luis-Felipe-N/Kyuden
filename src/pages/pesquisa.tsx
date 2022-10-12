@@ -7,14 +7,34 @@ import { CardAnime } from '../components/CardAnime'
 import { api } from '../service/api'
 import style from '../styles/Search.module.scss'
 
+interface IResultsSearch {
+    animes: IAnimes[];
+    totalAnimes: number;
+    nextPage: string | false;
+}
+
 export default function Search() {
     const [termSearch, setTermSearch] = useState('')
-    const [animes, setAnimes] = useState<IAnimes[]>()
+    const [results, setResults] = useState<IResultsSearch>()
 
     async function handleSearchAnime(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const { data } = await api.get('/animes')
-        setAnimes(data.animes)
+        const { data } = await api.get(`/animes?keyword=${termSearch}&take=${12}`)
+        const nextPage = data.totalAnimes > 12 ? `/animes?keyword=${termSearch}&take=${data.totalAnimes - 12}` : false
+        setResults({...data, nextPage})
+    }
+
+    async function getNextPage() {
+        if (results?.nextPage) {
+            const { data } = await api.get(results.nextPage)
+            const nextPage = data.totalAnimes > 12 ? `/animes?keyword=${termSearch}&take=${12}&skip=${12}` : false
+            console.log(nextPage)
+            setResults({
+                totalAnimes: data.totalAnimes,
+                animes: [...results.animes, ...data.animes],
+                nextPage
+            })
+        }
     }
 
     return (
@@ -51,14 +71,16 @@ export default function Search() {
                 </form>
             </div>
 
-            { animes && (
+            { results && (
                 <div className={`${style.search__resultsContainer} container`}>
-                    <h3>Resultados ({animes.length})</h3>
+                    <h3>Resultados ({results.totalAnimes})</h3>
 
                     <div className={`${style.search__resultsContainer_animes} container`}>
-                        {animes?.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
+                        {results.animes.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
                     </div>
-                </div>      
+                    <button onClick={getNextPage}>Carregar mais</button>
+                </div>  
+                
             )}
         </main>
         </>

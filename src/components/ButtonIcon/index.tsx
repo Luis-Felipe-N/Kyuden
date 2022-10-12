@@ -1,5 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
 import { ButtonHTMLAttributes } from "react"
+import style from './style.module.scss'
 
 interface IButtonIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     asChild?: boolean
@@ -10,6 +11,7 @@ export function ButtonIcon(props: IButtonIconProps) {
 
     return (    
         <Component
+            className={`${style.btnIcons} ${props.className}` }
             {...props}
         />
     )

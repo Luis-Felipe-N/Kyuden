@@ -29,6 +29,12 @@ export function Navigation() {
         </NavigationMenu.Item>
 
         <NavigationMenu.Item className={style.item}>
+          <Link href="/pesquisa">
+            <a>Pesquisa</a>
+          </Link>
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item className={style.item}>
             <NavigationMenu.Trigger className={`${style.item} ${style.trigger}`} >
                 Gênero
                 <FaChevronDown />
@@ -83,13 +89,7 @@ export function Navigation() {
           </NavigationMenu.Content>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item className={style.item}>
-          <Link href="/pesquisa">
-            <a>Pesquisa</a>
-          </Link>
-        </NavigationMenu.Item>
-      </NavigationMenu.List>
-
+        </NavigationMenu.List>
       <NavigationMenu.Viewport />
     </NavigationMenu.Root>
   );
