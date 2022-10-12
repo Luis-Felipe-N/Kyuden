@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from "next"
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/future/image"
 import Link from "next/link"
 import { useEffect } from "react"
