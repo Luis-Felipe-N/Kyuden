@@ -9,13 +9,14 @@
 
     &__remainingEpisodes {
         ul {
-            margin-block: 2rem;
             list-style: none;
 
             max-height: 100vh;
-            // overflow-inline: auto;
+            overflow-y: scroll;
+            padding: 1rem;
 
             li {
+                transition: .2s;
                 position: relative;
                 padding: .5rem;
                 & + li {
@@ -23,7 +24,7 @@
                 }
 
                 strong {
-                    // padding-top: .5rem;
+                    // padding-inline: .5rem;
                     display: block;
                 }
             }
@@ -34,15 +35,9 @@
             }
         }
 
-        ul li:hover {
+        ul li:hover, &_active {
             box-shadow: 0 0 0 2px var(--primary-700);
             background-color: var(--gray-800);
-            border-radius: 5px;
-        }
-
-        &_active {
-            box-shadow: 0 0 0 2px var(--primary-700);
-            background-color: var(--primary-700) !important;
             border-radius: 5px;
         }
 

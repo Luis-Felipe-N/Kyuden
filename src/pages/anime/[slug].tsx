@@ -117,8 +117,10 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                                     loading="lazy"
                                                 />
                                             </div>
-                                            <strong>{episode.title}</strong>
-                                            <i>{episode.duration > 0 && convertMillisecondsInMinutes(episode.duration)}</i>
+                                            <div className={style.season__episodesCard_infos}>
+                                                <strong>{episode.title}</strong>
+                                                <i>{episode.duration > 0 && convertMillisecondsInMinutes(episode.duration)}</i>
+                                            </div>
                                         </a>
                                     </Link>
                                 ))
@@ -168,8 +170,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
             revalidate: 60
         }
     } catch (error) {
-
-        console.log(error)
         return {
             notFound: true
         }

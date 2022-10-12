@@ -2,18 +2,20 @@ import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/future/image"
 import Link from "next/link"
 import { useEffect } from "react"
-import { IEpisodesAnime } from "../../@types/Anime"
+import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
 import { getUrlBaseVideo } from "../../components/utils/getUrlBaseVideo"
 import { api } from "../../service/api"
 
 import style from "../../styles/Episode.module.scss"
+import Anime from "../anime/[slug]"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
-    remainingEpisodes: IEpisodesAnime[]
+    remainingEpisodes: IEpisodesAnime[],
+    anime: IAnimes
 }
 
-export default function Episodio({ episode, remainingEpisodes }: IEpisodeProps) {
+export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
 
 
     // useEffect(() => {
@@ -33,6 +35,21 @@ export default function Episodio({ episode, remainingEpisodes }: IEpisodeProps) 
                     <section>
                         <div>
                             <iframe  width={1000} height={562.5} src={episode.linkEmbed} frameBorder="0"></iframe>
+                        </div>
+
+                        <div>
+                            { anime.slug && (
+                                <Link href={`/anime/${anime.slug}`}>
+                                <a>
+                                    <Image
+                                        width={64}
+                                        height={64}
+                                        src={anime.post} 
+                                        alt="" />
+                                    <h1>{anime.title}</h1>
+                                </a>
+                            </Link>
+                            )}
                         </div>
 
                     </section>
@@ -67,7 +84,7 @@ export default function Episodio({ episode, remainingEpisodes }: IEpisodeProps) 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: [],
-        fallback: false
+        fallback: true
     }
 }
 
@@ -77,13 +94,9 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
         console.log(id)
         const { data } = await api.get(`/animes/episode/${id}`)
 
-        const episode: IEpisodesAnime = data.episode
-        const remainingEpisodes: IEpisodesAnime[] = data.remainingEpisodes
-
         return {
             props: {
-                episode,
-                remainingEpisodes
+                ...data
             },
             revalidate: 60
         }

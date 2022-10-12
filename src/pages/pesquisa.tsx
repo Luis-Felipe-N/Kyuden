@@ -53,7 +53,7 @@ export default function Search() {
 
             { animes && (
                 <div className={`${style.search__resultsContainer} container`}>
-                    <strong>Resultados</strong>
+                    <h3>Resultados ({animes.length})</h3>
 
                     <div className={`${style.search__resultsContainer_animes} container`}>
                         {animes?.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
