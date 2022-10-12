@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from "next"
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
 import { FaHeart, FaPlay, FaStar, FaStarHalfAlt } from "react-icons/fa"
 import { BsFillBookmarkHeartFill } from 'react-icons/bs'
 import { IAnimes, IEpisodesAnime, ISeasonsAnime } from "../../@types/Anime"
@@ -134,7 +134,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     )
 }
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getServerSideProps: GetServerSideProps = async ({params}) => {
     const slug = params?.slug
     try {
         const { data } = await api.get(`/animes/${slug}`)

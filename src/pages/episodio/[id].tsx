@@ -65,12 +65,12 @@ export default function Episodio({ episode, remainingEpisodes }: IEpisodeProps) 
 }
 
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getServerSideProps: GetServerSideProps = async ({params}) => {
     const id = params?.id
     try {
         console.log(id)
         const { data } = await api.get(`/animes/episode/${id}`)
-        
+
         const episode: IEpisodesAnime = data.episode
         const remainingEpisodes: IEpisodesAnime[] = data.remainingEpisodes
 
