@@ -5,7 +5,6 @@ export default function useWindowDimesions() {
     useEffect(() => seHasWindow(true), [])
 
     const getDimesions = useCallback(() => {
-        console.log(hasWindow)
         const width = hasWindow && window.innerWidth
         const height = hasWindow && window.innerHeight
 

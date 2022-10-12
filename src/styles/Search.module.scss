@@ -4,7 +4,8 @@
 
     &__input {
         position: relative;
-        background-color: var(--primary-500);
+        background: rgb(85,60,154);
+        background: linear-gradient(-30deg, rgba(85,60,154,1) 10%, rgba(128,90,213,1) 100%); 
         padding-block: 2rem;
         border-radius: 10px;
         min-height: 17.18rem;

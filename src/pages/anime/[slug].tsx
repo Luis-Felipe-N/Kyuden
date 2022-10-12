@@ -9,6 +9,7 @@ import { SelectSeason } from "../../components/SelectSeason"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { convertMillisecondsInMinutes } from "../../components/utils/convertTime"
+import { ButtonIcon } from "../../components/ButtonIcon"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -20,13 +21,15 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     const [episodes, setEpisodes] = useState<IEpisodesAnime[]>()
 
     function handleChangeSeason(value: string) {
+        console.log("chamado")
         setCurrentSeason(value)
     }
 
     useEffect(() => {
+        console.log(currentSeason)
         const getEpisodes = async () => {
             try {
-                const { data } = await api.get(`/animes/season/${currentSeason}/episodes`)  
+                const { data } = await api.get(`/animes/season/${currentSeason ? currentSeason : firstSeason}/episodes`)  
                 setEpisodes(data.episodes)
 
             } catch (error) {
@@ -36,11 +39,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
         }
 
         getEpisodes()
-    }, [currentSeason])
-
-    useEffect(() => {
-        console.log(episodes)
-    }, [episodes])
+    }, [currentSeason, firstSeason])
 
     return (
         <main className={style.anime}>
@@ -55,7 +54,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                             <h1>{anime.title}</h1>
                             <p className={style.heroAnime__description}>{anime.description}</p>
                             <div className={style.heroAnime__infos}>
-                                <i>
+                                <i className={style.heroAnime__infos_rating}>
                                     <FaStar />
                                     {anime.rating}/10
                                 </i>
@@ -68,17 +67,22 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                             </div>
                             <div className={style.heroAnime__btns}>
                                 <div>
-                                    <button
+                                    <ButtonIcon
+                                        className={style.heroAnime__btns_button}
                                         aria-label={`Assistir trailer do anime ${anime.title}`}
                                         title={`Assistir trailer do anime ${anime.title}`}
+                                        asChild
                                     >
-                                        <FaPlay size={17} />
-                                    </button>
+                                        <a target="__black" href={`https://www.youtube.com/watch?v=${anime.youtubeVideoId}`}>
+                                            <FaPlay size={17} />
+                                        </a>
+                                    </ButtonIcon>
                                     <strong>Trailer</strong>
                                 </div>
 
                                 <div>
                                     <button
+                                        className={style.heroAnime__btns_button}
                                         aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
                                         title={`Adicionar o anime ${anime.title} aos favoritos`}
                                     >
@@ -144,7 +148,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
         const anime: IAnimes = data.anime
 
-        console.log(anime.seasons)
+        console.log(data.anime)
 
         return {
             props: {
@@ -154,6 +158,8 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
             revalidate: 100
         }
     } catch (error) {
+
+        console.log(error)
         return {
             notFound: true
         }

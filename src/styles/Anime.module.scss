@@ -21,12 +21,27 @@
         display: flex;
         gap: 1rem;
 
+        &_rating {
+            display: flex;
+            align-items: center;
+            gap: .3rem;
+        }
+
         &__genres {
             overflow: auto;
             flex-wrap: wrap;
             display: flex;
             gap: .5rem;
             list-style: none;
+
+            li {
+                font-size: .8rem;
+
+                background-color: var(--primary-800);
+                padding: 0 1rem;
+                line-height: 1.4rem;
+                border-radius: 1rem;
+            }
         }
     }
 
@@ -59,9 +74,12 @@
             }
         }
 
-        button {
-            width: 3rem;
-            height: 3rem;
+        &_button {
+            --button-width: 3rem;
+            line-height: var(--button-width);
+            width: var(--button-width);
+            height: var(--button-width);
+            text-align: center;
             background-color: var(--gray-700-alpha);
             color: var(--gray-50);
             transition: .2s;
