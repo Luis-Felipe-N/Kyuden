@@ -134,7 +134,24 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({params}) => {
+export const getStaticPaths: GetStaticPaths = async ({ }) => {
+    const { data } = await api.get(`/animes/`)
+
+    const animes = data.animes.map((anime: IAnimes) => {
+        return {
+            params: {
+                slug: anime.slug
+            }
+        }
+    })
+
+    return {
+        paths: animes,
+        fallback: true
+    }
+}
+
+export const getStaticProps: GetStaticProps = async ({params}) => {
     const slug = params?.slug
     try {
         const { data } = await api.get(`/animes/${slug}`)
@@ -148,7 +165,7 @@ export const getServerSideProps: GetServerSideProps = async ({params}) => {
                 anime,
                 firstSeason: anime.seasons[0].id
             },
-            revalidate: 100
+            revalidate: 60
         }
     } catch (error) {
 

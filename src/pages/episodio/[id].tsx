@@ -64,8 +64,14 @@ export default function Episodio({ episode, remainingEpisodes }: IEpisodeProps) 
     )
 }
 
+export const getStaticPaths: GetStaticPaths = async () => {
+    return {
+        paths: [],
+        fallback: false
+    }
+}
 
-export const getServerSideProps: GetServerSideProps = async ({params}) => {
+export const getStaticProps: GetStaticProps = async ({params}) => {
     const id = params?.id
     try {
         console.log(id)
@@ -79,7 +85,7 @@ export const getServerSideProps: GetServerSideProps = async ({params}) => {
                 episode,
                 remainingEpisodes
             },
-            revalidate: 100
+            revalidate: 60
         }
     } catch (error) {
         return {
