@@ -134,13 +134,6 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    return {
-        paths: [],
-        fallback: true
-    }
-}
-
 export const getStaticProps: GetStaticProps = async ({params}) => {
     const slug = params?.slug
     try {
