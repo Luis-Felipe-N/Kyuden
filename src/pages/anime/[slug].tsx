@@ -66,19 +66,21 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                 </ul>
                             </div>
                             <div className={style.heroAnime__btns}>
-                                <div>
-                                    <ButtonIcon
-                                        className={style.heroAnime__btns_button}
-                                        aria-label={`Assistir trailer do anime ${anime.title}`}
-                                        title={`Assistir trailer do anime ${anime.title}`}
-                                        asChild
-                                    >
-                                        <a target="__black" href={`https://www.youtube.com/watch?v=${anime.youtubeVideoId}`}>
-                                            <FaPlay size={17} />
-                                        </a>
-                                    </ButtonIcon>
-                                    <strong>Trailer</strong>
-                                </div>
+                                { anime.youtubeVideoId && (
+                                    <div>
+                                        <ButtonIcon
+                                            className={style.heroAnime__btns_button}
+                                            aria-label={`Assistir trailer do anime ${anime.title}`}
+                                            title={`Assistir trailer do anime ${anime.title}`}
+                                            asChild
+                                        >
+                                            <a target="__black" href={`https://www.youtube.com/watch?v=${anime.youtubeVideoId}`}>
+                                                <FaPlay size={17} />
+                                            </a>
+                                        </ButtonIcon>
+                                        <strong>Trailer</strong>
+                                    </div>  
+                                )}
 
                                 <div>
                                     <button

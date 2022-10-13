@@ -21,7 +21,7 @@ export function CardAnime({ anime }: ICardAnimesProps) {
                         
                         alt={`Poste do anime ${anime.title}`}
                     />
-                    <strong>{ anime.title }</strong>
+                    <span>{ anime.title }</span>
                 </a>
             </Link>
         </div>
