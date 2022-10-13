@@ -45,7 +45,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         </div>
 
                         <div>
-                           
+                           <div></div>
                         </div>
 
                     </section>
@@ -60,8 +60,8 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                                                 src={remainingEpisode.image}
                                                 width={350}
                                                 height={175}
-                                                alt={`Imagem do episódo ${remainingEpisode.title}`}
-                                                title={`Imagem do episódo ${remainingEpisode.title}`}
+                                                alt={`Imagem do episódio ${remainingEpisode.title}`}
+                                                title={`Imagem do episódio ${remainingEpisode.title}`}
                                             />
 
                                             <strong>{remainingEpisode.title}</strong>

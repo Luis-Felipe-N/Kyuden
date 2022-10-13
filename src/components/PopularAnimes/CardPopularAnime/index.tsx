@@ -2,6 +2,7 @@ import { IAnimes } from "../../../@types/Anime";
 import { FaPlay, FaStar } from "react-icons/fa";
 import style from "./style.module.scss";
 import Link from "next/link";
+import { ButtonIcon } from "../../ButtonIcon";
 
 interface ICardAnimesProps {
   anime: IAnimes;
@@ -19,12 +20,12 @@ export function CardPopularAnime({ anime }: ICardAnimesProps) {
         >
           [
           <div className={style.infos}>
-            <button
+            <ButtonIcon
               title={`Assistir ${anime.title}`}
               aria-label={`Assistir ${anime.title}`}
             >
               <FaPlay />
-            </button>
+            </ButtonIcon>
             <div className={style.infos__content}>
               <h3>{anime.title}</h3>
               <ul className={style.infos__content_genres}>
