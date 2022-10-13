@@ -32,29 +32,20 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     return (
         <>
         <Head>
-            <title>Kyuden :: Assistindo {anime.title}</title>
+            { anime && (
+                <title>Kyuden :: {anime.title}</title>
+            )}
         </Head>
         <main className={`${style.episode} container`}>
             { episode && (
                 <>
                     <section>
-                        <div>
-                            <iframe  width={1000} height={562.5} src={episode.linkEmbed} frameBorder="0"></iframe>
+                        <div className={style.episode__iframe}>
+                            <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
                         </div>
 
                         <div>
-                            { anime.slug && (
-                                <Link href={`/anime/${anime.slug}`}>
-                                <a>
-                                    <Image
-                                        width={64}
-                                        height={64}
-                                        src={anime.post} 
-                                        alt="" />
-                                    <h1>{anime.title}</h1>
-                                </a>
-                            </Link>
-                            )}
+                           
                         </div>
 
                     </section>

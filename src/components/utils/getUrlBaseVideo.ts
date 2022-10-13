@@ -5,8 +5,7 @@ export async function getUrlBaseVideo(linkEmbed: string) {
 
     const { data } = await axios.get(linkEmbed, {
         headers: {
-          'Access-Control-Allow-Origin': '*',
-        //   'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept"
+          
         },
     })
 }
