@@ -44,7 +44,7 @@ export function Navigation() {
             <NavigationMenu.Sub>
               <NavigationMenu.List className={style.dropdown}>
                 <NavigationMenu.Item className={style.dropdownItem}>
-                  <Link href={"acao"}>
+                  <Link href={"genero/acao"}>
                     <a>
                       <FaUserNinja />
                       Ação
@@ -52,7 +52,7 @@ export function Navigation() {
                   </Link>
                 </NavigationMenu.Item>
                 <NavigationMenu.Item className={style.dropdownItem}>
-                  <Link href={"/acao"}>
+                  <Link href={"genero/acao"}>
                     <a>
                       <FaSmileBeam />
                       Comédia
@@ -60,7 +60,7 @@ export function Navigation() {
                   </Link>
                 </NavigationMenu.Item>
                 <NavigationMenu.Item className={style.dropdownItem}>
-                  <Link href={"/acao"}>
+                  <Link href={"genero/acao"}>
                     <a>
                       <FaBookDead />
                       Shounen
@@ -68,7 +68,7 @@ export function Navigation() {
                   </Link>
                 </NavigationMenu.Item>
                 <NavigationMenu.Item className={style.dropdownItem}>
-                  <Link href={"/acao"}>
+                  <Link href={"genero/acao"}>
                     <a>
                       <FaMagic />
                       Magia
@@ -76,7 +76,7 @@ export function Navigation() {
                   </Link>
                 </NavigationMenu.Item>
                 <NavigationMenu.Item className={style.dropdownItem}>
-                  <Link href={"/generos"}>
+                  <Link href={"genero"}>
                     <a>
                       <MdFilter9Plus />
                       Outros

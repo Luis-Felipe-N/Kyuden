@@ -2,7 +2,6 @@ import Image from "next/future/image";
 import Link from "next/link";
 import style from "./style.module.scss"
 import { Navigation } from "./Navigation";
-import useWindowDimesions from "../../hooks/useWindowDimensions";
 import { FiMenu } from "react-icons/fi";
 import { ButtonIcon } from "../ButtonIcon";
 import { useState } from "react";
