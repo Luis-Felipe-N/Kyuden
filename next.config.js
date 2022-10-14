@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['https://animesonline.cc/', 'media.kitsu.io'],
+    domains: ['animesonline.cc', 'animesonline.cc/', 'https://animesonline.cc', 'https://animesonline.cc/',  'media.kitsu.io'],
   },
 }
 

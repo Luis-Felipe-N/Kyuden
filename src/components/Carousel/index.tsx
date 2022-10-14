@@ -21,7 +21,7 @@ export function CarouselAnimes({ genre }: ICarouselAnimes) {
 
   useEffect(() => {
     const getAnimesRow = async () => {
-      const { data } = await api.get(`animes/genre/${genre}`)
+      const { data } = await api.get(`animes/genre/${genre}?take=10`)
       setAnimes(data.animes)
     }
 

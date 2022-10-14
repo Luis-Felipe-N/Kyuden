@@ -19,11 +19,11 @@
 
         iframe {
             position: absolute;
-            top: 20%;
-            left: 20%;
+            top: 50%;
+            left: 50%;
             width: 100vw;
-            height: 100vh;
-            transform: translate(-20%, -20%);
+            height: 110vh;
+            transform: translate(-50%, -50%);
         }
     }
 
@@ -98,14 +98,16 @@
     }
 }
 
-@media (min-aspect-ratio: 16/9) {
+@media (max-width: 1200px) {
     .trailer iframe {
-      height: 56.25vw;
+      height: 200vw !important;
+      width: 200vw !important;
     }
   }
-  @media (max-aspect-ratio: 16/9) {
+  @media (max-width: 600px) {
     .trailer iframe {
-      width: 177.78vh;
-    }
+        height: 300vw !important;
+        width: 300vw !important;
+      }
   }
   
