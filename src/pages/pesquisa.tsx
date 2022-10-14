@@ -1,3 +1,4 @@
+import { GetServerSideProps } from 'next'
 import Image from 'next/future/image'
 import Head from 'next/head'
 import { FormEvent, useState } from 'react'
@@ -13,7 +14,11 @@ interface IResultsSearch {
     nextPage: string | false;
 }
 
-export default function Search() {
+interface ISearchProps {
+    popularAnimes: IAnimes[]
+}
+
+export default function Search({ popularAnimes }: ISearchProps) {
     const [termSearch, setTermSearch] = useState('')
     const [results, setResults] = useState<IResultsSearch>()
 
@@ -71,7 +76,7 @@ export default function Search() {
                 </form>
             </div>
 
-            { results && (
+            { results ? (
                 <div className={`${style.search__resultsContainer} container`}>
                     <h3>Resultados ({results.totalAnimes})</h3>
 
@@ -81,8 +86,27 @@ export default function Search() {
                     <button onClick={getNextPage}>Carregar mais</button>
                 </div>  
                 
+            ) : (
+                
+                <div className={`${style.search__resultsContainer} container`}>
+                    <h3>Populares</h3>
+
+                    <div className={`${style.search__resultsContainer_animes} container`}>
+                        {popularAnimes.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
+                    </div>
+            </div>  
             )}
         </main>
         </>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const { data } = await api.get('animes/popular')
+    const popularAnimes = data.animes
+    return {
+        props: {
+            popularAnimes
+        }
+    }
 }

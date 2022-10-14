@@ -120,13 +120,14 @@ button {
 /* ===== Scrollbar CSS ===== */
   /* Firefox */
   * {
-    scrollbar-width: thin;
+    scrollbar-width: 3px;
     scrollbar-color: var(--primary-700) #ffffff00;
   }
 
   /* Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
     width: 2px;
+    height: 2px;
   }
 
   *::-webkit-scrollbar-track {
