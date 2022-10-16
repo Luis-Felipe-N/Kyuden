@@ -76,25 +76,29 @@ export default function Search({ popularAnimes }: ISearchProps) {
                 </form>
             </div>
 
+            <section>
+                
+            </section>
+
             { results ? (
-                <div className={`${style.search__resultsContainer} container`}>
+                <section className={`${style.search__resultsContainer} container`}>
                     <h3>Resultados ({results.totalAnimes})</h3>
 
                     <div className={`${style.search__resultsContainer_animes} container`}>
                         {results.animes.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
                     </div>
                     <button onClick={getNextPage}>Carregar mais</button>
-                </div>  
+                </section>  
                 
             ) : (
                 
-                <div className={`${style.search__resultsContainer} container`}>
+                <section className={`${style.search__resultsContainer} container`}>
                     <h3>Populares</h3>
 
                     <div className={`${style.search__resultsContainer_animes} container`}>
                         {popularAnimes.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
                     </div>
-            </div>  
+                </section>  
             )}
         </main>
         </>

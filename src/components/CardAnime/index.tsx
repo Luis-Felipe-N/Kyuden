@@ -14,11 +14,10 @@ export function CardAnime({ anime }: ICardAnimesProps) {
         <div className={style.cardAnime}>
             <Link href={`/anime/${anime.slug}`}>
                 <a>
-                    <Image
+                    <img
                         src={anime.post}
                         width={210}
                         height={315}
-                        
                         alt={`Poste do anime ${anime.title}`}
                     />
                     <span>{ anime.title }</span>
