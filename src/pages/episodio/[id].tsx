@@ -2,12 +2,13 @@ import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/future/image"
 import Head from "next/head"
 import Link from "next/link"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
 import { getUrlBaseVideo } from "../../components/utils/getUrlBaseVideo"
 import { api } from "../../service/api"
 
 import style from "../../styles/Episode.module.scss"
+import { IStreamsBlogger } from "../../types"
 import Anime from "../anime/[slug]"
 
 interface IEpisodeProps {
@@ -17,32 +18,38 @@ interface IEpisodeProps {
 }
 
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
+    const [streams, setStreams] = useState<IStreamsBlogger[]>()
 
+    useEffect(() => {
+        const getUrlBase = async () => {
+            if (episode?.linkEmbed) {
+                const data = await getUrlBaseVideo(episode.linkEmbed)
+                setStreams(data)
+            }
+        }
 
-    // useEffect(() => {
-    //     const getUrlBase = async () => {
-    //         if (episode?.linkEmbed) {
-    //             await getUrlBaseVideo(episode.linkEmbed)
-    //         }
-    //     }
-
-    //     getUrlBase()
-    // }, [episode?.linkEmbed])
+        getUrlBase()
+    }, [episode?.linkEmbed])
 
     return (
         <>
-        <Head>
+        {/* <Head>
             { anime && (
                 <title>Kyuden :: {anime.title}</title>
             )}
-        </Head>
+        </Head> */}
         <main className={`${style.episode} container`}>
             { episode && (
                 <>
                     <section>
-                        <div className={style.episode__iframe}>
-                            <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
-                        </div>
+                        
+                            {streams ? (
+                                <video src={streams[streams.length - 1].play_url} controls autoPlay></video>
+                            ) : (
+                                <div className={style.episode__iframe}>
+                                    <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
+                                </div>
+                            )}
 
                         <div>
                            <div></div>

@@ -20,6 +20,8 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     const [currentSeason, setCurrentSeason] = useState(firstSeason)
     const [episodes, setEpisodes] = useState<IEpisodesAnime[]>()
 
+    
+
     function handleChangeSeason(value: string) {
         console.log("chamado")
         setCurrentSeason(value)
