@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react"
 import { IAnimes } from "../../@types/Anime"
-import { api } from "../../service/api"
 import { CardPopularAnime } from "./CardPopularAnime"
 import style from "./style.module.scss"
 

@@ -1,7 +1,13 @@
-export function Skeleton() {
+import style from './style.module.scss'
+
+interface ISkeleton {
+    width: number;
+    height: number;
+}
+
+export function Skeleton({width, height}: ISkeleton) {
     return (
-        <div>
-            Imagem carregando
+        <div className={style.skeleton} style={{width, height}}>
         </div>
     )
 }

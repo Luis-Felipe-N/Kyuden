@@ -1,0 +1,31 @@
+.footer {
+    // background-image: url('/banner.png');
+    margin-top: 2rem;
+    background-color: var(--gray-800);
+    padding: 2rem 0;
+
+    h1 {
+        font-size: 3rem;
+        &::first-letter {
+            color: var(--primary-600);
+
+        }
+    }
+
+    &__links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 3rem;
+            width: 3rem;
+            line-height: 0;
+            background-color: var(--primary-600);
+            border-radius: 5px;
+        }
+    }
+}

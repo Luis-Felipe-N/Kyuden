@@ -3,7 +3,17 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['animesonline.cc', 'animesonline.cc/', 'https://animesonline.cc', 'https://animesonline.cc/',  'media.kitsu.io'],
+    domains: ['animesonline.cc', 'media.kitsu.io'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.animesonline.cc',
+      },
+      {
+        protocol: 'https',
+        hostname: 'media.kitsu.io',
+      }
+    ],
   },
 }
 

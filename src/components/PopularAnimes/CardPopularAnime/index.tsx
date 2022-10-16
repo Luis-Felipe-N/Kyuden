@@ -18,7 +18,6 @@ export function CardPopularAnime({ anime }: ICardAnimesProps) {
             backgroundImage: `linear-gradient(180deg, rgba(23, 25, 35, 0) -7.34%, rgba(23, 25, 35, 1) 99.99%, rgba(23, 25, 35, 1) 100%), url(${anime?.cover}) `,
           }}
         >
-          [
           <div className={style.infos}>
             <ButtonIcon
               title={`Assistir ${anime.title}`}
