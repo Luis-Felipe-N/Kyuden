@@ -110,7 +110,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                                 <div className={style.season__episodesCard_play}>
                                                     <FaPlay />
                                                 </div>
-                                                <Image
+                                                <img
                                                     src={episode.image}
                                                     width={305}
                                                     height={160}

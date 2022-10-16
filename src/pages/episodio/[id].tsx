@@ -53,10 +53,11 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         <h3>Próximos episódios</h3>
                         <ul>
                             { remainingEpisodes.map(remainingEpisode => (
-                                <li key={remainingEpisode.id} className={remainingEpisode.id == episode.id ? style.episode__remainingEpisodes_active : ""}>
+                                <li key={remainingEpisode.id} >
                                     <Link href={`/episodio/${remainingEpisode.id}`}>
-                                        <a>
-                                            <Image
+                                        <a className={remainingEpisode.id == episode.id ? style.episode__remainingEpisodes_active : ""}>
+                                            <img
+                                                loading="lazy"
                                                 src={remainingEpisode.image}
                                                 width={350}
                                                 height={175}

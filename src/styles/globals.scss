@@ -107,6 +107,10 @@ button, input, textarea {
   font-weight: 400;
 }
 
+main {
+  min-height: calc(100vh - (6rem));
+}
+
 .container {
   max-width: var(--max-width);
   margin-inline: auto;
