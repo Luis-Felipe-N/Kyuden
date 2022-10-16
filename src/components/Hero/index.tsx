@@ -36,7 +36,7 @@ export function Hero({ anime }: IHeroProps) {
                 </div>
             )}
             <div className={style.hero}>
-                { anime ? (
+                { anime && (
                     <>
                     <Image 
                         src={anime.post}
@@ -69,8 +69,6 @@ export function Hero({ anime }: IHeroProps) {
                        
                     </div>
                     </>
-                ) : (
-                    <Skeleton />
                 )}
             </div>
         </section>
