@@ -1,15 +1,17 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
-import Image from "next/future/image"
+import { GetStaticPaths, GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { FaShare } from "react-icons/fa"
+import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
+import { ButtonIcon } from "../../components/ButtonIcon"
 import { getUrlBaseVideo } from "../../components/utils/getUrlBaseVideo"
+import { useEpisode } from "../../hooks/useEpisode"
 import { api } from "../../service/api"
 
 import style from "../../styles/Episode.module.scss"
 import { IStreamsBlogger } from "../../types"
-import Anime from "../anime/[slug]"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
@@ -20,41 +22,64 @@ interface IEpisodeProps {
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
     const [streams, setStreams] = useState<IStreamsBlogger[]>()
 
-    useEffect(() => {
-        const getUrlBase = async () => {
-            if (episode?.linkEmbed) {
-                const data = await getUrlBaseVideo(episode.linkEmbed)
-                setStreams(data)
-            }
-        }
+    const { getNextEpisode } = useEpisode()
 
-        getUrlBase()
-    }, [episode?.linkEmbed])
+    // useEffect(() => {
+    //     const getUrlBase = async () => {
+    //         if (episode?.linkEmbed) {
+    //             const data = await getUrlBaseVideo(episode.linkEmbed)
+    //             setStreams(data)
+    //         }
+    //     }
+
+    //     getUrlBase()
+    // }, [episode?.linkEmbed])
 
     return (
         <>
-        {/* <Head>
+        <Head>
             { anime && (
                 <title>Kyuden :: {anime.title}</title>
             )}
-        </Head> */}
+        </Head>
         <main className={`${style.episode} container`}>
             { episode && (
                 <>
-                    <section>
+                    <section className={style.episode__epvideo}>
                         
-                            {streams ? (
-                                <video src={streams[streams.length - 1].play_url} controls autoPlay></video>
-                            ) : (
-                                <div className={style.episode__iframe}>
-                                    <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
-                                </div>
-                            )}
+                        { streams ? (
+                            <video src={streams[streams.length - 1].play_url} controls autoPlay></video>
+                        ) : (
+                            <div className={style.episode__iframe}>
+                                <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
+                            </div>
+                        )}
 
-                        <div>
-                           <div></div>
+                        <div className={style.episode__info}>
+                           <div className={style.episode__info_ep}>
+                                <h3>{episode.title} </h3>
+                                <span>Lançado em 6 out 2022</span>
+                           </div>
+
+                           <div className={style.episode__info_options}>
+                                <ButtonIcon
+                                    title="Baixar episódio"
+                                    aria-label="Baixar episódio"
+                                >
+                                    <FiDownload size={20} />
+                                </ButtonIcon>
+                                <ButtonIcon
+                                    title="Compartilhar episódio"
+                                    aria-label="Compartilhar episódio"
+                                >
+                                    <FaShare size={20} />
+                                </ButtonIcon>
+                           </div>
                         </div>
 
+                    </section>
+                    <section className={style.episode__comments}>
+                        <strong>Comentarios</strong>
                     </section>
                     <aside className={style.episode__remainingEpisodes}>
                         <h3>Próximos episódios</h3>

@@ -1,15 +1,17 @@
 .episode {
     margin-block: 2rem;
+    align-content: flex-start;
     display: grid;
     grid-template-columns: 1fr 1fr 25rem;
     gap: 2rem;
 
-    section {
+    &__epvideo {
         grid-column: 1 / 3;
     }
 
-    aside {
-        grid-column: 3 / 4;
+    &__comments {
+        grid-column: 1 / 3;
+        grid-row-start: 2;
     }
 
     video {
@@ -30,10 +32,73 @@
             right: 0;
             width: 100%;
             height: 100%;
+            border-radius: 10px;
         }
     }
 
+    &__info {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--primary-900);
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &_anime {
+            display: flex;
+            align-items: center;
+            a {
+                color: var(--primary-500);
+                font-family: var(--font-secondary);
+                font-size: 1.3rem;
+                line-height: 1;
+                &:hover { text-decoration: underline;}
+            }
+    
+    
+            strong {
+                padding-right: .5rem;
+                border-right: 1px solid var(--gray-600);
+            }
+    
+            span {
+                font-size: 1rem;
+                padding-left: .5rem;
+                display: inline-flex;
+                align-items: center;
+                gap: .5rem;
+            }
+        }
+
+        &_ep {
+            h3 {
+                font-size: 1.5rem;
+            }
+            span {
+                font-size: .75rem;
+            }
+        }
+
+        &_options {
+            display: flex;
+            gap: 1rem;
+
+            button {
+                height: 3rem;
+                width: 3rem;
+                border-radius: 5px;
+                color: var(--gray-50);
+                background-color: var(--gray-700-alpha);
+            }
+        }
+
+    }
+
     &__remainingEpisodes {
+        grid-column: 3 / 4;
+        grid-row-start: 1;
+
+
         ul {
             list-style: none;
 
@@ -61,6 +126,7 @@
             }
 
             img {
+                width: 100%;
                 object-fit: cover;
                 border-radius: 5px;
             }
@@ -72,16 +138,54 @@
             border-radius: 5px;
         }
     }
+
+    &__nextEpisode {
+        display: none;
+    }
 }
+
 @media (max-width: 1106px) {
     .episode {
-        section {
+        &__epvideo {
             grid-column: 1 / 4;
+            grid-row-start: 1;
+        }
+
+        &__comments {
+            grid-column: 1 / 2;
+
+            grid-row-start: 2;
+
         }
     
-        aside {
-            grid-column: 1 / 4;
+        &__remainingEpisodes {
+            grid-column: 3 / 4;
+            grid-row-start: 2;
         }
     
+    }
+}
+
+@media (max-width: 780px) {
+    .episode {
+        &__epvideo {
+            grid-column: 1 / 4;
+            grid-row-start: 1;
+        }
+
+        &__comments {
+            grid-column: 1 / 4;
+
+            grid-row-start: 3;
+
+        }
+    
+        &__remainingEpisodes {
+            display: none;
+        }
+        
+        &__nextEpisode {
+            display: block;
+        }
     }
 }
