@@ -4,11 +4,12 @@ import style from "./style.module.scss"
 import { Navigation } from "./Navigation";
 import { FiMenu } from "react-icons/fi";
 import { ButtonIcon } from "../ButtonIcon";
+import { Button } from '../Button'
 import { useState } from "react";
-// import { useWindowDimesions } from "../../hooks/useWindowDimensions";
 
 export function Header() {
     const [ menuIsOpen, setMenuIsOpen ] = useState(false)
+    const [ user, setUser ] = useState(false)
 
     return (
         <header className={style.headerContainer}>
@@ -25,18 +26,32 @@ export function Header() {
                     <Navigation />
 
                     <div className={style.userContainer}>
-                        <div className={style.userContainer__user}>
-                            <div className={style.userContainer__user_info}>
-                                <span>Bem vindo, <strong>Luis Felipe</strong></span>
-                                <span>Desenvolvedor</span>
+
+                        { user ? (
+                            <div className={style.userContainer__user}>
+                                <div className={style.userContainer__user_info}>
+                                    <span>Bem vindo, <strong>Luis Felipe</strong></span>
+                                </div>
+                                <Image 
+                                    src="/avatar.jpeg"
+                                    width={45}
+                                    height={45}
+                                    alt="Avatar do usuário"
+                                />
                             </div>
-                            <Image 
-                                src="/avatar.png"
-                                width={50}
-                                height={50}
-                                alt="Avatar do usuário"
-                            />
-                        </div>
+                         ) : (
+                            <div className={style.userContainer__btns}>
+                                <Button asChild>
+                                    <Link href="/entrar">
+                                        <a>
+                                            Login
+                                        </a>
+                                    </Link>
+                                </Button>
+                                {/* <Button>Criar conta</Button> */}
+                            </div>
+                        )}
+                        
                     </div>
                 </div>
 

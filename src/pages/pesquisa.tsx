@@ -2,8 +2,9 @@ import { GetServerSideProps } from 'next'
 import Image from 'next/future/image'
 import Head from 'next/head'
 import { FormEvent, useState } from 'react'
-import { FaSearch, FaSearchPlus } from 'react-icons/fa'
+import { FaSearch } from 'react-icons/fa'
 import { IAnimes } from '../@types/Anime'
+import { Button } from '../components/Button'
 import { CardAnime } from '../components/CardAnime'
 import { api } from '../service/api'
 import style from '../styles/Search.module.scss'
@@ -18,15 +19,22 @@ interface ISearchProps {
     popularAnimes: IAnimes[]
 }
 
+const ANIMES_PER_PAGE = 12
+
 export default function Search({ popularAnimes }: ISearchProps) {
     const [termSearch, setTermSearch] = useState('')
     const [results, setResults] = useState<IResultsSearch>()
 
+    async function getAnimes(page: number) {
+        const { data } = await api.get(`/animes?keyword=${termSearch}&take=${page * 12}`)
+        const nextPage = data.totalAnimes > 12 ? `/animes?keyword=${termSearch}&take=${data.totalAnimes - 12}` : false
+        const totalPages = Math.ceil(data.totalAnimes / ANIMES_PER_PAGE)
+        setResults({...data, nextPage, totalPages})
+    }
+
     async function handleSearchAnime(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        const { data } = await api.get(`/animes?keyword=${termSearch}&take=${12}`)
-        const nextPage = data.totalAnimes > 12 ? `/animes?keyword=${termSearch}&take=${data.totalAnimes - 12}` : false
-        setResults({...data, nextPage})
+        getAnimes(1)
     }
 
     async function getNextPage() {
@@ -70,9 +78,9 @@ export default function Search({ popularAnimes }: ISearchProps) {
                         />
                     </div>
 
-                    <button>
+                    <Button>
                         Pesquisar
-                    </button>
+                    </Button>
                 </form>
             </div>
 

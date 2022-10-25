@@ -1,7 +1,7 @@
 .cardAnime {
     flex-shrink: 0;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
 
     a {
         display: flex;
@@ -10,7 +10,7 @@
 
     img {
         line-height: 0;
-        border-radius: 5px;
+        border-radius: var(--border-radius);
 
         &:hover {
             box-shadow: 0 0 0 4px var(--gray-900), 0 0 0 6px var(--primary-600);

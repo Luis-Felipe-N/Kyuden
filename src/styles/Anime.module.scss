@@ -87,7 +87,7 @@
             font-family: var(--font-secondary);
 
             border: none;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
         }
     }
 }
@@ -107,7 +107,7 @@
 
     &__episodesCard {
         padding: .3rem;
-        border-radius: 10px;
+        border-radius: var(--border-radius);
 
         strong, i {
             // display: block;
@@ -125,7 +125,7 @@
         }
 
         img {
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             width: 100%;
             object-fit: cover;
             transition: .2s;

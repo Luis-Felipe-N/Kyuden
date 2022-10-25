@@ -3,7 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { FaPlay, FaPlus } from "react-icons/fa"
 import { IAnimes } from "../../@types/Anime"
-import { Button } from "../Button/Index"
+import { Button } from "../Button"
 import { ButtonIcon } from "../ButtonIcon"
 import { Skeleton } from "../Skeleton"
 
@@ -12,6 +12,7 @@ import style from './style.module.scss'
 interface IHeroProps {
     anime: IAnimes
 }
+
 
 export function Hero({ anime }: IHeroProps) {
 

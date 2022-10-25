@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaShare } from "react-icons/fa"
 import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
@@ -24,23 +24,33 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
 
     const { getNextEpisode } = useEpisode()
 
-    // useEffect(() => {
-    //     const getUrlBase = async () => {
-    //         if (episode?.linkEmbed) {
-    //             const data = await getUrlBaseVideo(episode.linkEmbed)
-    //             setStreams(data)
-    //         }
-    //     }
+    function formatDate(date: Date) {
+        const dateFormated = new Date(date).toLocaleDateString("pt-BR", {
+            day: "numeric",
+            month: "short",
+            year: "numeric"
+        })
 
-    //     getUrlBase()
-    // }, [episode?.linkEmbed])
+        return dateFormated
+    }
+
+    useEffect(() => {
+        const getUrlBase = async () => {
+            if (episode?.linkEmbed) {
+                const data = await getUrlBaseVideo(episode.linkEmbed)
+                setStreams(data)
+            }
+        }
+
+        getUrlBase()
+    }, [episode?.linkEmbed])
 
     return (
         <>
         <Head>
             { anime && (
-                <title>Kyuden :: {anime.title}</title>
-            )}
+                <title>Kyuden :: {episode.title} do {anime.title}</title>
+            )} 
         </Head>
         <main className={`${style.episode} container`}>
             { episode && (
@@ -58,7 +68,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         <div className={style.episode__info}>
                            <div className={style.episode__info_ep}>
                                 <h3>{episode.title} </h3>
-                                <span>Lançado em 6 out 2022</span>
+                                <span>Lançado em {formatDate(episode.uploaded_at)}</span>
                            </div>
 
                            <div className={style.episode__info_options}>

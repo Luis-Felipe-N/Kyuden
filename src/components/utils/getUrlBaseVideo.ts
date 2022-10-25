@@ -1,14 +1,21 @@
 import axios from "axios"
 import { IStreamsBlogger } from "../../types";
 
-export async function getUrlBaseVideo(linkEmbed: string): Promise<IStreamsBlogger[] | undefined> {
+export async function getUrlBaseVideo(link: string): Promise<IStreamsBlogger[] | undefined> {
     try {
-        const { data } = await axios.get('https://cors-anywhere.herokuapp.com/' + linkEmbed);    
-
+        const { data } = await axios.post('http://localhost:3000/api/hello', {
+            data: {
+                linkEmbed: link
+            }
+        });    
+        
+        console.log("Data", data)
         const dataContainer = document.createElement('div')
-        dataContainer.innerHTML = data
+        dataContainer.innerHTML = data.html
         
         const urlVideo = _getUrlBaseVideo(dataContainer)
+        
+        // console.log(urlVideo)
 
         return urlVideo
     } catch (error) {
