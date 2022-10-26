@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import axios from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
@@ -11,16 +11,13 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'POST') {
-    const body = req.body
+    const { linkEmbed, userAgent} = req.body.data
 
-    console.log("Porra do link", body.data.linkEmbed)
-
-    const { data } = await axios.get(body.data.linkEmbed)
-    // if ( typeof linkEmbed == "string" ) {
-    // }
+    const { data } = await axios.get(linkEmbed, {headers: {"User-agent": userAgent}})
+    
     res.status(200).json({ html: data })
   } else {
-    // Handle any other HTTP method
+    
   }
 
   res.status(200).json({ html: '' })

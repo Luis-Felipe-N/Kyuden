@@ -3,9 +3,10 @@ import { IStreamsBlogger } from "../../types";
 
 export async function getUrlBaseVideo(link: string): Promise<IStreamsBlogger[] | undefined> {
     try {
-        const { data } = await axios.post('http://localhost:3000/api/hello', {
+        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_DOMAINURL}/api/extractor`, {
             data: {
-                linkEmbed: link
+                linkEmbed: link,
+                userAgent: window.navigator.userAgent
             }
         });    
         
@@ -14,8 +15,6 @@ export async function getUrlBaseVideo(link: string): Promise<IStreamsBlogger[] |
         dataContainer.innerHTML = data.html
         
         const urlVideo = _getUrlBaseVideo(dataContainer)
-        
-        // console.log(urlVideo)
 
         return urlVideo
     } catch (error) {
