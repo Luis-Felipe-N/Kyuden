@@ -6,6 +6,7 @@ import { FaShare } from "react-icons/fa"
 import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
 import { ButtonIcon } from "../../components/ButtonIcon"
+import { Comments } from "../../components/Comments"
 import { getUrlBaseVideo } from "../../components/utils/getUrlBaseVideo"
 import { useEpisode } from "../../hooks/useEpisode"
 import { api } from "../../service/api"
@@ -72,12 +73,20 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                            </div>
 
                            <div className={style.episode__info_options}>
-                                <ButtonIcon
-                                    title="Baixar episódio"
-                                    aria-label="Baixar episódio"
-                                >
-                                    <FiDownload size={20} />
-                                </ButtonIcon>
+                            {
+                                streams && (
+                                    <ButtonIcon
+                                        title="Baixar episódio"
+                                        aria-label="Baixar episódio"
+                                        asChild
+                                    >
+                                        <a href={streams[streams.length - 1].play_url} download>
+                                            
+                                            <FiDownload size={20} />
+                                        </a>
+                                    </ButtonIcon>
+                                )
+                            }
                                 <ButtonIcon
                                     title="Compartilhar episódio"
                                     aria-label="Compartilhar episódio"
@@ -88,9 +97,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         </div>
 
                     </section>
-                    <section className={style.episode__comments}>
-                        <strong>Comentarios</strong>
-                    </section>
+                    <Comments />
                     <aside className={style.episode__remainingEpisodes}>
                         <h3>Próximos episódios</h3>
                         <ul>
