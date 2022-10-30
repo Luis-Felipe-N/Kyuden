@@ -1,0 +1,56 @@
+.episode {
+    display: block;
+    margin: 1rem 0;
+    position: relative;
+    
+    &:hover img {
+        box-shadow: 0 0 0 2px var(--gray-800), 0 0 0 4px var(--primary-500);
+    }
+
+    img {
+        transition: .2s;
+        border-radius: var(--border-radius);
+        width: 100%;
+        object-fit: cover;
+    }
+
+    &__duration {
+        position: absolute;
+    }
+
+    &__cover {
+        position: relative;
+        &_play {
+            transition: .2s;
+            opacity: 0;
+            z-index: 10;
+            position: absolute;
+            background-color: var(--primary-600);
+            bottom: 1rem;
+            left: 1rem;
+            height: 2.5rem;
+            width: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+    
+            transform: translateY(1rem);
+        }
+    }
+
+    &__infos {
+        display: flex;    
+        align-items: center;
+        gap: .5rem;
+
+        span {
+            font-size: .8rem;
+            &::before {
+                content: '•';
+                margin-right: .5rem;
+                color: var(--gray-200);
+            }
+        }
+    }
+}

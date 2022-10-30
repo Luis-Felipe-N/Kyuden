@@ -1,0 +1,133 @@
+.heroAnime {
+    background-color: var(--gray-700-alpha);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    min-height: 60vh;
+    display: flex;
+    align-items: flex-end;
+
+    h1 {
+        font-size: 4rem;
+    }
+
+    &__description {
+        word-wrap: break-word;
+    }
+
+    &__infos {
+        margin: 1rem 0;
+        display: flex;
+        gap: 1rem;
+
+        &_rating {
+            display: flex;
+            align-items: center;
+            gap: .3rem;
+        }
+
+        &__genres {
+            overflow: auto;
+            flex-wrap: wrap;
+            display: flex;
+            gap: .5rem;
+            list-style: none;
+
+            li {
+                font-size: .8rem;
+
+                background-color: var(--primary-800);
+                padding: 0 1rem;
+                line-height: 1.4rem;
+                border-radius: 1rem;
+            }
+        }
+    }
+
+    &__btns {
+        display: flex;
+        gap: 1rem;
+
+        div {
+            display: flex;
+            flex-direction:column;
+
+            strong {
+                margin-top: .5rem;
+                font-weight: 600;
+                font-size: .8rem;
+            }
+
+            transition: .2s;
+
+            &:last-child {
+                button:hover {
+                    color: #F56565;
+                }
+            }
+
+            &:first-child {
+                button:hover {
+                    color: var(--primary-400);
+                }
+            }
+        }
+
+        &_button {
+            --button-width: 3rem;
+            line-height: var(--button-width);
+            width: var(--button-width);
+            height: var(--button-width);
+            text-align: center;
+            background-color: var(--gray-700-alpha);
+            color: var(--gray-50);
+            transition: .2s;
+
+            font-family: var(--font-secondary);
+
+            border: none;
+            border-radius: var(--border-radius);
+        }
+    }
+}
+
+.season {
+    margin-block: 2rem;
+
+    &__header {
+        margin-bottom: 2rem;
+    }
+
+    &__episodes {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(315px, 1fr));
+    }
+
+    // &__episodesCard {
+    //     padding: .3rem;
+    //     border-radius: var(--border-radius);
+
+    //     strong, i {
+    //         // display: block;
+    //         font-weight: 500;
+    //     }
+
+    //     i {
+    //         font-size: .8rem;
+
+            
+    //     }
+
+    //     img {
+    //         border-radius: var(--border-radius);
+    //         width: 100%;
+    //         object-fit: cover;
+    //         transition: .2s;
+
+    //         filter: brightness(.9);
+    //     }
+
+    // }
+}

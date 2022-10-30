@@ -1,0 +1,19 @@
+.skeleton {
+    background: rgb(31,32,41);
+    background: linear-gradient(90deg, var(--gray-900) 0px, var(--gray-800) 50%, var(--gray-900) 100%); 
+    background-size: 200%;
+    border-radius: 5px;
+    animation: skeleton 2s infinite linear;
+
+    & + .skeleton {
+        margin-block: .5rem;
+    }
+}
+
+@keyframes skeleton {
+    from {
+        background-position: 0px;
+    } to {
+        background-position: -200%;
+    }
+}

@@ -1,0 +1,17 @@
+
+.row {
+    overflow: hidden;
+
+    .headerCarousel {
+        h2 {
+            color: var(--primary-100);
+            font-weight: 500;
+        }
+
+        margin-block: 1rem;
+    }   
+
+    .carousel {
+        overflow: visible !important;
+    }
+}

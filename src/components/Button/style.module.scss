@@ -1,0 +1,9 @@
+.btn {
+    border-radius: 3rem;
+    border: none;
+    transition: .2s filter;
+    
+    &:hover {
+        filter: brightness(.85);
+    }
+}

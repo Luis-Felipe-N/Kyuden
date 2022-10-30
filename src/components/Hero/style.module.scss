@@ -1,0 +1,113 @@
+
+.heroContainer {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    position: relative;
+    
+    .trailer {
+        overflow: hidden;
+        z-index: -1;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+
+        iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 110vh;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .hero {
+        position: relative;
+        max-width: var(--max-width);
+        min-height:70vh;
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: flex-start;
+    
+        padding: 2rem 15px 4rem;
+        gap: 1rem;
+    
+        .content {
+            max-width: 50rem;
+    
+            h1 {
+                font-size: 3.625rem;
+                line-height: 1;
+            }
+            
+            p {
+                margin: 1rem 0 .5rem;
+                font-size: .9rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;  
+                overflow: hidden; 
+            }
+
+            .containerBtns {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+
+                .btnAddList {
+                    border: none;
+                    padding: 1rem;
+                    line-height: 0;
+                    border-radius: 2rem;
+                    background-color: var(--gray-700-alpha);
+                    color: var(--gray-50);
+                    transition: .2s;
+
+                    &:hover {
+                        box-shadow: 0 0 0 2px var(--gray-900), 0 0 0 4px var(--primary-600);
+                    }
+                }
+    
+                a {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: .5rem;
+                    background-color: var(--primary-600);
+                    padding: .7rem 2rem;
+                    border-radius: 2rem;
+                    font-weight: 500;
+
+                    &:hover {
+                        transform: scale(1);
+                    }
+                }
+            }
+        }
+    
+        img {
+            border-radius: 5px;
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .trailer iframe {
+      height: 200vw !important;
+      width: 200vw !important;
+    }
+  }
+  @media (max-width: 600px) {
+    .trailer iframe {
+        height: 300vw !important;
+        width: 300vw !important;
+      }
+  }
+  
