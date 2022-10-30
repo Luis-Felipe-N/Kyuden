@@ -105,6 +105,7 @@
         grid-template-columns: repeat(auto-fill, minmax(315px, 1fr));
     }
 
+<<<<<<< HEAD
     // &__episodesCard {
     //     padding: .3rem;
     //     border-radius: var(--border-radius);
@@ -130,4 +131,74 @@
     //     }
 
     // }
+=======
+    &__episodesCard {
+        padding: .3rem;
+        border-radius: var(--border-radius);
+
+        strong, i {
+            // display: block;
+            font-weight: 500;
+        }
+
+        i {
+            font-size: .8rem;
+
+            &::before {
+                content: '•';
+                margin-right: .5rem;
+                color: var(--gray-200);
+            }
+        }
+
+        img {
+            border-radius: var(--border-radius);
+            width: 100%;
+            object-fit: cover;
+            transition: .2s;
+
+            filter: brightness(.9);
+        }
+
+        &_cover {
+            position: relative;
+        }
+
+        &_play {
+            transition: .2s;
+            opacity: 0;
+            z-index: 3;
+            position: absolute;
+            background-color: var(--primary-600);
+            bottom: 1rem;
+            left: 1rem;
+            height: 2.5rem;
+            width: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+
+            transform: translateY(1rem);
+        }
+
+        &:hover {
+            img {
+                box-shadow: 0 0 0 2px var(--gray-900), 0 0 0 4px var(--primary-600);
+                filter: brightness(1);
+            }
+        }
+
+        &:hover &_play {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        &_infos {
+            display: flex;;
+            align-items: center;
+            gap: .5rem;
+        }
+    }
+>>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
 }

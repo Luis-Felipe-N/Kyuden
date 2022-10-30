@@ -6,10 +6,17 @@ export function useEpisode() {
         const indexCurrentEp = episodes.findIndex((ep => currentEpisode.id == ep.id))
 
         if (indexCurrentEp >= (episodes.length -1)) {
+<<<<<<< HEAD
             return
         }
 
         return episodes[indexCurrentEp + 1]
+=======
+            return null
+        }
+
+        return episodes[indexCurrentEp + 1].id
+>>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
     }
 
 

@@ -10,7 +10,10 @@ import Link from "next/link"
 import { convertMillisecondsInMinutes } from "../../components/utils/convertTime"
 import { ButtonIcon } from "../../components/ButtonIcon"
 import Head from "next/head"
+<<<<<<< HEAD
 import { EpisodeCard } from "../../components/EpisodeCard"
+=======
+>>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -118,7 +121,31 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                             <div className={style.season__episodes}>
                                 { episodes ? (
                                     episodes.map(episode => (
+<<<<<<< HEAD
                                         <EpisodeCard key={episode.id} episode={episode} anime={anime} />
+=======
+                                        <Link key={episode.id} href={`/episodio/${episode.id}`}>
+                                            <a className={style.season__episodesCard}>
+                                                <div className={style.season__episodesCard_cover}>
+                                                    <div className={style.season__episodesCard_play}>
+                                                        <FaPlay />
+                                                    </div>
+                                                    <img
+                                                        src={episode.image}
+                                                        width={305}
+                                                        height={160}
+                                                        alt={`Thumbnail do episode ${episode.title} do anime ${anime.title}`}
+                                                        title={`Thumbnail do episode ${episode.title} do anime ${anime.title}`}
+                                                        loading="lazy"
+                                                    />
+                                                </div>
+                                                <div className={style.season__episodesCard_infos}>
+                                                    <strong>{episode.title}</strong>
+                                                    <i>{episode.duration > 0 && convertMillisecondsInMinutes(episode.duration)}</i>
+                                                </div>
+                                            </a>
+                                        </Link>
+>>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
                                     ))
                                 ) : (
                                     "Buscando episódios"
