@@ -23,13 +23,9 @@ export function Comments() {
                         <Avatar src="/avatar.jpeg" />
                         <form>
                             <textarea placeholder='Deixe um comentário' />
-<<<<<<< HEAD
                             <div>
                                 <Button>Enviar</Button>
                             </div>
-=======
-                            <Button>Enviar</Button>
->>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
                         </form>
                     </>
                 ) : (   

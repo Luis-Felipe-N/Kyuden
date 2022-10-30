@@ -7,11 +7,8 @@ import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
 import { ButtonIcon } from "../../components/ButtonIcon"
 import { Comments } from "../../components/Comments"
-<<<<<<< HEAD
 import { EpisodeCard } from "../../components/EpisodeCard"
 import { Skeleton } from "../../components/Skeleton"
-=======
->>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
 import { getUrlBaseVideo } from "../../components/utils/getUrlBaseVideo"
 import { useEpisode } from "../../hooks/useEpisode"
 import { api } from "../../service/api"
@@ -27,10 +24,7 @@ interface IEpisodeProps {
 
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
     const [streams, setStreams] = useState<IStreamsBlogger[]>()
-<<<<<<< HEAD
     const [nextEpisode, setNextEpisode] = useState<IEpisodesAnime | undefined>()
-=======
->>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
 
     const { getNextEpisode } = useEpisode()
 
@@ -55,7 +49,6 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
         getUrlBase()
     }, [episode?.linkEmbed])
 
-<<<<<<< HEAD
     useEffect(() => {
         if (episode && remainingEpisodes) {
             setNextEpisode(getNextEpisode(remainingEpisodes, episode))
@@ -63,8 +56,6 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
         }
     }, [episode, remainingEpisodes])
 
-=======
->>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
     return (
         <>
         <Head>
@@ -73,11 +64,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
             )} 
         </Head>
         <main className={`${style.episode} container`}>
-<<<<<<< HEAD
             { episode ? (
-=======
-            { episode && (
->>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
                 <>
                     <section className={style.episode__epvideo}>
                         
@@ -122,7 +109,6 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                     </section>
                     <Comments />
                     <aside className={style.episode__remainingEpisodes}>
-<<<<<<< HEAD
                         { nextEpisode && (
                             <>
                             <h3>Próximo episódio</h3>
@@ -134,14 +120,6 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                                 <li key={remainingEpisode.id} >
                                     <Link href={`/episodio/${nextEpisode.id}`}>
                                         <a>
-=======
-                        <h3>Próximos episódios</h3>
-                        <ul>
-                            { remainingEpisodes.map(remainingEpisode => (
-                                <li key={remainingEpisode.id} >
-                                    <Link href={`/episodio/${remainingEpisode.id}`}>
-                                        <a className={remainingEpisode.id == episode.id ? style.episode__remainingEpisodes_active : ""}>
->>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
                                             <img
                                                 loading="lazy"
                                                 src={remainingEpisode.image}
@@ -156,7 +134,6 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                                     </Link>
                                 </li>
                             )) }
-<<<<<<< HEAD
                         </ul> */}
                     </aside>
                 </>
@@ -172,9 +149,6 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                     </section>
                     <aside className={style.episode__remainingEpisodes}>
                     <Skeleton height={1000}  />
-=======
-                        </ul>
->>>>>>> 91e0b26dd14befebaf5fd5e617dc93f735ac6f93
                     </aside>
                 </>
             )}
