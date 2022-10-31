@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next"
-import Image from "next/image"
+import Image from "next/future/image"
 import Link from "next/link"
 import { FaPlay, FaPlus } from "react-icons/fa"
 import { IAnimes } from "../../@types/Anime"
@@ -16,15 +16,13 @@ interface IHeroProps {
 
 export function Hero({ anime }: IHeroProps) {
 
-    const backgroundImage = !anime.youtubeVideoId ? `, url(${anime.cover || 'banner.png'})` : ''
-    console.log(backgroundImage)
+    const backgroundImage = `linear-gradient(1.68deg, rgba(23, 25, 35, 0.99) 20%, rgba(23, 25, 35, 0) 80%) ${anime.cover}`
+    
     return (    
         <section 
             className={style.heroContainer} 
-            style={{
-                backgroundImage: `linear-gradient(1.68deg, rgba(23, 25, 35, 0.99) 20%, rgba(23, 25, 35, 0) 80%) ${backgroundImage}`
-                }}>
-            { anime?.youtubeVideoId && (
+            style={{backgroundImage: `linear-gradient(0deg, rgba(23,25,35,1) 2%, rgba(23,25,35,0.9093838218881303) 17%, rgba(23,25,35,0.8393558106836485) 27%, rgba(23,25,35,0.6600841020001751) 40%, rgba(0,212,255,0) 99%), url(${anime.cover})`}}>
+            {/* { anime?.youtubeVideoId && (
                 <div className={style.trailer}>
                     <iframe 
                         // src={`https://www.youtube.com/embed/${anime.youtubeVideoId}?autoplay=1&controls=0`} 
@@ -35,7 +33,7 @@ export function Hero({ anime }: IHeroProps) {
                         
                     </iframe>
                 </div>
-            )}
+            )} */}
             <div className={style.hero}>
                 { anime && (
                     <>
