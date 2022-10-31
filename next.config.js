@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ['animesonline.cc', 'media.kitsu.io'],
-    disableStaticImages: true
+    disableStaticImages: false
   },
 }
 
