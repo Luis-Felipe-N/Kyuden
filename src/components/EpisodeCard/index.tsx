@@ -32,6 +32,7 @@ export function EpisodeCard({episode, anime}: INextEpisodeProps) {
                         height={190}
                         placeholder="blur"
                         blurDataURL={episode.image}
+                        unoptimized
                         alt={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
                         title={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
                     />

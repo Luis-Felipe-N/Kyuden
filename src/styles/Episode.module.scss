@@ -69,6 +69,19 @@
         &_ep {
             h3 {
                 font-size: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+                span {
+                    font-size: .85rem;
+                    color: var(--primary-400);
+
+                    &::before {
+                        content: '•';
+                        margin-right: .5rem;
+                        color: var(--gray-200);
+                    }
+                }
             }
             span {
                 font-size: .75rem;
@@ -81,7 +94,7 @@
 
             button, a {
                 text-align: center;
-                line-height: 3rem;
+                line-height: calc(3rem + 3px);
                 height: 3rem;
                 width: 3rem;
                 border-radius: var(--border-radius);
@@ -131,5 +144,9 @@
             grid-column: span 3;
         }    
 
+        &__comments {
+            grid-row-start: 3;
+
+        }
     }
 }

@@ -7,7 +7,6 @@ import Image from "next/future/image"
 import { SelectSeason } from "../../components/SelectSeason"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { convertMillisecondsInMinutes } from "../../components/utils/convertTime"
 import { ButtonIcon } from "../../components/ButtonIcon"
 import Head from "next/head"
 import { EpisodeCard } from "../../components/EpisodeCard"
@@ -43,7 +42,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
 
         }
 
-        getEpisodes()
+        getEpisodes()   
     }, [currentSeason, firstSeason])
 
     return (

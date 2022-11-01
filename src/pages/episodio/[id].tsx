@@ -78,7 +78,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
 
                         <div className={style.episode__info}>
                            <div className={style.episode__info_ep}>
-                                <h3>{episode.title} </h3>
+                                <h3>{episode.title} <span><Link href={`/anime/${anime.slug}`}>{anime.title}</Link></span></h3>
                                 <span>Lançado em {formatDate(episode.uploaded_at)}</span>
                            </div>
 
