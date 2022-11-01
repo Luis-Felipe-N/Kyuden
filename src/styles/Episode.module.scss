@@ -12,6 +12,7 @@
 
     video {
         width: 100%;
+        border-radius: var(--border-radius);
     }
 
     &__iframe {
@@ -139,6 +140,7 @@
 
 @media (max-width: 780px) {
     .episode {
+        grid-template-columns: 1fr;
 
         section, &__remainingEpisodes{
             grid-column: span 3;
