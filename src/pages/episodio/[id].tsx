@@ -1,10 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from "next"
+import Image from "next/future/image"
 import Head from "next/head"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { FaShare } from "react-icons/fa"
 import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
+import { Button } from "../../components/Button"
 import { ButtonIcon } from "../../components/ButtonIcon"
 import { Comments } from "../../components/Comments"
 import { EpisodeCard } from "../../components/EpisodeCard"
@@ -78,31 +80,46 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
 
                         <div className={style.episode__info}>
                            <div className={style.episode__info_ep}>
-                                <h3>{episode.title} <span><Link href={`/anime/${anime.slug}`}>{anime.title}</Link></span></h3>
+                                <h3>{episode.title}</h3>
+                                <Link href={`/anime/${anime.slug}`}>
+                                    <div className={style.episode__info_anime}>
+                                        <Image
+                                            src={anime.post}
+                                            width={50}
+                                            height={50}
+                                            alt={`Poster do anime ${anime.title}`}
+                                        />
+                                        <div>
+                                            <h4>{anime.title}</h4>
+                                            <span>{anime.rating} pontos de avaliação</span>
+                                        </div>
+                                    </div>
+                                </Link>
                                 <span>Lançado em {formatDate(episode.uploaded_at)}</span>
                            </div>
 
                            <div className={style.episode__info_options}>
                             {
                                 streams && (
-                                    <ButtonIcon
+                                    <Button
                                         title="Baixar episódio"
                                         aria-label="Baixar episódio"
                                         asChild
                                     >
                                         <a href={streams[streams.length - 1].play_url} download>
-                                            
                                             <FiDownload size={20} />
+                                            Baixar
                                         </a>
-                                    </ButtonIcon>
+                                    </Button>
                                 )
                             }
-                                <ButtonIcon
+                                <Button
                                     title="Compartilhar episódio"
                                     aria-label="Compartilhar episódio"
                                 >
                                     <FaShare size={20} />
-                                </ButtonIcon>
+                                    Compartilha
+                                </Button>
                            </div>
                         </div>
 

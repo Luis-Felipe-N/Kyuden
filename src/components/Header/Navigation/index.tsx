@@ -18,7 +18,7 @@ export function Navigation() {
       <NavigationMenu.List className={style.list}>
         <NavigationMenu.Item className={style.item}>
           <Link href="/">
-            <a>Inicio</a>
+            <a className={style.active}>Inicio</a>
           </Link>
         </NavigationMenu.Item>
 

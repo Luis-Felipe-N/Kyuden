@@ -11,10 +11,10 @@ export function Comments() {
     return (
         <section className={style.comments}>
             <div className={style.comments__header}>
-                <strong>Comentários</strong>
                 <span>
                     2
                 </span>
+                <strong>comentários</strong>
             </div>
 
             <div className={style.comments__send}>

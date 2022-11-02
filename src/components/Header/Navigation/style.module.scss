@@ -99,6 +99,8 @@
 
 @media (max-width: 700px) {
     .navigation {
+        width: 100%;
+
         ul {
             margin: 1rem 0;
             flex-direction: column;
@@ -106,9 +108,16 @@
             gap: 0;
         }
 
-        li a, li button {
-            padding: 1rem 0;
+         button {
+            display: none !important;
+        }
+
+        li a {
+            padding: 1rem ;
+            width: 100%;
+            border-radius: var(--border-radius);
             display: inline-block;
+            font-size: 1rem;
         }
 
         .dropdown {
@@ -118,8 +127,12 @@
         }
 
         .item {
-            // font-size: 1.5rem;
             text-align: end;
+            width: 100%;
+            .active {
+                background-color: var(--gray-800);
+
+            }
         }
     }
 }

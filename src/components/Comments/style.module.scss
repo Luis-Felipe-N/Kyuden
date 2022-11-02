@@ -4,22 +4,7 @@
     &__header {
         display: flex;
         align-items: center;
-        gap: 1rem;
-
-        strong {
-            font-size: 1.3rem;
-        }
-
-        span {
-            width: 2rem;
-            height: 2rem;
-            line-height: 2rem;
-            text-align: center;
-            display: inline-block;
-            background-color: var(--gray-700-alpha);
-            border-radius: var(--border-radius);
-            font-size: .8rem;
-        }
+        gap: .5rem;
     }
 
     &__send {

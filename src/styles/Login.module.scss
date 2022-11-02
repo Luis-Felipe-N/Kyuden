@@ -6,6 +6,8 @@
     display: grid;
     place-items: center;
 
+    padding: 0 2rem;
+
     &__container {
         background-color: var(--gray-700);
         border-radius: var(--border-radius);
