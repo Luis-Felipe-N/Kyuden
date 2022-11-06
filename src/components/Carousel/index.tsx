@@ -42,7 +42,21 @@ export function CarouselAnimes({ genre }: ICarouselAnimes) {
     
       <div ref={containerCarouselRef} className={`${style.carouselContainer} container `}>
         <Swiper
-          slidesPerView={(containerCarouselRef.current?.clientWidth || 1400) / 235}
+          breakpoints={{
+            235: {
+              width: 235,
+              slidesPerView: 1,
+            },
+
+            490: {
+              width: 490,
+              slidesPerView: 2  ,
+            },
+            700: {
+              width: 700,
+              slidesPerView: 3,
+            },
+          }}
           modules={[Navigation]}
           className={style.carousel}
         >
