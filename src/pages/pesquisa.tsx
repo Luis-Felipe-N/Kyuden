@@ -25,29 +25,14 @@ export default function Search({ popularAnimes }: ISearchProps) {
     const [termSearch, setTermSearch] = useState('')
     const [results, setResults] = useState<IResultsSearch>()
 
-    async function getAnimes(page: number) {
-        const { data } = await api.get(`/animes?keyword=${termSearch}&take=${page * 12}`)
-        const nextPage = data.totalAnimes > 12 ? `/animes?keyword=${termSearch}&take=${data.totalAnimes - 12}` : false
-        const totalPages = Math.ceil(data.totalAnimes / ANIMES_PER_PAGE)
-        setResults({...data, nextPage, totalPages})
+    async function getAnimes() {
+        
     }
 
     async function handleSearchAnime(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        getAnimes(1)
-    }
-
-    async function getNextPage() {
-        if (results?.nextPage) {
-            const { data } = await api.get(results.nextPage)
-            const nextPage = data.totalAnimes > 12 ? `/animes?keyword=${termSearch}&take=${12}&skip=${12}` : false
-            console.log(nextPage)
-            setResults({
-                totalAnimes: data.totalAnimes,
-                animes: [...results.animes, ...data.animes],
-                nextPage
-            })
-        }
+        const { data } = await api.get(`/animes?keyword=${termSearch}&take=12`)
+        setResults({...data})
     }
 
     return (
@@ -95,7 +80,6 @@ export default function Search({ popularAnimes }: ISearchProps) {
                     <div className={`${style.search__resultsContainer_animes} container`}>
                         {results.animes.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
                     </div>
-                    <button onClick={getNextPage}>Carregar mais</button>
                 </section>  
                 
             ) : (

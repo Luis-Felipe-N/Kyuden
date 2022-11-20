@@ -37,7 +37,9 @@ export default function Home({animeHero, popularAnimes}: IHomeProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   // const { data } = await api.get('/animes/dorohedoro')
-  const { data } = await api.get('/animes/popular?take=3')
+  // const response = await fetch(`http://localhost:3333/animes/popular`)
+  // const data = await response.json()
+  const { data } = await api.get('/animes/popular')
   const { animes } = data
 
   return {
