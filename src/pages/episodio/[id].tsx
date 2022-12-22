@@ -74,7 +74,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                             <video controls autoPlay>
                                 <source src={streams[streams.length - 1].play_url} type="video/mp4" /> 
                                 HTML5 Video .
-                                <a style={{width: '200px'}} href={streams[streams.length - 1].play_url} download>Download video</a> . 
+                                <a style={{width: '200px'}} href={streams[streams.length - 1].play_url} download=>Download video</a> . 
                             </video>
                         ) : (
                             <div className={style.episode__iframe}>
