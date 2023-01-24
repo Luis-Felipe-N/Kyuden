@@ -2,20 +2,30 @@ import Image from "next/future/image";
 import Link from "next/link";
 import style from "./style.module.scss"
 import { Navigation } from "./Navigation";
-import { FiMenu } from "react-icons/fi";
 import { ButtonIcon } from "../ButtonIcon";
 import { Button } from '../Button'
-import { useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { useClickOutSide } from "../../hooks/useClickOutSide";
 
 export function Header() {
     const [ menuIsOpen, setMenuIsOpen ] = useState(false)
     const { user } = useAuth()
-    console.log(user)
+
+    const { onClickOutSide } = useClickOutSide()
+
+    const menuRef = createRef<HTMLDivElement>()
+    const btnMenuRef = createRef<HTMLElement>()
+    
+    useEffect(() => {
+        if (menuIsOpen && menuRef.current) {
+            onClickOutSide(menuRef, menuIsOpen, setMenuIsOpen)
+        }
+    }, [menuIsOpen, onClickOutSide, menuRef])
 
     return (
         <header className={style.headerContainer}>
-            <div className={style.header}>
+            <div className={style.header} ref={menuRef}>
                 <Link href="/">
                     <a>
                         <h1>
@@ -24,44 +34,35 @@ export function Header() {
                     </a>
                 </Link>
                 <div className={menuIsOpen ? `${style.menu} ${style.active}` : style.menu}>
+                    <Navigation setStateMenu={setMenuIsOpen} stateMenu={menuIsOpen} />
+                </div>
 
-                    <Navigation />
+                <div className={style.userContainer}>
 
-                    <div className={style.userContainer}>
-
-                        { !!user ? (
-                            <div className={style.userContainer__user}>
-                                <div className={style.userContainer__user_info}>
-                                    <span>Bem vindo, <strong>{user.displayName}</strong></span>
-                                </div>
-                                <Image 
-                                    src="/avatar.jpeg"
-                                    width={45}
-                                    height={45}
-                                    alt="Avatar do usuário"
-                                />
+                    { !!user ? (
+                        <div className={style.userContainer__user}>
+                            <div className={style.userContainer__user_info}>
+                                <span>Bem vindo, <strong>{user.displayName}</strong></span>
                             </div>
-                         ) : (
-                            <div className={style.userContainer__btns}>
-                                <Button asChild>
-                                    <Link href="/entrar">
-                                        <a>
-                                            Entrar
-                                        </a>
-                                    </Link>
-                                </Button>
-                                
-                                <Button asChild>
-                                    <Link href="/criarconta">
-                                        <a>
-                                            Criar conta
-                                        </a>
-                                    </Link>
-                                </Button>
-                            </div>
-                        )}
-                        
-                    </div>
+                            <Image 
+                                src="/avatar.jpeg"
+                                width={45}
+                                height={45}
+                                alt="Avatar do usuário"
+                            />
+                        </div>
+                    ) : (
+                        <div className={style.userContainer__btns}>
+                            <Button asChild>
+                                <Link href="/entrar">
+                                    <a>
+                                        Entrar
+                                    </a>
+                                </Link>
+                            </Button>
+                        </div>
+                    )}
+                    
                 </div>
 
                 <ButtonIcon
@@ -70,8 +71,10 @@ export function Header() {
                     title={menuIsOpen ? "Fechar menu" : "Abrir menu"}
                     tabIndex={0}
                     onClick={() => setMenuIsOpen(!menuIsOpen)}
+                    // ref={btnMenuRef}
                 >
-                    <FiMenu size={25} />
+                    <span></span>
+                    <span></span>
                 </ButtonIcon>
             </div>
 

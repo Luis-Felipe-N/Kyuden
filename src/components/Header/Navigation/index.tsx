@@ -11,26 +11,37 @@ import { MdFilter9Plus } from "react-icons/md";
 import style from "./style.module.scss";
 import Link from "next/link";
 
-export function Navigation() {
+interface INavigationProps {
+  setStateMenu: (value: boolean) => void,
+  stateMenu: boolean
+}
+
+export function Navigation({ setStateMenu, stateMenu }: INavigationProps) {
+
+  function handleCloseMenu() {
+    if (stateMenu) {
+      setStateMenu(!stateMenu)
+    }
+  }
 
   return (
     <NavigationMenu.Root className={style.navigation}>
       <NavigationMenu.List className={style.list}>
         <NavigationMenu.Item className={style.item}>
-          <Link href="/">
-            <a className={style.active}>Inicio</a>
+          <Link href="/" >
+            <a className={style.active} onClick={handleCloseMenu}>Inicio</a>
           </Link>
         </NavigationMenu.Item>
 
         <NavigationMenu.Item className={style.item}>
           <Link href="/">
-            <a>Doação</a>
+            <a onClick={handleCloseMenu}>Doação</a>
           </Link>
         </NavigationMenu.Item>
 
         <NavigationMenu.Item className={style.item}>
           <Link href="/pesquisa">
-            <a>Pesquisa</a>
+            <a onClick={handleCloseMenu}>Pesquisa</a>
           </Link>
         </NavigationMenu.Item>
 
