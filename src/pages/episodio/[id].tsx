@@ -74,7 +74,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                             <video controls autoPlay>
                                 <source src={streams[streams.length - 1].play_url} type="video/mp4" /> 
                                 HTML5 Video .
-                                <a style={{width: '200px'}} href={streams[streams.length - 1].play_url} download=>Download video</a> . 
+                                <a style={{width: '200px'}} href={streams[streams.length - 1].play_url} download>Download video</a> . 
                             </video>
                         ) : (
                             <div className={style.episode__iframe}>
@@ -136,26 +136,6 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                             <EpisodeCard episode={nextEpisode} />
                             </>
                         )}
-                        {/* <ul>
-                            { remainingEpisodes.map(remainingEpisode => (
-                                <li key={remainingEpisode.id} >
-                                    <Link href={`/episodio/${nextEpisode.id}`}>
-                                        <a>
-                                            <img
-                                                loading="lazy"
-                                                src={remainingEpisode.image}
-                                                width={350}
-                                                height={175}
-                                                alt={`Imagem do episódio ${remainingEpisode.title}`}
-                                                title={`Imagem do episódio ${remainingEpisode.title}`}
-                                            />
-
-                                            <strong>{remainingEpisode.title}</strong>
-                                        </a>                                
-                                    </Link>
-                                </li>
-                            )) }
-                        </ul> */}
                     </aside>
                 </>
             ) : (

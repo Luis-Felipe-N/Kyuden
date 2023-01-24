@@ -45,7 +45,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   const [user, setUser] = useState<IUser>()
 
   useEffect(() => {
-    auth.onAuthStateChanged(userPersistence => {
+    auth.onAuthStateChanged((userPersistence: any) => {
       if (userPersistence !== null) {
         setUser(userPersistence.providerData[0])
       }
