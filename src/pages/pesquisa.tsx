@@ -1,13 +1,15 @@
 import { GetServerSideProps } from 'next'
 import Image from 'next/future/image'
 import Head from 'next/head'
-import { FormEvent, useState } from 'react'
+import { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { IAnimes } from '../@types/Anime'
 import { Button } from '../components/Button'
 import { CardAnime } from '../components/CardAnime'
 import { api } from '../service/api'
 import style from '../styles/Search.module.scss'
+
+import { motion as m } from 'framer-motion'
 
 interface IResultsSearch {
     animes: IAnimes[];
@@ -19,20 +21,20 @@ interface ISearchProps {
     popularAnimes: IAnimes[]
 }
 
-const ANIMES_PER_PAGE = 12
+let timeOutSearch: any;
 
 export default function Search({ popularAnimes }: ISearchProps) {
     const [termSearch, setTermSearch] = useState('')
     const [results, setResults] = useState<IResultsSearch>()
 
-    async function getAnimes() {
-        
-    }
 
-    async function handleSearchAnime(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault()
-        const { data } = await api.get(`/animes?keyword=${termSearch}&take=12`)
-        setResults({...data})
+    function handleTermSearch() {
+        clearTimeout(timeOutSearch)
+        timeOutSearch = setTimeout(async () => {
+            const { data } = await api.get(`/animes?keyword=${termSearch}&take=12`)
+            setResults({...data})
+            console.log(data)
+        }, 500);
     }
 
     return (
@@ -52,11 +54,12 @@ export default function Search({ popularAnimes }: ISearchProps) {
                     className={style.search__input_gonImage}
                 />
                 <h1>Encontre o anime perfeito para você</h1>
-                <form onSubmit={handleSearchAnime}>
+                <form>
                     <div className={style.search__containerInput}>
                         <FaSearch />
                         <input 
                             value={termSearch} 
+                            onKeyUp={() => handleTermSearch()}
                             onChange={({target}) => setTermSearch(target.value)}
                             type="search" 
                             placeholder="Hunter x Hunter"
@@ -77,7 +80,7 @@ export default function Search({ popularAnimes }: ISearchProps) {
                 <section className={`${style.search__resultsContainer} container`}>
                     <h3>Resultados ({results.totalAnimes})</h3>
 
-                    <div className={`${style.search__resultsContainer_animes} container`}>
+                    <div  className={`${style.search__resultsContainer_animes} container`}>
                         {results.animes.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
                     </div>
                 </section>  

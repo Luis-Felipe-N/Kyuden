@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { IAnimes } from "../../@types/Anime"
 import style from './style.module.scss'
+import { motion as m } from "framer-motion"
 
 interface ICardAnimesProps {
     anime: IAnimes
@@ -11,7 +12,14 @@ interface ICardAnimesProps {
 export function CardAnime({ anime }: ICardAnimesProps) {
 
     return (
-        <div className={style.cardAnime}>
+        <m.div 
+            layout 
+            initial={{opacity: 0}} 
+            animate={{opacity: 1}} 
+            exit={{opacity: 0, scale: 0.9}} 
+            
+            className={style.cardAnime}
+        >
             <Link href={`/anime/${anime.slug}`}>
                 <a>
                     <img
@@ -23,6 +31,6 @@ export function CardAnime({ anime }: ICardAnimesProps) {
                     <span>{ anime.title }</span>
                 </a>
             </Link>
-        </div>
+        </m.div>
     )
 }
