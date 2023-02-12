@@ -55,8 +55,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   function createAccount({email, password, name, username}: ICreateUser) {
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Signed in 
-      // userCredential.user.u
+  
       const user = userCredential.user;
       
 

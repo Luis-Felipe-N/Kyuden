@@ -7,6 +7,7 @@ import { Button } from '../Button'
 import { createRef, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useClickOutSide } from "../../hooks/useClickOutSide";
+import { SignOut, User } from "phosphor-react";
 
 export function Header() {
     const [ menuIsOpen, setMenuIsOpen ] = useState(false)
@@ -40,17 +41,39 @@ export function Header() {
                 <div className={style.userContainer}>
 
                     { !!user ? (
+                        <>
+
                         <div className={style.userContainer__user}>
-                            <div className={style.userContainer__user_info}>
-                                <span>Bem vindo, <strong>{user.displayName}</strong></span>
+                            <div>
+                                <div className={style.userContainer__user_info}>
+                                    <span>Bem vindo, <strong>{user.displayName}</strong></span>
+                                </div>
+                                <Image 
+                                    src="/avatar.jpeg"
+                                    width={45}
+                                    height={45}
+                                    alt="Avatar do usuário"
+                                />
                             </div>
-                            <Image 
-                                src="/avatar.jpeg"
-                                width={45}
-                                height={45}
-                                alt="Avatar do usuário"
-                            />
+                            <div className={style.userContainer__dropdown}>
+                                <ul>
+                                    <li>
+                                        <a href="/perfil">
+                                            <User size={20} />
+                                            Perfil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <SignOut size={20} />
+                                                Sair
+                                            </button>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </div>
+                        </>
                     ) : (
                         <div className={style.userContainer__btns}>
                             <Button asChild>

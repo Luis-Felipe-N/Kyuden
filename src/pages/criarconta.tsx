@@ -51,7 +51,7 @@ export default function SingUp() {
                                 type="name"
                                 placeholder="Luis Felipe N"
                             />
-                            {errors?.name && (<p>{errors.name.message?.toString()   }</p>)}
+                            {errors?.name && (<p>{errors.name.message?.toString()}</p>)}
                         </label>
                         <label>
                             E-mail
@@ -60,7 +60,7 @@ export default function SingUp() {
                                 type="email"
                                 placeholder="email@gmail.com"
                             />
-                            {errors?.email && (<p>{errors.email.message?.toString() }</p>)}
+                            {errors?.email && (<p>{errors.email.message?.toString()}</p>)}
                         </label>
                         <label>
                             Senha
@@ -69,14 +69,13 @@ export default function SingUp() {
                                 type="password"
                                 placeholder="senha123!@#"
                             />
-                            {errors?.password && (<p>{errors.password.message?.toString()   }</p>)}
+                            {errors?.password && (<p>{errors.password.message?.toString()}</p>)}
                         </label>
 
                         <Button>Entrar</Button>
                     </form>
 
-                    {/* <p>Nao tem uma conta? <Link href="/"><a>Crie aqui</a></Link></p> */}
-                    <p>Já tem uma conta? <Link href="/"><a>Entrar aqui</a></Link></p>
+                    <p>Já tem uma conta? <Link href="/entrar"><a>Entrar aqui</a></Link></p>
             </div>
         </main>
     )
