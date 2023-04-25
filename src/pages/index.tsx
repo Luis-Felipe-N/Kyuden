@@ -15,7 +15,7 @@ interface IHomeProps {
 
 
 export default function Home({animeHero, popularAnimes}: IHomeProps) { 
-
+  console.log(animeHero)
   return (
     <>
     <Head>

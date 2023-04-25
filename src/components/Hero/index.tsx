@@ -1,11 +1,10 @@
-import { GetStaticProps } from "next"
 import Image from "next/future/image"
 import Link from "next/link"
 import { FaPlay, FaPlus } from "react-icons/fa"
 import { IAnimes } from "../../@types/Anime"
 import { Button } from "../Button"
 import { ButtonIcon } from "../ButtonIcon"
-import { Skeleton } from "../Skeleton"
+import { motion as m } from "framer-motion";
 
 import style from './style.module.scss'
 
@@ -37,15 +36,27 @@ export function Hero({ anime }: IHeroProps) {
             <div className={style.hero}>
                 { anime && (
                     <>
-                    <Image 
-                        src={anime.post}
-                        width={210}
-                        height={315}
-                        alt={`Foto da capa do anime ${anime.title}`}
-                        title={`Foto da capa do anime ${anime.title}`}
-                        priority
-                    />
-                    <div className={style.content}>
+                    <m.div 
+                    initial={{opacity: 0, y: "15%"}} 
+                    animate={{opacity:1, y: "0%"}}
+                    transition={{duration: 0.5, ease: "easeOut"}}
+                    exit={{opacity: 1}} className={style.content}
+                    >
+                        <Image 
+                            src={anime.post}
+                            width={210}
+                            height={315}
+                            alt={`Foto da capa do anime ${anime.title}`}
+                            title={`Foto da capa do anime ${anime.title}`}
+                            priority
+                        />
+                    </m.div>
+                    <m.div 
+                        initial={{opacity: 0, y: "12%"}} 
+                        animate={{opacity:1, y: "0%"}}
+                        transition={{duration: 0.5, ease: "easeOut"}}
+                        exit={{opacity: 1}} className={style.content}
+                    >
                         <h1>{anime.title}</h1>
                         <p>{anime.description}</p>
                         <div className={style.containerBtns}>
@@ -66,7 +77,7 @@ export function Hero({ anime }: IHeroProps) {
                             </Button>
                         </div>
                        
-                    </div>
+                    </m.div>
                     </>
                 )}
             </div>
