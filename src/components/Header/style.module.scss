@@ -59,13 +59,15 @@
                 position: absolute;
                 right: 0;
                 background-color: var(--gray-800);
-                padding: 1rem;
+                padding: 2rem;
                 border-radius: 5px;
-                width: 150px;
+                width: 230px;
+                font-weight: 500;
 
                 ul {
                     
                     list-style: none;
+
                     li:not(:last-child) {
                         padding-bottom: .5rem;
                     }
@@ -84,9 +86,10 @@
                 button {
                     background: transparent;
                     border: 0;
-                    color: red;
+                    color: var(--red-400);
                     border-top: 1px solid var(--primary-800);
                     padding-top: .5rem;
+                    padding-inline: 1rem;
                 }
             }
 

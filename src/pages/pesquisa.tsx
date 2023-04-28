@@ -25,15 +25,17 @@ let timeOutSearch: any;
 
 export default function Search({ popularAnimes }: ISearchProps) {
     const [termSearch, setTermSearch] = useState('')
+    const [loading, setLoading] = useState(false)
     const [results, setResults] = useState<IResultsSearch>()
 
 
     function handleTermSearch() {
+        setLoading(true)
         clearTimeout(timeOutSearch)
         timeOutSearch = setTimeout(async () => {
             const { data } = await api.get(`/animes?keyword=${termSearch}&take=12`)
             setResults({...data})
-            console.log(data)
+            setLoading(false)
         }, 500);
     }
 
@@ -65,10 +67,6 @@ export default function Search({ popularAnimes }: ISearchProps) {
                             placeholder="Hunter x Hunter"
                         />
                     </div>
-
-                    <Button>
-                        Pesquisar
-                    </Button>
                 </form>
             </div>
 
@@ -76,12 +74,24 @@ export default function Search({ popularAnimes }: ISearchProps) {
                 
             </section>
 
-            { results ? (
+            { loading ? (
+                <section className={`${style.search__resultsContainer} container`}>
+                    <h3>Buscando</h3>
+
+                    <div  className={`${style.search__resultsContainer_animes} container`}>
+                        
+                    </div>
+                </section>  
+            ) : results ? (
                 <section className={`${style.search__resultsContainer} container`}>
                     <h3>Resultados ({results.totalAnimes})</h3>
 
                     <div  className={`${style.search__resultsContainer_animes} container`}>
-                        {results.animes.map(anime => <CardAnime key={anime.slug} anime={anime} />)}
+                        { !!results.animes ? (
+                            results.animes.map(anime => <CardAnime key={anime.slug} anime={anime} />)
+                        ) : (
+                            <img alt='Gon sentado pescando' src="gon-notfound.gif" width="200" height="200" />
+                        )}
                     </div>
                 </section>  
                 

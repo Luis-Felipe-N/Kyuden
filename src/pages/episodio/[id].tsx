@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/future/image"
 import Head from "next/head"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { FaShare } from "react-icons/fa"
 import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
@@ -17,6 +17,7 @@ import { api } from "../../service/api"
 
 import style from "../../styles/Episode.module.scss"
 import { IStreamsBlogger } from "../../types"
+import { useRouter } from "next/router"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
@@ -27,6 +28,10 @@ interface IEpisodeProps {
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
     const [streams, setStreams] = useState<IStreamsBlogger[]>()
     const [nextEpisode, setNextEpisode] = useState<IEpisodesAnime | undefined>()
+
+    const refVideo = useRef<HTMLVideoElement>(null)
+
+    const router = useRouter()
 
     const { getNextEpisode } = useEpisode()
 
@@ -58,6 +63,27 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
         }
     }, [episode, remainingEpisodes])
 
+    useEffect(() => {
+        if (refVideo.current !== null) {
+            refVideo.current.currentTime = 900
+
+        }
+
+        const exitingFunction = () => {
+            if (refVideo.current !== null) {
+                console.log("Você parou no segundo: ", refVideo.current.currentTime);
+
+            }
+        };
+    
+        router.events.on("routeChangeStart", exitingFunction);
+    
+        return () => {
+          console.log("unmounting component...");
+          router.events.off("routeChangeStart", exitingFunction);
+        };
+      }, [refVideo.current]);
+
     return (
         <>
         <Head>
@@ -71,7 +97,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                     <section className={style.episode__epvideo}>
                         
                         { streams ? (
-                            <video controls autoPlay>
+                            <video ref={refVideo} controls autoPlay>
                                 <source src={streams[streams.length - 1].play_url} type="video/mp4" /> 
                                 HTML5 Video .
                                 <a style={{width: '200px'}} href={streams[streams.length - 1].play_url} download>Download video</a> . 
@@ -110,7 +136,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                                         aria-label="Baixar episódio"
                                         asChild
                                     >
-                                        <a href={streams[streams.length - 1].play_url} download>
+                                        <a href={streams[streams.length - 1].play_url} download={episode.title}>
                                             <FiDownload size={20} />
                                             Baixar
                                         </a>
