@@ -11,7 +11,7 @@ import { SignOut, User } from "phosphor-react";
 
 export function Header() {
     const [ menuIsOpen, setMenuIsOpen ] = useState(false)
-    const { user } = useAuth()
+    const { user, logout } = useAuth()
 
     const { onClickOutSide } = useClickOutSide()
 
@@ -64,10 +64,10 @@ export function Header() {
                                         </a>
                                     </li>
                                     <li>
-                                        <button>
+                                        <button onClick={logout}>
                                             <SignOut size={20} />
                                                 Sair
-                                            </button>
+                                        </button>
                                     </li>
                                 </ul>
                             </div>
