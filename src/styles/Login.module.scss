@@ -49,11 +49,26 @@
             background-color: var(--primary-400);
             color: var(--gray-50);
             font-weight: bold;
+
+            &:disabled {
+                filter: brightness(.9);
+            }
+        }
+
+        .loading {
+            cursor: progress;
         }
 
         a {
             color: var(--primary-400);
             text-decoration: underline;
         }
+    }
+
+    &__errors {
+        margin-top: .3rem;
+        font-weight: 500;
+        font-size: .8rem;
+        color: var(--red-300);
     }
 }

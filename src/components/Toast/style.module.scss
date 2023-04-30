@@ -1,0 +1,33 @@
+.toast {
+    animation: toRight .2s ease-out;
+    display: flex;
+    gap: 1rem;
+    background-color: var(--gray-800);
+    padding: 1rem;
+    border-radius: 10px;
+    align-items: start;
+
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+
+    &__title {
+        font-weight: 600;
+    }
+
+    &__action {
+        line-height: 0;
+        background: transparent;
+        color: var(--gray-50);
+        border: 0;
+        font-size: 1.5rem;
+    }
+}
+
+@keyframes toRight {
+    0% {
+        right: -100%;
+    } 100% {
+        right: 2rem;
+    }
+}

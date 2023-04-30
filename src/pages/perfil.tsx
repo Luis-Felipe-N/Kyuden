@@ -1,35 +1,41 @@
 import { useEffect, useState } from "react"
 import { IUser } from "../@types/User"
+import { Avatar } from "../components/Avatar"
+import { Loading } from "../components/Loading"
 import { useAuth } from "../hooks/useAuth"
 import { getUserData } from "../service/firebase"
 
+import style from "../styles/Profile.module.scss"
+
 export default function Perfil() {
+    const [loading, setLoading] = useState(false)
     const [userData, setUserData] = useState<IUser>()
     const {user} = useAuth()
 
     useEffect(() => {
+        console.log(user)
         if(!!user) {
-            console.log(user)
+            setLoading(true)
             getUserData(user.uid, setUserData)
-
-            console.log(userData)
         }
-    }, [user?.uid])
-
-    useEffect(() => {
-    }, [userData])
+        setLoading(false)
+    }, [user, user?.uid])
 
     return (
-        <main>
-            {!!userData ? (
-                <section>
+        <main className={style.profile}>
+            { loading ? (
+                <Loading />
+            ) : !userData ? (
+                <p>User nao encontrado</p>
+            ) : (
+            <section>
+                <div className={style.profile__banner} style={{backgroundImage: `linear-gradient(180deg, rgba(23,25,35,.6) 0%, rgba(23,25,35,9) 98%), url(${userData.banner})`}}>
+                    <button>Editar</button>
                     <div>
-                        {userData.avatar ? (
-                            <img 
-                                src={userData.avatar} 
-                                alt={`Avatar do usuario ${userData.displayName}`} />
+                        {userData?.avatar ? (
+                            <Avatar className={style.profile__banner_avatar} src={userData?.avatar} fallback={userData.displayName[0]} />
                         ) : (
-                            <p>Sem foto</p>
+                            <Avatar className={style.profile__banner_avatar} fallback={userData.displayName[0]} />
                         )}
                         <div>
                             <h1>{userData?.displayName}</h1>
@@ -40,16 +46,15 @@ export default function Perfil() {
                             </ul>
                         </div>
                     </div>
-                    <div>
-                        <h1>Animes</h1>
-                        <ul>
-                            <li>Minha Lista</li>
-                            <li>Assistidos</li>
-                        </ul>
-                    </div>
-                </section>
-            ) : (
-                <p>User nao encontrado</p>
+                </div>
+                <div>
+                    <h1>Animes</h1>
+                    <ul>
+                        <li>Minha Lista</li>
+                        <li>Assistidos</li>
+                    </ul>
+                </div>
+            </section>
             )}
         </main>
     )

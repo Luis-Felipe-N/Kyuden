@@ -5,17 +5,20 @@ import { Footer } from '../components/Footer'
 
 import { AuthenticationProvider } from '../context/AuthenticationContext'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ToastProvider } from '../components/Toast'
 const queryClient = new QueryClient()
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AuthenticationProvider>
-    <QueryClientProvider client={queryClient}>
-      <Header />
-      <Component {...pageProps} />  
-      <Footer />
-    </QueryClientProvider>
-    </AuthenticationProvider>
+    <ToastProvider>
+      <AuthenticationProvider>
+      <QueryClientProvider client={queryClient}>
+        <Header />
+        <Component {...pageProps} />  
+        <Footer />
+      </QueryClientProvider>
+      </AuthenticationProvider>
+    </ToastProvider>
   )
 }
 

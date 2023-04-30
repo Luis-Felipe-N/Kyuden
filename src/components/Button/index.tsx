@@ -6,13 +6,13 @@ interface IButtonIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     asChild?: boolean
 }
 
-export function Button(props: IButtonIconProps) {
+export function Button({className, ...props}: IButtonIconProps) {
     const Component = props.asChild ? Slot : 'button'
 
     return (    
         <Component
+            className={`${style.btn} ${className}` }
             {...props}
-            className={`${style.btn} ` }
         />
     )
 }

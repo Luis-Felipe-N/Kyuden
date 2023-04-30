@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, updateCurrentUser, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, updateCurrentUser, setPersistence, browserSessionPersistence, User } from "firebase/auth";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { auth } from "../libs/firebase";
 import { createUser } from "../service/firebase";
@@ -31,7 +31,7 @@ export interface IUserLoginCredentials {
 }
 
 interface IAuthenticationContext {
-  createAccount: ({email, password, name, username}: ICreateUser) => void;
+  createAccount: ({email, password, name, username}: ICreateUser) => Promise<User | Error>;
   login: ({email, password}: IUserLoginCredentials) => void;
   logout:  () => void;
   user: IUser | null
@@ -55,29 +55,27 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
     });
   }, [])
 
-  function createAccount({email, password, name, username}: ICreateUser) {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
-  
+  async function createAccount({email, password, name, username}: ICreateUser): Promise<User | Error> {
+    return createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
       const user = userCredential.user;
-      console.log(user)
-      const a = createUser({
+
+      // ADD USER DATA IN REALTIME DATABASE
+      createUser({
         id: user.uid,
         displayName: name,
         email: email,
         providerId: user.providerId,
       })
 
-      console.log(a)
-
       updateProfile(user, {
         displayName: name
       })
+
+      return user
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      
+      return new Error(error)
     });
   }
 
