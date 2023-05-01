@@ -12,6 +12,7 @@ import Head from "next/head"
 import { EpisodeCard } from "../../components/EpisodeCard"
 import { useAuth } from "../../hooks/useAuth"
 import { updateUserData } from "../../service/firebase"
+import { arrangeAndAddAttributes } from "../../utils/Object"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -31,10 +32,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     function handleAddFavoriteAnime() {
         if (!!user) {
             updateUserData(user.uid, {
-                myListAnimes: {
-                    ...user.myListAnimes,
-                    animeSlug: anime.slug
-                }
+                myListAnimes: arrangeAndAddAttributes(user.myListAnimes, anime.slug)
             })
         } else {
 
