@@ -10,6 +10,8 @@ import Link from "next/link"
 import { ButtonIcon } from "../../components/ButtonIcon"
 import Head from "next/head"
 import { EpisodeCard } from "../../components/EpisodeCard"
+import { useAuth } from "../../hooks/useAuth"
+import { updateUserData } from "../../service/firebase"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -20,15 +22,24 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     const [currentSeason, setCurrentSeason] = useState(firstSeason)
     const [episodes, setEpisodes] = useState<IEpisodesAnime[]>()
 
+    const { user } = useAuth()
+
     function handleChangeSeason(value: string) {
         setCurrentSeason(value)
     }
 
-    useEffect(() => {
-        document.addEventListener('scroll', () => {
-            
-        })
-    }, [])
+    function handleAddFavoriteAnime() {
+        if (!!user) {
+            updateUserData(user.uid, {
+                myListAnimes: {
+                    ...user.myListAnimes,
+                    animeSlug: anime.slug
+                }
+            })
+        } else {
+
+        }
+    }
 
     useEffect(() => {
         const getEpisodes = async () => {
@@ -100,6 +111,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                             className={style.heroAnime__btns_button}
                                             aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
                                             title={`Adicionar o anime ${anime.title} aos favoritos`}
+                                            onClick={handleAddFavoriteAnime}
                                         >
                                             <FaHeart size={17} />
                                         </button>

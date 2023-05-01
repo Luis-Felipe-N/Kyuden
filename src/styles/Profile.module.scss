@@ -2,16 +2,32 @@
     &__banner {
         display: flex;
         align-items: center;
+        justify-content: center;
         flex-direction: column;
         background-size: cover;
         background-position: center;
         backdrop-filter: brightness(10%);
-        min-height: 40vh;
+        min-height: 50vh;
+        padding: 0 15px;
         
-        div {
+        &_container {
             max-width: var(--max-width);
             width: 100%;
             margin: 0 auto;
+
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+
+            > div {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+            }
+
+            button {
+                
+            }
         }
 
         &_avatar {
@@ -43,5 +59,29 @@
             gap: 1rem;
             list-style: none;
         }
+    }
+
+    &__countanimes {
+        max-width: var(--max-width);
+        width: 100%;
+        margin: 3rem auto 0;
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+        }
+    }
+
+    &__animes {
+        max-width: var(--max-width);
+        width: 100%;
+        margin: 0 auto;
+        padding: 15px;
+
+        display: flex;
+        gap: 2rem;
     }
 }

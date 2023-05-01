@@ -7,7 +7,7 @@ interface IAvatarProps extends ImgHTMLAttributes<HTMLImageElement> {
     fallback?: string;
 }
 
-export function Avatar({hasBorder, fallback, className, ...props}: IAvatarProps) {
+export function Avatar({hasBorder, height, width, fallback, className, ...props}: IAvatarProps) {
     return (
         // <img 
         //     {...props}
@@ -16,6 +16,8 @@ export function Avatar({hasBorder, fallback, className, ...props}: IAvatarProps)
         <AvatarRadix.Root className={className}>
         <AvatarRadix.Image
           {...props}
+          width={width}
+          height={height}
         />
         <AvatarRadix.Fallback delayMs={600}>
           {fallback?.toUpperCase()}

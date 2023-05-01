@@ -12,8 +12,8 @@ export function useEpisode() {
         return episodes[indexCurrentEp + 1]
     }
 
-
     return {
-        getNextEpisode
+        getNextEpisode,
+        // getEpisodesByIds
     }
 }

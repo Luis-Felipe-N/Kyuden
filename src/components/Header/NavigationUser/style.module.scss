@@ -20,6 +20,41 @@
         }
     }
 
+    &__user {
+        font-family: 'Oswald', sans-serif;
+
+        span {
+            white-space: nowrap;
+            display: block;
+            text-align: right;
+        
+            &:last-child {
+                font-family: 'Poppins';
+                font-size: .8rem;
+            }
+        }
+    }
+
+    &__avatar {
+        display: block;
+            line-height: 3rem;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-radius: 100%;
+            height: 3rem;
+            width: 3rem;
+            background-color: var(--primary-200);
+
+    }
+
+    &__avatar img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 100%;
+        object-fit: cover;
+    }
+
     .trigger {
         background-color: transparent;
         border: none;
@@ -43,11 +78,12 @@
 
     .dropdown {
         top: 1rem;
+        right: 0;
         position: absolute;
         flex-direction: column;
         gap: 0;
         box-shadow: 0 0 0 2px var(--gray-800);
-        width: 300px;
+        width: 250px;
 
         transition: .2s;
         z-index: 200;
@@ -64,8 +100,16 @@
             align-items: center;
             width: 100%;
 
+            button {
+                background-color: transparent;
+                border: 0;
 
-            a {
+                &.colorRed {
+                    color: var(--red-400) !important;
+                }
+            }
+
+            a, button {
                 padding: 1rem;
                 display: flex;
                 align-items: center;
@@ -78,10 +122,11 @@
                 background-color: var(--gray-800);
                 border-radius: 5px;
 
-                a {
+                a, button {
                     color: var(--primary-400);
                 }
             }
+            
         }
     }
 

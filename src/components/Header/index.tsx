@@ -1,4 +1,3 @@
-import Image from "next/future/image";
 import Link from "next/link";
 import style from "./style.module.scss"
 import { Navigation } from "./Navigation";
@@ -7,11 +6,11 @@ import { Button } from '../Button'
 import { createRef, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useClickOutSide } from "../../hooks/useClickOutSide";
-import { SignOut, User } from "phosphor-react";
+import { NavigationUser } from "./NavigationUser";
 
 export function Header() {
     const [ menuIsOpen, setMenuIsOpen ] = useState(false)
-    const { user, logout } = useAuth()
+    const { user } = useAuth()
 
     const { onClickOutSide } = useClickOutSide()
 
@@ -42,37 +41,7 @@ export function Header() {
 
                     { !!user ? (
                         <>
-
-                        <div className={style.userContainer__user}>
-                            <div>
-                                <div className={style.userContainer__user_info}>
-                                    <span>Bem vindo, <strong>{user.displayName}</strong></span>
-                                </div>
-                                <Image 
-                                    src="/avatar.jpeg"
-                                    width={45}
-                                    height={45}
-                                    alt="Avatar do usuário"
-                                />
-                            </div>
-                            <div className={style.userContainer__dropdown}>
-                                <ul>
-                                    <li>
-                                        <a href="/perfil">
-                                            <User size={20} />
-                                            Perfil
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <button onClick={logout}>
-                                            <SignOut size={20} />
-                                                Sair
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
+                            <NavigationUser  />
                         </>
                     ) : (
                         <div className={style.userContainer__btns}>

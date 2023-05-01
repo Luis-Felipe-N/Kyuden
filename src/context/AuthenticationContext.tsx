@@ -1,17 +1,8 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, updateCurrentUser, setPersistence, browserSessionPersistence, User } from "firebase/auth";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { auth } from "../libs/firebase";
-import { createUser } from "../service/firebase";
-
-interface IUser {
-  displayName: string | null
-  email: string
-  phoneNumber: string | null
-  photoURL: string | null
-  providerId: string
-  uid: string
-}
-
+import { createUser, getUserData } from "../service/firebase";
+import { IUser } from "../@types/User";
 interface IUserUpdate {
   displayName?: string | null
   photoURL?: string | null
@@ -34,7 +25,8 @@ interface IAuthenticationContext {
   createAccount: ({email, password, name, username}: ICreateUser) => Promise<User | Error>;
   login: ({email, password}: IUserLoginCredentials) => void;
   logout:  () => void;
-  user: IUser | null
+  user: IUser | null;
+  loading: boolean;
 }
 
 interface IAuthenticationProviderProps {
@@ -45,13 +37,16 @@ export const AuthContext = createContext({} as IAuthenticationContext)
 
 export function AuthenticationProvider({ children }: IAuthenticationProviderProps) {
   const [user, setUser] = useState<IUser | null>(null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
     auth.onAuthStateChanged((userPersistence: any) => {
       if (userPersistence !== null) {
         const {uid, ...user} = userPersistence.providerData[0];
-        setUser({...user, uid: userPersistence.uid})
+        getUserData(userPersistence.uid, setUser)
       }
+      setLoading(false)
     });
   }, [])
 
@@ -106,7 +101,8 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
-        setUser({...user, uid: userCredential.user.uid})
+        getUserData(userCredential.user.uid, setUser)
+
       })
       .catch((error: any) => {
         const errorCode = error.code;
@@ -117,7 +113,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
 
 
 
-  return (<AuthContext.Provider value={{ createAccount, login, logout, user }}>
+  return (<AuthContext.Provider value={{ createAccount, login, logout, user, loading }}>
     {children}
 </AuthContext.Provider>)
 }
