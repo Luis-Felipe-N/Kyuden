@@ -18,11 +18,20 @@ import { api } from "../../service/api"
 import style from "../../styles/Episode.module.scss"
 import { IStreamsBlogger } from "../../types"
 import { useRouter } from "next/router"
+import { updateUserData } from "../../service/firebase"
+import { useAuth } from "../../hooks/useAuth"
+import { arrangeAndAddObject } from "../../utils/Object"
+import { number } from "yup"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
     remainingEpisodes: IEpisodesAnime[],
     anime: IAnimes
+}
+
+interface IWatchedEpisodeData {
+    id: string;
+    assistedTime: string;
 }
 
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
@@ -32,6 +41,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     const refVideo = useRef<HTMLVideoElement>(null)
 
     const router = useRouter()
+    const { user } = useAuth()
 
     const { getNextEpisode } = useEpisode()
 
@@ -59,30 +69,41 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     useEffect(() => {
         if (episode && remainingEpisodes) {
             setNextEpisode(getNextEpisode(remainingEpisodes, episode))
-            console.log(getNextEpisode(remainingEpisodes, episode))
         }
-    }, [episode, remainingEpisodes])
+
+        if (user?.watchingEpisodes) {
+            // @ts-ignore
+            const watchedEpisode = Object.entries(user.watchingEpisodes).find(([, value]: any) => value.id === episode.id)
+
+            // @ts-ignore
+            const watchedEpisodeData: IWatchedEpisodeData = watchedEpisode ? watchedEpisode[1] : {}
+            
+            if (refVideo.current && watchedEpisodeData.assistedTime) {
+                refVideo.current.currentTime = Number(watchedEpisodeData.assistedTime)
+            }
+        }
+    }, [episode, remainingEpisodes, refVideo, user])
 
     useEffect(() => {
-        if (refVideo.current !== null) {
-            refVideo.current.currentTime = 900
-
-        }
-
         const exitingFunction = () => {
             if (refVideo.current !== null) {
-                console.log("Você parou no segundo: ", refVideo.current.currentTime);
-
+                if (user) {
+                    updateUserData(user.uid, {
+                        watchingEpisodes: arrangeAndAddObject(user.watchingEpisodes || {}, {
+                            id: episode.id,
+                            assistedTime: refVideo.current.currentTime
+                        }, episode.id)
+                    })
+                }
             }
         };
     
         router.events.on("routeChangeStart", exitingFunction);
     
         return () => {
-          console.log("unmounting component...");
           router.events.off("routeChangeStart", exitingFunction);
         };
-      }, [refVideo.current]);
+      }, [router.events]);
 
     return (
         <>

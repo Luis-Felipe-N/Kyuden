@@ -12,6 +12,7 @@ interface IUpdateUserData {
     watchedAnimes?: {};
     myListAnimes?: {};
     myListfriends?: {};
+    watchingEpisodes?: {};
 }
 
 export function createUser(providerUserInfo: IProviderUserInfo){
