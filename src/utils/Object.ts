@@ -15,9 +15,11 @@ export function arrangeAndAddAttributes(object: Object, valueToAdd: any) {
 
 export function arrangeAndAddObject(object: Object, valueToAdd: any, uniqueIdentifier: any) {
     const arrangedObject = Object.entries(object).map(([,v], i) => [i, v])
-    const alreadyHaveThisValue = arrangedObject.find(([,value]) => value === uniqueIdentifier)
+    const alreadyHaveThisValue = arrangedObject.find(([,value]) => value.id === uniqueIdentifier)
 
-    if (alreadyHaveThisValue) return Object.fromEntries(arrangedObject);
+    if (alreadyHaveThisValue) {
+        return Object.fromEntries(arrangedObject.map(([i, value]) => value.id === uniqueIdentifier ? [i, valueToAdd] : [i, value]));
+    } 
 
     const newValue = [Object.entries(object).length, valueToAdd]
     const newArray = [...arrangedObject, newValue]

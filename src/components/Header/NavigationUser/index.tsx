@@ -34,9 +34,9 @@ export function NavigationUser() {
                   <span>Bem vindo, <strong>{user.displayName}</strong></span>
                 </div>
                 {user?.avatar ? (
-                    <Avatar className={style.navigation__avatar} src={user?.avatar} fallback={user.displayName[0]} />
+                    <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} src={user?.avatar} fallback={user.displayName[0]} />
                 ) : (
-                    <Avatar className={style.navigation__avatar} fallback={user.displayName[0]} />
+                    <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} fallback={user.displayName[0]} />
                 )}
                 </>
               )}

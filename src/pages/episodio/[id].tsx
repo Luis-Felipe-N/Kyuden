@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/future/image"
 import Head from "next/head"
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { FaShare } from "react-icons/fa"
 import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
@@ -29,21 +29,47 @@ interface IEpisodeProps {
     anime: IAnimes
 }
 
-interface IWatchedEpisodeData {
-    id: string;
-    assistedTime: string;
-}
-
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
     const [streams, setStreams] = useState<IStreamsBlogger[]>()
     const [nextEpisode, setNextEpisode] = useState<IEpisodesAnime | undefined>()
 
+    const { user } = useAuth()
+    const router   = useRouter()
     const refVideo = useRef<HTMLVideoElement>(null)
 
-    const router = useRouter()
-    const { user } = useAuth()
+    const { getNextEpisode, getWatchedEpisodeData } = useEpisode()
 
-    const { getNextEpisode } = useEpisode()
+    console.log("rederizando")
+
+    const savePreviosTime = useCallback(() => {
+        if (refVideo.current !== null) {
+            if (user) {
+                updateUserData(user.uid, {
+                    watchingEpisodes: arrangeAndAddObject(user.watchingEpisodes || {}, {
+                        id: episode.id,
+                        assistedTime: refVideo.current.currentTime
+                    }, episode.id)
+                })
+            }
+        }
+    }, [refVideo, episode, user])
+
+    const returnToPreviosTime = useCallback(() => {
+        if (user) {
+            const watchedEpisodeData = getWatchedEpisodeData(user, episode)
+            if (refVideo.current) {
+                if (watchedEpisodeData) {
+                    refVideo.current.currentTime = watchedEpisodeData.assistedTime
+                } else {
+                    refVideo.current.currentTime = 0
+                }
+            }
+        }
+    }, [refVideo, episode, user, getWatchedEpisodeData])
+
+    if (episode && user?.watchingEpisodes) {
+        returnToPreviosTime()
+    }
 
     function formatDate(date: Date) {
         const dateFormated = new Date(date).toLocaleDateString("pt-BR", {
@@ -69,41 +95,16 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     useEffect(() => {
         if (episode && remainingEpisodes) {
             setNextEpisode(getNextEpisode(remainingEpisodes, episode))
-        }
+        }        
+    }, [episode, remainingEpisodes, getNextEpisode])
 
-        if (user?.watchingEpisodes) {
-            // @ts-ignore
-            const watchedEpisode = Object.entries(user.watchingEpisodes).find(([, value]: any) => value.id === episode.id)
-
-            // @ts-ignore
-            const watchedEpisodeData: IWatchedEpisodeData = watchedEpisode ? watchedEpisode[1] : {}
-            
-            if (refVideo.current && watchedEpisodeData.assistedTime) {
-                refVideo.current.currentTime = Number(watchedEpisodeData.assistedTime)
-            }
-        }
-    }, [episode, remainingEpisodes, refVideo, user])
-
-    useEffect(() => {
-        const exitingFunction = () => {
-            if (refVideo.current !== null) {
-                if (user) {
-                    updateUserData(user.uid, {
-                        watchingEpisodes: arrangeAndAddObject(user.watchingEpisodes || {}, {
-                            id: episode.id,
-                            assistedTime: refVideo.current.currentTime
-                        }, episode.id)
-                    })
-                }
-            }
-        };
-    
-        router.events.on("routeChangeStart", exitingFunction);
+    useEffect(() => {    
+        router.events.on("routeChangeStart", savePreviosTime);
     
         return () => {
-          router.events.off("routeChangeStart", exitingFunction);
+          router.events.off("routeChangeStart", savePreviosTime);
         };
-      }, [router.events]);
+      }, [router.events, savePreviosTime]);
 
     return (
         <>
@@ -117,22 +118,21 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                 <>
                     <section className={style.episode__epvideo}>
                         
-                        { streams ? (
-                            <video ref={refVideo} controls autoPlay>
-                                <source src={streams[streams.length - 1].play_url} type="video/mp4" /> 
-                                HTML5 Video .
-                                <a style={{width: '200px'}} href={streams[streams.length - 1].play_url} download>Download video</a> . 
-                            </video>
-                        ) : (
-                            <div className={style.episode__iframe}>
-                                <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
-                            </div>
-                        )}
-
+                            { streams ? (
+                                <video ref={refVideo} controls autoPlay>
+                                    <source src={streams[streams.length - 1].play_url} type="video/mp4" /> 
+                                    HTML5 Video .
+                                    <a style={{width: '200px'}} href={streams[streams.length - 1].play_url} download>Download video</a> . 
+                                </video>
+                            ) : (
+                                <div className={style.episode__iframe}>
+                                    <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
+                                </div>
+                            )}
                         <div className={style.episode__info}>
                            <div className={style.episode__info_ep}>
                                 <h3>{episode.title}</h3>
-                                <Link href={`/anime/${anime.slug}`}>
+                                <Link href={`/anime/${anime.slug}`} prefetch>
                                     <div className={style.episode__info_anime}>
                                         <Image
                                             src={anime.post}

@@ -18,7 +18,6 @@ interface ICarouselAnimes {
 }
 
 export function CarouselAnimes({ genre }: ICarouselAnimes) {
-  const [ animes, setAnimes ] = useState<IAnimes[]>()
   const containerCarouselRef = useRef<HTMLDivElement>(null)
 
   const { data, isLoading, error } = useQuery(`animes${genre}`, async () => {

@@ -1,0 +1,14 @@
+.avatarComponent {
+    display: inline-block;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 0 0 3px var(--primary-500);
+    border-radius: 100%;
+    background-color: var(--primary-200);
+
+    img {
+        object-fit: cover;
+        object-position: top;
+        border-radius: 100%;
+    }
+}

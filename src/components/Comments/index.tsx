@@ -1,12 +1,13 @@
 import Image from 'next/future/image'
 import Link from 'next/link'
 import { useState } from 'react'
+import { useAuth } from '../../hooks/useAuth'
 import { Avatar } from '../Avatar'
 import { Button } from '../Button'
 import style from './style.module.scss'
 
 export function Comments() {
-    const [user, setUser] = useState(true)
+    const { user } = useAuth()
 
     return (
         <section className={style.comments}>
@@ -20,7 +21,11 @@ export function Comments() {
             <div className={style.comments__send}>
                 { user ? (
                     <>
-                        <Avatar src="/avatar.jpeg" />
+                        {user?.avatar ? (
+                            <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} src={user?.avatar} fallback={user.displayName[0]} />
+                        ) : (
+                            <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} fallback={user.displayName[0]} />
+                        )}
                         <form>
                             <textarea placeholder='Deixe um comentário' />
                             <div>

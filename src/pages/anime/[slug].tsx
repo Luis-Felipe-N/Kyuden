@@ -61,6 +61,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                     <title>
                         Kyuden :: {anime.title}
                     </title>
+                    
                     <meta name="description" content={anime.description} />
                 </Head>
             )}

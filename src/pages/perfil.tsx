@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
@@ -56,6 +57,11 @@ export default function Perfil() {
                 <Loading />
             ) : user ? (
                 <>
+                <Head>
+                    <title>
+                        Kyuden :: {user.displayName}
+                    </title>
+                </Head>
                 <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(180deg, rgba(23,25,35,.8) 0%, rgba(23,25,35,9) 98%), url(${user.banner})`}}>
                         <div className={style.profile__banner_container}>
                             <div>
@@ -69,7 +75,6 @@ export default function Perfil() {
                                     <ul>
                                         <li>Minha Lista ({myListAnimes.length})</li>
                                         <li>Animes assistidos ({watchedAnimes.length})</li>
-                                        <li>Episódios assistidos ({watchedEpisodes.length})</li>
                                     </ul>
                                 </div>
                             </div>
