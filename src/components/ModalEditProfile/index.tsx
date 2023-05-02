@@ -1,4 +1,3 @@
-import React from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IoMdClose } from "react-icons/io"
 
@@ -17,9 +16,11 @@ import { updateUserData } from '../../service/firebase';
 import { useAuth } from '../../hooks/useAuth';
 import { removeEmptyAttribute } from '../../utils/Object';
 import { Avatar } from '../Avatar';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery, useQuery } from 'react-query';
 import Image from 'next/image';
 import { Navigation } from 'swiper';
+import { useState } from 'react';
+import { spawn } from 'child_process';
 
 interface ICharactersJikanAPI {
     data: {
@@ -76,14 +77,26 @@ const editProfileFormSchema = yup.object().shape({
     banner: yup.string()
 });
 
+const AVATARPERVIEW = 9
+
 export function ModalEditProfile() {
-    const [open, setOpen] = React.useState(false);
-    const [avatarSelected, setAvatarSelected] = React.useState(0);
-    const [bannerSelected, setBannerSelected] = React.useState("");
+    const [open, setOpen] = useState(false);
+    const [avatarSelected, setAvatarSelected] = useState(0);
+    const [bannerSelected, setBannerSelected] = useState("");
 
     const { register, handleSubmit, formState:{ errors }, setValue } = useForm({
         resolver: yupResolver(editProfileFormSchema)
     });
+
+    function handleFetchDataAvatar(page: number) {
+        return fetch('https://api.jikan.moe/v4/characters?page=' + (page || 1)).then((res): Promise<ICharactersJikanAPI>  => res.json()).then(res => res.data)
+    }
+
+    const { isLoading: avatarSuggestionIsLoading, error: avatarSuggestionIsLoadingIsError, data: avatarSuggestion, fetchNextPage } = useInfiniteQuery({
+        queryKey: ["avatarSuggestion"],
+        queryFn: ({pageParam}) => handleFetchDataAvatar(pageParam),
+        getNextPageParam: (lastPage, pages) => pages.length + 1,
+    })
 
     function handleSelectAvatar(url: string, id: number) {
         setValue("avatar", url)
@@ -94,6 +107,13 @@ export function ModalEditProfile() {
         setValue("banner", url)
     }
 
+    function handleGetNextPageAvatar(currentIndex: number, totalIndex: number) {
+        console.log(totalIndex, AVATARPERVIEW,  currentIndex)
+        if (totalIndex - (AVATARPERVIEW + 5) < currentIndex) {
+            fetchNextPage()
+        }
+    }
+
     const { isLoading: animeMediaSuggestionIsLoading, error: animeMediaSuggestionIsError, data: animeMediaSuggestion } = useQuery({
         queryKey: ['animeMediaSuggestion'],
         queryFn: () =>
@@ -102,15 +122,8 @@ export function ModalEditProfile() {
         ),
     })
 
-    const { isLoading: avatarSuggestionIsLoading, error: avatarSuggestionIsLoadingIsError, data: avatarSuggestion } = useQuery({
-        queryKey: ['avatarSuggestion'],
-        queryFn: () =>
-        fetch('https://api.jikan.moe/v4/characters').then(
-            (res): Promise<ICharactersJikanAPI> => res.json(),
-        ),
-    })
 
-    console.log(animeMediaSuggestion)
+    console.log("DATA: ", avatarSuggestion)
 
     const { user } = useAuth()
 
@@ -127,7 +140,7 @@ export function ModalEditProfile() {
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
-            <button className="Button violet">Edit profile</button>
+            <button className="Button violet">Editar perfil</button>
             </Dialog.Trigger>
             <Dialog.Portal className={style.modal}>
                 <Dialog.Overlay className={style.modal__overlay} />
@@ -142,70 +155,48 @@ export function ModalEditProfile() {
                             <strong>Sugestão de avatares</strong>
                             <div className={style.modal__suggestion_avatar}>
                                 <Swiper
-                                    breakpoints={{
-                                        235: {
-                                        width: 235,
-                                        slidesPerView: 1,
-                                        },
-
-                                        490: {
-                                        width: 490,
-                                        slidesPerView: 2  ,
-                                        },
-                                        700: {
-                                        width: 700,
-                                        slidesPerView: 3,
-                                        },
-                                    }}
+                                    onSlideChange={(e) => handleGetNextPageAvatar(e.realIndex, avatarSuggestion ? avatarSuggestion.pages.length * 25 : 0)}
+                                    freeMode={true}
+                                    slidesPerView={9}
+                                    spaceBetween={10}
                                     modules={[Navigation]}
                                     className={style.carousel}
                                 >
-                                { avatarSuggestion && avatarSuggestion.data.map(anime => (
-                                        <SwiperSlide key={anime.mal_id}>
-                                            <div className={
-                                                `${anime.images.jpg.image_url == user?.avatar ? style.modal__suggestion_avatar_active : ''}
-                                                 ${ avatarSelected == anime.mal_id ? style.modal__suggestion_avatar_selected : ''}
-                                                `}>
-                                            <Image
-                                                src={anime.images.jpg.image_url}
-                                                width={200}
-                                                height={200}
-                                                objectFit="cover"
-                                                objectPosition="top"
-                                                alt={`Poster do personagem ${anime.name}`}
-                                                title={`Poster do personagem ${anime.name}`}
-                                                onClick={() => handleSelectAvatar(anime.images.jpg.image_url, anime.mal_id)}
-                                            />
-                                            </div>
-                                        </SwiperSlide>
-                                ))}
+                                { avatarSuggestion && avatarSuggestion.pages.map(page => page && (page.map(anime => (
+                                    <SwiperSlide key={anime.mal_id}>
+                                               <div className={
+                                                   `${anime.images.jpg.image_url == user?.avatar ? style.modal__suggestion_avatar_active : ''}
+                                                    ${ avatarSelected == anime.mal_id ? style.modal__suggestion_avatar_selected : ''}
+                                                   `}>
+                                                   <Image
+                                                       src={anime.images.jpg.image_url}
+                                                       width={100}
+                                                       height={100}
+                                                       objectFit="cover"
+                                                       objectPosition="top"
+                                                       alt={`Poster do personagem ${anime.name}`}
+                                                       title={`Poster do personagem ${anime.name}`}
+                                                       onClick={() => handleSelectAvatar(anime.images.jpg.image_url, anime.mal_id)}
+                                                   />
+                                               </div>
+                                           </SwiperSlide>
+                                ))))}
                                 </Swiper>
                             </div>
 
                             <strong>Sugestão de banners</strong>
                             <div className={style.modal__suggestion_banner}>
                                 <Swiper
-                                    breakpoints={{
-                                        550: {
-                                        width: 550,
-                                        slidesPerView: 1,
-                                        },
-
-                                        1100: {
-                                        width: 1100,
-                                        slidesPerView: 2  ,
-                                        },
-                                        1650: {
-                                        width: 1650,
-                                        slidesPerView: 3,
-                                        },
-                                    }}
+                                    freeMode={true}
+                                    slidesPerView={3}
+                                    spaceBetween={10}
                                     modules={[Navigation]}
                                     className={style.carousel}
                                 >
                                 { animeMediaSuggestion && animeMediaSuggestion.data.filter(anime => !!anime.attributes.coverImage?.original).map(anime => (
                                         <SwiperSlide key={anime.attributes.slug}>
                                             <Image
+                                                blurDataURL='./background.png'
                                                 src={anime.attributes.coverImage.original}
                                                 width={500}
                                                 height={281}
@@ -216,6 +207,8 @@ export function ModalEditProfile() {
                                             />
                                         </SwiperSlide>
                                 ))}
+
+                                { avatarSuggestionIsLoading && <span>carregando mais</span>}
                                 </Swiper>
                             </div>
                         </div>

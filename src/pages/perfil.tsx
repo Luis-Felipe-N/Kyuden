@@ -22,34 +22,23 @@ export default function Perfil() {
 
     const myListAnimes = user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : []
     const watchedAnimes = user?.watchedAnimes ? Object.entries(user.watchedAnimes).map(([,episodeId]) => episodeId) : []
-    const watchedEpisodes = user?.watchedEpisodes ? Object.entries(user.watchedEpisodes).map(([,episodeId]) => episodeId) : []
 
     function createRangeArrayByNumber(number: number) {
         return [...Array(number).keys()]
     }
 
-    console.log(myListAnimes)
-    const { isLoading: myListAnimesLoading, error, data: myListAnimesData } = useQuery({
+    const { isLoading: myListAnimesLoading, error: myListAnimesError, data: myListAnimesData } = useQuery({
         queryKey: ['myListAnimesData'],
         queryFn: async (): Promise<IAnimes[]> =>{
             const { data } = await api.post('animes/slugs', {
                 animesSlug: myListAnimes
             })
-            console.log(data)
+            
             return data.animes
         },
     })
-    useEffect(() => {
 
-    }, [])
-
-    // useEffect(() => {
-    //     console.log(!loading , !user)
-    //     if (!loading && !user) {
-    //         router.push("/login")
-    //         console.log('aaa')
-    //     }
-    // }, [user, loading, router])
+    console.log(myListAnimesData)
 
     return (
         <main className={style.profile}>
@@ -73,7 +62,7 @@ export default function Perfil() {
                                 <div>
                                     <h1>{user?.displayName}</h1>
                                     <ul>
-                                        <li>Minha Lista ({myListAnimes.length})</li>
+                                        <li>Favoritos ({myListAnimes.length})</li>
                                         <li>Animes assistidos ({watchedAnimes.length})</li>
                                     </ul>
                                 </div>
@@ -84,21 +73,32 @@ export default function Perfil() {
                     <div className={style.profile__countanimes}>
                         <h1>Animes</h1>
                         <ul>
-                            <li>Minha Lista ({myListAnimes.length})</li>
+                            <li>Favoritos ({myListAnimes.length})</li>
                             <li>Assistidos</li>
                         </ul>
                     </div>
                 </section>
                 <section className={style.profile__animes}>
-                    { myListAnimesLoading ? (
+                    { myListAnimesLoading 
+                    ? (
                         createRangeArrayByNumber(myListAnimes.length).map((item: any) => (<Skeleton key={item} width={210} height={305} />))
-                        ) :  myListAnimesData ? (
-                            myListAnimesData.map(anime => (
-                                <CardAnime key={anime.slug} anime={anime} />
-                            ))
-                        ): (
-                            <p>Lista vazia</p>
-                        )}                      
+                    ) : myListAnimesError 
+                    ? (
+                        
+                        <div className={style.profile__animes_errorMessage}>
+                            <span>Vixii!</span>
+                            <strong>Alguma coisa deu errado em buscar seus animes favorito!</strong>
+                            <strong>:(</strong>
+
+                        </div>
+                    ) :  myListAnimesData 
+                    ? (
+                        myListAnimesData.map(anime => (
+                            <CardAnime key={anime.slug} anime={anime} />
+                        ))
+                    ): (
+                        <p>Lista vazia</p>
+                    )}                      
                     
                 </section>
                 </>
