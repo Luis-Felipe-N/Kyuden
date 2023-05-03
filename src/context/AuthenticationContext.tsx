@@ -39,9 +39,12 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   const [user, setUser] = useState<IUser | null>(null)
   const [loading, setLoading] = useState(false)
 
+  console.log(user)
+
   useEffect(() => {
     setLoading(true)
     auth.onAuthStateChanged((userPersistence: any) => {
+      console.log(userPersistence)
       if (userPersistence !== null) {
         const {uid, ...user} = userPersistence.providerData[0];
         getUserData(userPersistence.uid, setUser)
@@ -72,19 +75,6 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
     .catch((error) => {
       return new Error(error)
     });
-  }
-
-  function updateUser(newData: IUserUpdate) {
-    const currentUser = auth.currentUser
-
-    if (currentUser === null) return
-    updateCurrentUser(auth, {
-      ...currentUser,
-      providerData: {
-        ...currentUser.providerData,
-        ...newData
-      }
-    })
   }
 
   function logout() {
