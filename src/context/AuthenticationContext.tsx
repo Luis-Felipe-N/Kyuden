@@ -3,6 +3,8 @@ import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 import { auth } from "../libs/firebase";
 import { createUser, getUserData } from "../service/firebase";
 import { IUser } from "../@types/User";
+import { get, ref } from "firebase/database";
+import { db } from "../libs/firebase";
 interface IUserUpdate {
   displayName?: string | null
   photoURL?: string | null
@@ -41,16 +43,13 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
 
   useEffect(() => {
     mounted.current = true;
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       console.log("onAuthUserChanged", user);
       if (user) {
         if (mounted.current) {
-          // getUserData(user.uid).then(res => {
-          //   console.log("RES: ", res)
-          //   setUser(res)
-          // })
-          // @ts-ignore
-          setUser({avatar: "", banner: "", createAt: "", email: user.email || 'luis@gmaail.com', uid: user.uid, displayName: "va", myListAnimes: {}, myListfriends: {}, watchedAnimes: {}, watchedEpisodes: {}, watchingEpisodes: {}, ...user})
+          const snapshot = await get(ref(db, 'users/' + user.uid));
+          const userData =  snapshot.val();
+          setUser(userData)
         }
       } else {
         if (mounted.current) {
@@ -100,14 +99,13 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   function login({email, password}: IUserLoginCredentials) {  
   
     return setPersistence(auth, browserSessionPersistence).then(() => {
-      return signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential: any) => {
+      return  signInWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
-        setUser({avatar: "", banner: "", createAt: "", email: user.email || 'luis@gmaail.com', uid: user.uid, displayName: "va", myListAnimes: {}, myListfriends: {}, watchedAnimes: {}, watchedEpisodes: {}, watchingEpisodes: {}, ...user})
-        // getUserData(userCredential.user.uid).then(res => {
-        //   console.log(res)
-        //   setUser(res)
-        // })
+
+        const snapshot = await get(ref(db, 'users/' + user.uid));
+        const userData =  snapshot.val();
+        setUser(userData)
 
       })
       .catch((error: any) => {
