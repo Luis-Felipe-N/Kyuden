@@ -37,12 +37,10 @@ export const AuthContext = createContext({} as IAuthenticationContext)
 
 export function AuthenticationProvider({ children }: IAuthenticationProviderProps) {
   const [user, setUser] = useState<IUser | null>(null)
-  const [loading, setLoading] = useState(false)
 
   console.log(user)
 
   useEffect(() => {
-    setLoading(true)
     auth.onAuthStateChanged((userPersistence: any) => {
       console.log(userPersistence)
       if (userPersistence !== null) {
@@ -50,7 +48,6 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
         getUserData(userPersistence.uid, setUser)
         console.log("apos getUser")
       }
-      setLoading(false)
     });
   }, [])
 
