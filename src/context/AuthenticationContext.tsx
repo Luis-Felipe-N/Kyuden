@@ -26,7 +26,6 @@ interface IAuthenticationContext {
   login: ({email, password}: IUserLoginCredentials) => Promise<void | Error>;
   logout:  () => void;
   user: IUser | null;
-  loading: boolean;
 }
 
 interface IAuthenticationProviderProps {
@@ -100,7 +99,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
 
 
 
-  return (<AuthContext.Provider value={{ createAccount, login, logout, user, loading }}>
+  return (<AuthContext.Provider value={{ createAccount, login, logout, user }}>
     {children}
 </AuthContext.Provider>)
 }

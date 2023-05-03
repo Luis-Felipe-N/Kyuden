@@ -17,7 +17,7 @@ import { getUserData } from "../service/firebase"
 import style from "../styles/Profile.module.scss"
 
 export default function Perfil() {
-    const { user, loading } = useAuth()
+    const { user } = useAuth()
     const router = useRouter()
 
     const myListAnimes = user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : []
@@ -42,9 +42,7 @@ export default function Perfil() {
 
     return (
         <main className={style.profile}>
-            { loading ? (
-                <Loading />
-            ) : user ? (
+            { user ? (
                 <>
                 <Head>
                     <title>
