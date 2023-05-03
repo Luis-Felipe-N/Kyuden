@@ -78,6 +78,7 @@ const editProfileFormSchema = yup.object().shape({
 });
 
 const AVATARPERVIEW = 9
+const BANNERPERVIEW = 3
 
 export function ModalEditProfile() {
     const [open, setOpen] = useState(false);
@@ -92,9 +93,19 @@ export function ModalEditProfile() {
         return fetch('https://api.jikan.moe/v4/characters?page=' + (page || 1)).then((res): Promise<ICharactersJikanAPI>  => res.json()).then(res => res.data)
     }
 
-    const { isLoading: avatarSuggestionIsLoading, error: avatarSuggestionIsLoadingIsError, data: avatarSuggestion, fetchNextPage } = useInfiniteQuery({
+    function handleFetchDataBanner(page: number) {
+        return fetch('https://kitsu.io/api/edge/anime?page[limit]=10&page[offset]=' + (page * 10 + 1)).then((res): Promise<IAnimeKitsu>  => res.json()).then(res => res.data)
+    }
+
+    const { isLoading: avatarSuggestionIsLoading, error: avatarSuggestionIsLoadingIsError, data: avatarSuggestion, fetchNextPage: fetchNextPageAvatar } = useInfiniteQuery({
         queryKey: ["avatarSuggestion"],
         queryFn: ({pageParam}) => handleFetchDataAvatar(pageParam),
+        getNextPageParam: (lastPage, pages) => pages.length + 1,
+    })
+
+    const { isLoading: bannerSuggestionIsLoading, error: bannerSuggestionIsError, data: bannerSuggestion, fetchNextPage: fetchNextPageBanner } = useInfiniteQuery({
+        queryKey: ['bannerSuggestion'],
+        queryFn: ({pageParam}) => handleFetchDataBanner(pageParam),
         getNextPageParam: (lastPage, pages) => pages.length + 1,
     })
 
@@ -108,22 +119,20 @@ export function ModalEditProfile() {
     }
 
     function handleGetNextPageAvatar(currentIndex: number, totalIndex: number) {
-        console.log(totalIndex, AVATARPERVIEW,  currentIndex)
         if (totalIndex - (AVATARPERVIEW + 5) < currentIndex) {
-            fetchNextPage()
+            fetchNextPageAvatar()
         }
     }
 
-    const { isLoading: animeMediaSuggestionIsLoading, error: animeMediaSuggestionIsError, data: animeMediaSuggestion } = useQuery({
-        queryKey: ['animeMediaSuggestion'],
-        queryFn: () =>
-        fetch('https://kitsu.io/api/edge/anime').then(
-            (res): Promise<IAnimeKitsu> => res.json(),
-        ),
-    })
+    function handleGetNextPageBanner(currentIndex: number, totalIndex: number) {
+        console.log(totalIndex, BANNERPERVIEW,  currentIndex)
+        if (totalIndex - (BANNERPERVIEW + 5) < currentIndex) {
+            fetchNextPageBanner()
+        }
+    }
+    
 
-
-    console.log("DATA: ", avatarSuggestion)
+    console.log("DATA: ", bannerSuggestion)
 
     const { user } = useAuth()
 
@@ -151,97 +160,7 @@ export function ModalEditProfile() {
                     </Dialog.Description>
 
                     <div>
-                        <div className={style.modal__suggestion}>
-                            <strong>Sugestão de avatares</strong>
-                            <div className={style.modal__suggestion_avatar}>
-                                <Swiper
-                                    onSlideChange={(e) => handleGetNextPageAvatar(e.realIndex, avatarSuggestion ? avatarSuggestion.pages.length * 25 : 0)}
-                                    freeMode={true}
-                                    slidesPerView={9}
-                                    spaceBetween={10}
-                                    modules={[Navigation]}
-                                    className={style.carousel}
-                                >
-                                { avatarSuggestion && avatarSuggestion.pages.map(page => page && (page.map(anime => (
-                                    <SwiperSlide key={anime.mal_id}>
-                                               <div className={
-                                                   `${anime.images.jpg.image_url == user?.avatar ? style.modal__suggestion_avatar_active : ''}
-                                                    ${ avatarSelected == anime.mal_id ? style.modal__suggestion_avatar_selected : ''}
-                                                   `}>
-                                                   <Image
-                                                       src={anime.images.jpg.image_url}
-                                                       width={100}
-                                                       height={100}
-                                                       objectFit="cover"
-                                                       objectPosition="top"
-                                                       alt={`Poster do personagem ${anime.name}`}
-                                                       title={`Poster do personagem ${anime.name}`}
-                                                       onClick={() => handleSelectAvatar(anime.images.jpg.image_url, anime.mal_id)}
-                                                   />
-                                               </div>
-                                           </SwiperSlide>
-                                ))))}
-                                </Swiper>
-                            </div>
-
-                            <strong>Sugestão de banners</strong>
-                            <div className={style.modal__suggestion_banner}>
-                                <Swiper
-                                    freeMode={true}
-                                    slidesPerView={3}
-                                    spaceBetween={10}
-                                    modules={[Navigation]}
-                                    className={style.carousel}
-                                >
-                                { animeMediaSuggestion && animeMediaSuggestion.data.filter(anime => !!anime.attributes.coverImage?.original).map(anime => (
-                                        <SwiperSlide key={anime.attributes.slug}>
-                                            <Image
-                                                blurDataURL='./background.png'
-                                                src={anime.attributes.coverImage.original}
-                                                width={500}
-                                                height={281}
-                                                objectFit="cover"
-                                                alt={`Poster do anime ${anime.attributes.canonicalTitle}`}
-                                                title={`Poster do anime ${anime.attributes.canonicalTitle}`}
-                                                onClick={() => handleSelectBanner(anime.attributes.coverImage.original)}
-                                            />
-                                        </SwiperSlide>
-                                ))}
-
-                                { avatarSuggestionIsLoading && <span>carregando mais</span>}
-                                </Swiper>
-                            </div>
-                        </div>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <fieldset className={style.modal__content_fieldset}>
-                                <label className="Label" htmlFor="avatar">
-                                    Avatar
-                                </label>
-                                <div>
-                                {user && user.avatar ? (
-                                    <Avatar
-                                    style={{width: "10rem", height: "10rem", lineHeight: "10rem", fontSize: "4rem"}}
-                                    className={style.modal__avatar} src={user?.avatar} fallback={user.displayName[0]} />
-                                ) : (
-                                    <div>
-                                        <Avatar
-                                            style={{width: "10rem", height: "10rem", lineHeight: "10rem", fontSize: "4rem"}}
-                                            className={style.modal__avatar} fallback={user?.displayName[0]} />
-
-                                    </div>
-                                )}
-                                </div>
-                                <input {...register("avatar")} id="avatar" defaultValue={user?.avatar || ''} />
-                            </fieldset>
-                            <fieldset className={style.modal__content_fieldset}>
-                                <label className="Label" htmlFor="banner">
-                                    Banner
-                                </label>
-                                {/* <div className={style.modal__content_preview}>
-                                    Arraste
-                                </div> */}
-                                <input {...register("banner")} id="banner" defaultValue={user?.banner || ''} />
-                            </fieldset>
                             <fieldset className={style.modal__content_fieldset}>
                                 <label className="Label" htmlFor="displayName">
                                     Nome
@@ -253,6 +172,98 @@ export function ModalEditProfile() {
                                 <Button type="submit" className={style.modal__btnsave}>Salvar</Button>
                             </div>
                         </form>
+                        <div className={style.modal__suggestion}>
+                            <strong>Avatares</strong>
+                            <div className={style.modal__suggestion_avatar}>
+                                <Swiper
+                                    onSlideChange={(e) => handleGetNextPageAvatar(e.realIndex, avatarSuggestion ? avatarSuggestion.pages.length * 25 : 0)}
+                                    freeMode={true}
+                                    slidesPerView={9}
+                                    spaceBetween={10}
+                                    modules={[Navigation]}
+                                    className={style.carousel}
+                                >
+                                    {user?.avatar && (
+                                        <SwiperSlide>
+                                            <div>
+                                                <Image
+                                                    className={style.modal__suggestion_avatar_active}
+                                                    src={user?.avatar}
+                                                    width={100}
+                                                    height={100}
+                                                    objectFit="cover"
+                                                    objectPosition="top"
+                                                    alt={`Imagem de perfil do ${user.displayName}`}
+                                                    title={`Imagem de perfil do ${user.displayName}`}
+                                                />
+                                            </div>
+                                        </SwiperSlide>
+                                    )}
+
+                                { avatarSuggestion && avatarSuggestion.pages.map(page => page && (page.map(anime => (
+                                    <SwiperSlide key={anime.mal_id}>
+                                        <div className={avatarSelected == anime.mal_id ? style.modal__suggestion_avatar_selected : ''}>
+                                            <Image
+                                                quality={100}
+                                                src={anime.images.jpg.image_url}
+                                                width={100}
+                                                height={100}
+                                                loading="lazy"
+                                                objectFit="cover"
+                                                objectPosition="top"
+                                                alt={`Poster do personagem ${anime.name}`}
+                                                title={`Poster do personagem ${anime.name}`}
+                                                onClick={() => handleSelectAvatar(anime.images.jpg.image_url, anime.mal_id)}
+                                            />
+                                        </div>
+                                    </SwiperSlide>
+                                ))))}
+                                </Swiper>
+                            </div>
+
+                            <strong>Banners</strong>
+                            <div className={style.modal__suggestion_banner}>
+                                <Swiper
+                                    onSlideChange={(e) => handleGetNextPageBanner(e.realIndex, avatarSuggestion ? avatarSuggestion.pages.length * 10 : 0)}
+                                    freeMode={true}
+                                    slidesPerView={3}
+                                    spaceBetween={10}
+                                    modules={[Navigation]}
+                                    className={style.carousel}
+                                >
+                                {user?.banner && (
+                                     <SwiperSlide>
+                                     <Image
+                                         src={user.banner}
+                                         width={500}
+                                         height={281}
+                                         objectFit="cover"
+                                         alt={`Banner do usuário ${user.displayName}`}
+                                         title={`Banner do usuário ${user.displayName}`}
+                                     />
+                                 </SwiperSlide>
+                                )}
+                                { bannerSuggestion && bannerSuggestion.pages.map(page => page && (page.map(anime => !!anime.attributes.coverImage?.original && (
+                                    <SwiperSlide key={anime.attributes.slug}>
+                                        <Image
+                                            quality={50}
+                                            blurDataURL='./background.png'
+                                            src={anime.attributes.coverImage.original}
+                                            width={500}
+                                            height={281}
+                                            objectFit="cover"
+                                            alt={`Poster do anime ${anime.attributes.canonicalTitle}`}
+                                            title={`Poster do anime ${anime.attributes.canonicalTitle}`}
+                                            onClick={() => handleSelectBanner(anime.attributes.coverImage.original)}
+                                        />
+                                    </SwiperSlide>
+                                ))))}
+
+                                { avatarSuggestionIsLoading && <span>carregando mais</span>}
+                                </Swiper>
+                            </div>
+                        </div>
+                       
                     </div>
                     <Dialog.Close asChild>
                     <button className="IconButton" aria-label="Close">
