@@ -37,15 +37,14 @@ export const AuthContext = createContext({} as IAuthenticationContext)
 export function AuthenticationProvider({ children }: IAuthenticationProviderProps) {
   const [user, setUser] = useState<IUser | null>(null)
 
-  console.log(user)
+  useEffect(() => {
+    console.log("USER: ", user)
+  }, [user])
 
   useEffect(() => {
     auth.onAuthStateChanged((userPersistence: any) => {
-      console.log(userPersistence)
       if (userPersistence !== null) {
-        console.log("antes getUser")
         getUserData(userPersistence.uid, setUser)
-        console.log("apos getUser")
       }
     });
   }, [])

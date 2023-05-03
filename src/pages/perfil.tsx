@@ -18,8 +18,7 @@ import style from "../styles/Profile.module.scss"
 
 export default function Perfil() {
     const { user } = useAuth()
-    const router = useRouter()
-
+    
     const myListAnimes = user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : []
     const watchedAnimes = user?.watchedAnimes ? Object.entries(user.watchedAnimes).map(([,episodeId]) => episodeId) : []
 

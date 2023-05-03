@@ -45,9 +45,7 @@ export function getUserData(userId: string, setUserData: any){
     const db = getDatabase();
     const userRef = ref(db, 'users/' + userId);
     onValue(userRef, (snapshot) => {
-        console.log(snapshot)
         const data = snapshot.val();
-        console.log(data)
 
         setUserData(data);
     });
