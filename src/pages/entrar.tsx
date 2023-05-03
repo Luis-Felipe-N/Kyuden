@@ -1,4 +1,4 @@
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
 import Link from "next/link"
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,6 +11,8 @@ import { useForm, Resolver } from "react-hook-form";
 import style from "../styles/Login.module.scss"
 import { Input } from "../components/Forms/Input";
 import { IUserLoginCredentials } from "../context/AuthenticationContext";
+import { Loading } from "../components/Loading";
+import { useRouter } from "next/router";
 
 
 
@@ -21,16 +23,28 @@ const loginFormSchema = yup.object().shape({
   
 
 export default function SingIn() {
-    const { register, handleSubmit, formState:{ errors } } = useForm({
+    const [loading, setLoading] = useState(false)
+    const { register, handleSubmit, formState:{ errors, isSubmitting,  },  } = useForm({
         resolver: yupResolver(loginFormSchema)
     });
     const onSubmit = (data: any) => handleCreateAccount(data);
     
     const { login } = useAuth()
+    const router = useRouter()
 
     function handleCreateAccount(credentials: IUserLoginCredentials) {
-        
-        login(credentials)
+        setLoading(true)
+        login(credentials).then(res => {
+            if (res instanceof Error) {
+                console.log(res)
+            }
+
+            router.push('/')
+            setLoading(false)
+        }).catch(err => {
+            console.log(err)
+            setLoading(false)
+        })
     }
 
     return (
@@ -58,10 +72,16 @@ export default function SingIn() {
                             {errors?.password && (<p>{errors.password.message?.toString()   }</p>)}
                         </label>
 
-                        <Button>Entrar</Button>
+                        <Button>
+                            { loading ? (
+                                <Loading />
+                            ) : (
+                                <span>Entrar</span>
+                            )}
+                        </Button>
                     </form>
 
-                    <p>Nao tem uma conta? <Link href="/criarconta"><a>Crie aqui</a></Link></p>
+                    <p>Não tem uma conta? <Link href="/criarconta"><a>Crie aqui</a></Link></p>
             </div>
         </main>
     )

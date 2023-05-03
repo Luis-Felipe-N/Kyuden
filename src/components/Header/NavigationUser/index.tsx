@@ -1,12 +1,7 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import {
-  FaBookDead,
   FaChevronDown,
-  FaMagic,
-  FaSmileBeam,
-  FaUserNinja,
 } from "react-icons/fa";
-import { MdFilter9Plus } from "react-icons/md";
 
 import style from "./style.module.scss";
 import Link from "next/link";
@@ -31,7 +26,7 @@ export function NavigationUser() {
               { user && (
                 <>
                 <div className={style.navigation__user}>
-                  <span>Bem vindo, <strong>{user.displayName}</strong></span>
+                  <span>Olá, <strong>{user.displayName}</strong></span>
                 </div>
                 {user?.avatar ? (
                     <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} src={user?.avatar} fallback={user.displayName[0]} />
