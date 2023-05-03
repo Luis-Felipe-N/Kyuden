@@ -42,7 +42,8 @@
 
                 background-color: var(--primary-800);
                 padding: 0 1rem;
-                line-height: 1.4rem;
+                line-height: 2rem;
+                height: 2rem;
                 border-radius: 1rem;
             }
         }
@@ -107,32 +108,6 @@
         gap: 1rem;
         grid-template-columns: repeat(auto-fill, minmax(315px, 1fr));
     }
-
-    // &__episodesCard {
-    //     padding: .3rem;
-    //     border-radius: var(--border-radius);
-
-    //     strong, i {
-    //         // display: block;
-    //         font-weight: 500;
-    //     }
-
-    //     i {
-    //         font-size: .8rem;
-
-            
-    //     }
-
-    //     img {
-    //         border-radius: var(--border-radius);
-    //         width: 100%;
-    //         object-fit: cover;
-    //         transition: .2s;
-
-    //         filter: brightness(.9);
-    //     }
-
-    // }
 }
 
 @media (max-width: 600px) {

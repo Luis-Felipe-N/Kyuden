@@ -13,6 +13,7 @@ import { EpisodeCard } from "../../components/EpisodeCard"
 import { useAuth } from "../../hooks/useAuth"
 import { updateUserData } from "../../service/firebase"
 import { arrangeAndAddAttributes } from "../../utils/Object"
+import { useQuery } from "react-query"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -20,10 +21,29 @@ interface IAnimePageProps {
 }
 
 export default function Anime({anime, firstSeason}: IAnimePageProps) {
-    const [currentSeason, setCurrentSeason] = useState(firstSeason)
-    const [episodes, setEpisodes] = useState<IEpisodesAnime[]>()
+    console.log('Rederizou')
+    const [currentSeason, setCurrentSeason] = useState<string | null>(null)
 
     const { user } = useAuth()
+
+    function getNextSeasonAnimes(season: string | null): Promise<IEpisodesAnime[]> | undefined {
+        if (!season) return undefined
+
+        return api.get(`/animes/season/${currentSeason}/episodes`).then(res => res.data.episodes)
+    }
+
+    const {
+        isLoading,
+        isError,
+        error,
+        data,
+        isFetching,
+        isPreviousData,
+      } = useQuery({
+        queryKey: ['episodes', currentSeason],
+        queryFn: () => getNextSeasonAnimes(currentSeason),
+        keepPreviousData : true
+      })
 
     function handleChangeSeason(value: string) {
         setCurrentSeason(value)
@@ -40,19 +60,8 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     }
 
     useEffect(() => {
-        const getEpisodes = async () => {
-            try {
-                const { data } = await api.get(`/animes/season/${currentSeason ? currentSeason : firstSeason}/episodes`)  
-                setEpisodes(data.episodes)
-
-            } catch (error) {
-                console.log("Episodios não encontrado")
-            }
-
-        }
-
-        getEpisodes()   
-    }, [currentSeason, firstSeason])
+        setCurrentSeason(firstSeason)
+    }, [firstSeason])
 
     return (
         <>
@@ -126,8 +135,8 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                             </div>
 
                             <div className={style.season__episodes}>
-                                { episodes ? (
-                                    episodes.map(episode => (
+                                { !!data ? (
+                                    data.map(episode => (
                                         <EpisodeCard key={episode.id} episode={episode} anime={anime} />
                                     ))
                                 ) : (
