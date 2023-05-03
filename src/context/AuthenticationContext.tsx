@@ -45,10 +45,12 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       console.log("onAuthUserChanged", user);
       if (user) {
         if (mounted.current) {
-          getUserData(user.uid).then(res => {
-            console.log("RES: ", res)
-            setUser(res)
-          })
+          // getUserData(user.uid).then(res => {
+          //   console.log("RES: ", res)
+          //   setUser(res)
+          // })
+          // @ts-ignore
+          setUser({avatar: "", banner: "", createAt: "", email: user.email || 'luis@gmaail.com', uid: user.uid, displayName: "va", myListAnimes: {}, myListfriends: {}, watchedAnimes: {}, watchedEpisodes: {}, watchingEpisodes: {}, ...user})
         }
       } else {
         if (mounted.current) {
