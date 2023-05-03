@@ -51,25 +51,30 @@ export default function Perfil() {
                         Kyuden :: {user.displayName}
                     </title>
                 </Head>
-                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(180deg, rgba(23,25,35,.8) 0%, rgba(23,25,35,9) 98%), url(${user.banner})`}}>
+                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(180deg, rgba(23,25,35,.8) 100%, rgba(23,25,35,9) 100%), url(${user.banner})`}}>
                         <div className={style.profile__banner_container}>
                             <div>
+                            <ModalEditProfile />
+                            </div>
+
+                            <div>
                                 {user?.avatar ? (
-                                    <Avatar className={style.profile__banner_avatar} src={user?.avatar} fallback={user.displayName[0]} />
+                                    <Avatar style={{borderRadius: "10px"}} hasBorder className={style.profile__banner_avatar} src={user?.avatar} fallback={user.displayName[0]} />
                                 ) : (
                                     <Avatar className={style.profile__banner_avatar} fallback={user.displayName[0]} />
                                 )}
                                 <div>
                                     <h1>{user?.displayName}</h1>
+                                    <small>{user.email}</small>
                                     <ul>
                                         <li>Favoritos ({myListAnimes.length})</li>
                                         <li>Animes assistidos ({watchedAnimes.length})</li>
                                     </ul>
                                 </div>
-                            </div>
-                        
-                            <ModalEditProfile />
+                            </div>                        
                         </div>
+                </section>
+                <section className={style.profile__animes}>
                     <div className={style.profile__countanimes}>
                         <h1>Animes</h1>
                         <ul>
@@ -77,29 +82,28 @@ export default function Perfil() {
                             <li>Assistidos</li>
                         </ul>
                     </div>
-                </section>
-                <section className={style.profile__animes}>
-                    { myListAnimesLoading 
-                    ? (
-                        createRangeArrayByNumber(myListAnimes.length).map((item: any) => (<Skeleton key={item} width={210} height={305} />))
-                    ) : myListAnimesError 
-                    ? (
-                        
-                        <div className={style.profile__animes_errorMessage}>
-                            <span>Vixii!</span>
-                            <strong>Alguma coisa deu errado em buscar seus animes favorito!</strong>
-                            <strong>:(</strong>
+                    <div className={style.profile__animes_container}>
+                        { myListAnimesLoading 
+                        ? (
+                            createRangeArrayByNumber(myListAnimes.length).map((item: any) => (<Skeleton key={item} width={210} height={305} />))
+                        ) : myListAnimesError 
+                        ? (
+                            
+                            <div className={style.profile__animes_errorMessage}>
+                                <span>Vixii!</span>
+                                <strong>Alguma coisa deu errado em buscar seus animes favorito!</strong>
+                                <strong>:(</strong>
 
-                        </div>
-                    ) :  myListAnimesData 
-                    ? (
-                        myListAnimesData.map(anime => (
-                            <CardAnime key={anime.slug} anime={anime} />
-                        ))
-                    ): (
-                        <p>Lista vazia</p>
-                    )}                      
-                    
+                            </div>
+                        ) :  myListAnimesData 
+                        ? (
+                            myListAnimesData.map(anime => (
+                                <CardAnime key={anime.slug} anime={anime} />
+                            ))
+                        ): (
+                            <p>Lista vazia</p>
+                        )}                      
+                    </div>
                 </section>
                 </>
             ) : (

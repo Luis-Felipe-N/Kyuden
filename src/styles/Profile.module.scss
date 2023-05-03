@@ -15,9 +15,9 @@
             width: 100%;
             margin: 0 auto;
 
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
+            // display: flex;
+            // align-items: flex-start;
+            // justify-content: space-between;
 
             > div {
                 display: flex;
@@ -34,6 +34,8 @@
                 font-weight: bold;
                 color: var(--gray-50);
                 transition: .2s;
+                margin-bottom: 1rem;
+                margin-left: auto;
 
                 &:hover {
                     color: var(--primary-400);
@@ -61,8 +63,9 @@
         }
 
         h1 {
-            font-size: 2rem;
-            margin-top: 1rem;
+            font-size: 5rem;
+            font-weight: 900;
+            // margin-top: 1rem;
         }
 
         ul {
@@ -92,9 +95,19 @@
         margin: 0 auto;
         padding: 15px;
 
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
         gap: 2rem;
+
+        ul {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        &_container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 2rem;
+        }
 
         &_errorMessage {
             text-align: center;
@@ -102,14 +115,15 @@
             margin: 2rem auto;
 
             span {
-                font-size: 5rem;
+                font-size: 3rem;
                 font-weight: bold;
                 display: block;
-                color: var(--red-400);
+                color: var(--red-300);
             }
 
             strong {
-                font-size: 2rem;
+                font-size: 1rem;
+                display: block;
             }
         }
     }
@@ -178,10 +192,6 @@
             width: 100%;
             margin: 0 auto;
             padding: 15px;
-    
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 2rem;
         }
     }
 }
