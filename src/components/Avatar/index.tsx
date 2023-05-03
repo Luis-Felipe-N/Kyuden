@@ -5,15 +5,17 @@ import style from './style.module.scss'
 interface IAvatarProps extends ImgHTMLAttributes<HTMLImageElement> {
     hasBorder?: boolean;
     fallback?: string;
+    quality?: number;
 }
 
-export function Avatar({hasBorder, height, width, fallback, className, ...props}: IAvatarProps) {
+export function Avatar({hasBorder, height, width, fallback, quality, className, ...props}: IAvatarProps) {
     return (
         <AvatarRadix.Root 
           {...props}
-          className={`${style.avatarComponent} ${className}`}>
+          className={`${style.avatar} ${className}`}>
         <AvatarRadix.Image
           {...props}
+          className={`${hasBorder && style.avatar__hasBorder}`}
           width={width}
           height={height}
         />
