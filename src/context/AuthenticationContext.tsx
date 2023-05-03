@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, updateCurrentUser, setPersistence, browserSessionPersistence, User } from "firebase/auth";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, updateCurrentUser, setPersistence, browserSessionPersistence, User, onAuthStateChanged } from "firebase/auth";
+import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 import { auth } from "../libs/firebase";
 import { createUser, getUserData } from "../service/firebase";
 import { IUser } from "../@types/User";
@@ -37,20 +37,31 @@ export const AuthContext = createContext({} as IAuthenticationContext)
 export function AuthenticationProvider({ children }: IAuthenticationProviderProps) {
   const [user, setUser] = useState<IUser | null>(null)
 
-  useEffect(() => {
-    console.log("USER: ", user)
-  }, [user])
+  let mounted = useRef<boolean>(false);
 
   useEffect(() => {
-    auth.onAuthStateChanged((userPersistence: any) => {
-      if (userPersistence !== null) {
-        getUserData(userPersistence.uid).then(res => {
-          console.log(res)
-          setUser(res)
-        })
+    mounted.current = true;
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("onAuthUserChanged", user);
+      if (user) {
+        if (mounted.current) {
+          getUserData(user.uid).then(res => {
+            console.log("RES: ", res)
+            setUser(res)
+          })
+        }
+      } else {
+        if (mounted.current) {
+          setUser(null);
+        }
       }
     });
-  }, [])
+
+    return () => {
+      mounted.current = false;
+      unsubscribe();
+    };
+  }, [auth]);
 
   async function createAccount({email, password, name, username}: ICreateUser): Promise<User | Error> {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -90,7 +101,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
-        
+
         getUserData(userCredential.user.uid).then(res => {
           console.log(res)
           setUser(res)
