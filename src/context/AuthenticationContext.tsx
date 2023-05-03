@@ -103,11 +103,11 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
-
-        getUserData(userCredential.user.uid).then(res => {
-          console.log(res)
-          setUser(res)
-        })
+        setUser({avatar: "", banner: "", createAt: "", email: user.email || 'luis@gmaail.com', uid: user.uid, displayName: "va", myListAnimes: {}, myListfriends: {}, watchedAnimes: {}, watchedEpisodes: {}, watchingEpisodes: {}, ...user})
+        // getUserData(userCredential.user.uid).then(res => {
+        //   console.log(res)
+        //   setUser(res)
+        // })
 
       })
       .catch((error: any) => {
