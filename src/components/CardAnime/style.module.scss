@@ -10,8 +10,10 @@
     }
 
     img {
+        image-resolution: 40px !important;
         line-height: 0;
         border-radius: var(--border-radius);
+        object-fit: cover;
 
         &:hover {
             box-shadow: 0 0 0 4px var(--gray-900), 0 0 0 6px var(--primary-600);
@@ -28,5 +30,14 @@
         overflow: hidden; 
         // font-size: .8rem !important;
     }
+}
 
+@media (max-width: 500px) {
+    .cardAnime {
+
+        img {
+            width: 185px;
+            height: 278px;
+        }
+    }
 }
