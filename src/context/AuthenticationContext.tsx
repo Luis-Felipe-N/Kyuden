@@ -46,8 +46,9 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
     auth.onAuthStateChanged((userPersistence: any) => {
       console.log(userPersistence)
       if (userPersistence !== null) {
-        const {uid, ...user} = userPersistence.providerData[0];
+        console.log("antes getUser")
         getUserData(userPersistence.uid, setUser)
+        console.log("apos getUser")
       }
       setLoading(false)
     });
