@@ -44,7 +44,10 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   useEffect(() => {
     auth.onAuthStateChanged((userPersistence: any) => {
       if (userPersistence !== null) {
-        getUserData(userPersistence.uid, setUser)
+        getUserData(userPersistence.uid).then(res => {
+          console.log(res)
+          setUser(res)
+        })
       }
     });
   }, [])
@@ -87,7 +90,11 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
-        getUserData(userCredential.user.uid, setUser)
+        
+        getUserData(userCredential.user.uid).then(res => {
+          console.log(res)
+          setUser(res)
+        })
 
       })
       .catch((error: any) => {

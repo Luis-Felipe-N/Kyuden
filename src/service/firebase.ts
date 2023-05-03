@@ -1,8 +1,7 @@
 // Nome, data de criação, usuário que quer criar
-import { onValue, push, ref, set, update, getDatabase, child } from "firebase/database"
+import { onValue, push, ref, set, update, getDatabase, child, get } from "firebase/database"
 import { string } from "yup";
 import { IProviderUserInfo, IUser } from "../@types/User"
-import { db } from "../libs/firebase"
 
 interface IUpdateUserData {
     displayName?: string;
@@ -41,14 +40,11 @@ export function createUser(providerUserInfo: IProviderUserInfo){
     });
 }
 
-export function getUserData(userId: string, setUserData: any){
+export async function getUserData(userId: string): Promise<IUser | null> {
     const db = getDatabase();
-    const userRef = ref(db, 'users/' + userId);
-    onValue(userRef, (snapshot) => {
-        const data = snapshot.val();
-
-        setUserData(data);
-    });
+    const snapshot = await get(ref(db, 'users/' + userId));
+    console.log(snapshot)
+    return snapshot.val();
 }
 
 export async function updateUserData(userId: string, userData: IUpdateUserData): Promise<void | Error>{
