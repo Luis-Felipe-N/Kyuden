@@ -47,6 +47,8 @@ export function getUserData(userId: string, setUserData: any){
     onValue(userRef, (snapshot) => {
         console.log(snapshot)
         const data = snapshot.val();
+        console.log(data)
+
         setUserData(data);
     });
 }
