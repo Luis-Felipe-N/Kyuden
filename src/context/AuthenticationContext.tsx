@@ -23,7 +23,7 @@ export interface IUserLoginCredentials {
 
 interface IAuthenticationContext {
   createAccount: ({email, password, name, username}: ICreateUser) => Promise<User | Error>;
-  login: ({email, password}: IUserLoginCredentials) => void;
+  login: ({email, password}: IUserLoginCredentials) => Promise<void | Error>;
   logout:  () => void;
   user: IUser | null;
   loading: boolean;
@@ -97,7 +97,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
 
   function login({email, password}: IUserLoginCredentials) {  
   
-    setPersistence(auth, browserSessionPersistence).then(() => {
+    return setPersistence(auth, browserSessionPersistence).then(() => {
       return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
@@ -105,8 +105,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
 
       })
       .catch((error: any) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        return new Error(error)
       });
     })
   }
