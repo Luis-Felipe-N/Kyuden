@@ -39,7 +39,7 @@ export default function SingIn() {
                 console.log(res)
             }
 
-            router.push('/')
+            router.push('/perfil')
             setLoading(false)
         }).catch(err => {
             console.log(err)

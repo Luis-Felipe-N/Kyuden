@@ -1,34 +1,18 @@
 import Head from "next/head"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import { IAnimes, IEpisodesAnime } from "../@types/Anime"
-import { IUser } from "../@types/User"
 import { Avatar } from "../components/Avatar"
-import { Button } from "../components/Button"
 import { CardAnime } from "../components/CardAnime"
-import { Loading } from "../components/Loading"
 import { ModalEditProfile } from "../components/ModalEditProfile"
 import { Skeleton } from "../components/Skeleton"
 import { useAuth } from "../hooks/useAuth"
 import { api } from "../service/api"
-import { getUserData } from "../service/firebase"
 
 import style from "../styles/Profile.module.scss"
 
 export default function Perfil() {
     const { user } = useAuth()
-<<<<<<< HEAD
 
-    const { isLoading: userDataLoading, error: userDataError, data: userDataData } = useQuery({
-        queryKey: ['userDataData'],
-        queryFn: async (): Promise<IUser | null> => {
-            return getUserData(user?.uid || null)
-        },
-    })
-=======
->>>>>>> parent of ee8c6e9 (:test_tube: new method login)
-    
     const myListAnimes = user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : []
     const watchedAnimes = user?.watchedAnimes ? Object.entries(user.watchedAnimes).map(([,episodeId]) => episodeId) : []
 
@@ -47,11 +31,23 @@ export default function Perfil() {
         },
     })
 
+    if (!user) return (
+        <main className={style.profile}>
+            <Head>
+                <title>
+                    Kyuden :: Perfil
+                </title>
+            </Head>
+            <h1>NSem user</h1>
+        </main>
+    )
+    
+
     console.log(myListAnimesData)
 
     return (
         <main className={style.profile}>
-            { user ? (
+            { user && (
                 <>
                 <Head>
                     <title>
@@ -113,8 +109,6 @@ export default function Perfil() {
                     </div>
                 </section>
                 </>
-            ) : (
-                <p>Usuário nao encontrado</p>
             )}
         </main>
     )

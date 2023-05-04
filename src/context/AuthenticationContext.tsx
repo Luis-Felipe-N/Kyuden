@@ -44,15 +44,11 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   useEffect(() => {
     mounted.current = true;
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("onAuthUserChanged", user);
       if (user) {
         if (mounted.current) {
-          console.log("ANtes", user);
           getUserData(user.uid).then(res => {
-            console.log("durante", user, res);
             setUser(res)
           })
-          console.log("depois", user);
         }
       } else {
         if (mounted.current) {

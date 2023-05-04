@@ -2,12 +2,9 @@ import Image from "next/future/image";
 import Link from "next/link";
 import { useMemo } from "react";
 import { FaPlay } from "react-icons/fa";
-import { useQuery } from "react-query";
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime";
-import { IUser } from "../../@types/User";
 import { useAuth } from "../../hooks/useAuth";
 import { useEpisode } from "../../hooks/useEpisode";
-import { getUserData } from "../../service/firebase";
 import { Skeleton } from "../Skeleton";
 import { convertMillisecondsInMinutes } from "../utils/convertTime";
 import style from './style.module.scss'
@@ -26,25 +23,18 @@ function customLoadImage() {
 export function EpisodeCard({episode, anime}: INextEpisodeProps) {
 
     const { user } = useAuth()
-
-    const { isLoading: userDataLoading, error: userDataError, data: userDataData } = useQuery({
-        queryKey: ['userDataData'],
-        queryFn: async (): Promise<IUser | null> => {
-            return getUserData(user?.uid || null)
-        },
-    })
     
     const { getWatchedEpisodeData } = useEpisode()
 
     const assistedTimeInPercentage = useMemo(() => {
-        if (!userDataData) return null
+        if (!user) return null
 
-        const watchedEpisodeData = getWatchedEpisodeData(userDataData, episode)
+        const watchedEpisodeData = getWatchedEpisodeData(user, episode)
 
         if (!watchedEpisodeData) return null
 
         return (Number(watchedEpisodeData.assistedTime) * 100) / episode.duration
-    }, [episode, userDataData, getWatchedEpisodeData])
+    }, [episode, user, getWatchedEpisodeData])
 
     console.log(assistedTimeInPercentage)
     

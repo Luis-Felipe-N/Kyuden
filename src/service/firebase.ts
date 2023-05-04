@@ -14,6 +14,8 @@ interface IUpdateUserData {
     watchingEpisodes?: {};
 }
 
+let userData: IUser | null;
+
 export function createUser(providerUserInfo: IProviderUserInfo){
     const createdAt = new Date().toString()
     const db = getDatabase();
@@ -41,15 +43,15 @@ export function createUser(providerUserInfo: IProviderUserInfo){
 }
 
 export async function getUserData(userId: string): Promise<IUser | null> {
+    console.log("USER ID: ", userId)
     const db = getDatabase();
-    let userData: IUser | null;
     const unsubscribe = onValue(ref(db, 'users/' + userId), (snapshot) => {
         userData = snapshot.val();
-        unsubscribe()
-    
+        return () => unsubscribe()
     })
 
-    // @ts-ignore
+    console.log("USER ID: ", userData)
+
     return userData;
 }
 
@@ -61,30 +63,3 @@ export async function updateUserData(userId: string, userData: IUpdateUserData):
     .then(() => {})
     .catch((err) => new Error(err))
 }
-
-
-
-// export function addWatchedAnimes(userId: string, epido){
-//     const createdAt = new Date().toString()
-//     const db = getDatabase();
-    
-//     set(ref(db, 'users/' + providerUserInfo.id), {
-//         email: providerUserInfo.email,
-//         displayName: providerUserInfo.displayName,
-//         createAt: createdAt,
-//         watchedEpisodes: {
-            
-//         },
-//         watchedAnimes: {
-            
-//         },
-//         myListAnimes: {
-            
-//         },
-//         myListfriends: {
-            
-//         },
-//         banner: "",
-//         avatar: ""
-//     });
-// }
