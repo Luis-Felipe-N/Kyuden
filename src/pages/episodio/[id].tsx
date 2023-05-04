@@ -18,10 +18,12 @@ import { api } from "../../service/api"
 import style from "../../styles/Episode.module.scss"
 import { IStreamsBlogger } from "../../types"
 import { useRouter } from "next/router"
-import { updateUserData } from "../../service/firebase"
+import { getUserData, updateUserData } from "../../service/firebase"
 import { useAuth } from "../../hooks/useAuth"
 import { arrangeAndAddObject } from "../../utils/Object"
 import { number } from "yup"
+import { IUser } from "../../@types/User"
+import { useQuery } from "react-query"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
@@ -34,6 +36,13 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     const [nextEpisode, setNextEpisode] = useState<IEpisodesAnime | undefined>()
 
     const { user } = useAuth()
+    const { isLoading: userDataLoading, error: userDataError, data: userDataData } = useQuery({
+        queryKey: ['userDataData'],
+        queryFn: async (): Promise<IUser | null> => {
+            return getUserData(user?.uid || null)
+        },
+    })
+
     const router   = useRouter()
     const refVideo = useRef<HTMLVideoElement>(null)
 
@@ -43,9 +52,9 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
 
     const savePreviosTime = useCallback(() => {
         if (refVideo.current !== null) {
-            if (user) {
-                updateUserData(user.uid, {
-                    watchingEpisodes: arrangeAndAddObject(user.watchingEpisodes || {}, {
+            if (userDataData) {
+                updateUserData(userDataData.uid, {
+                    watchingEpisodes: arrangeAndAddObject(userDataData.watchingEpisodes || {}, {
                         id: episode.id,
                         assistedTime: refVideo.current.currentTime
                     }, episode.id)
@@ -55,8 +64,8 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     }, [refVideo, episode, user])
 
     const returnToPreviosTime = useCallback(() => {
-        if (user) {
-            const watchedEpisodeData = getWatchedEpisodeData(user, episode)
+        if (userDataData) {
+            const watchedEpisodeData = getWatchedEpisodeData(userDataData, episode)
             if (refVideo.current) {
                 if (watchedEpisodeData) {
                     refVideo.current.currentTime = watchedEpisodeData.assistedTime
@@ -65,9 +74,9 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                 }
             }
         }
-    }, [refVideo, episode, user, getWatchedEpisodeData])
+    }, [refVideo, episode, userDataData, getWatchedEpisodeData])
 
-    if (episode && user?.watchingEpisodes) {
+    if (episode && userDataData?.watchingEpisodes) {
         returnToPreviosTime()
     }
 

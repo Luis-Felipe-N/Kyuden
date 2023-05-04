@@ -37,7 +37,6 @@ interface ICharactersJikanAPI {
 const AVATARPERVIEW = 9
 
 export function AvatarSlider({ onSelectAvatar }: IAvatarSliderProps) {
-    const { user } = useAuth()
     const [avatarSelected, setAvatarSelected] = useState(0);
 
     function handleSelectAvatar(url: string, id: number) {

@@ -50,7 +50,6 @@ interface IAnimeKitsu {
 const BANNERPERVIEW = 3
 
 export function BannerSlider({ onSelectBanner }: IBannerSliderProps) {
-    const { user } = useAuth()
     const [bannerSelected, setBannerSelected] = useState("");
 
     function handleSelectBanner(url: string, id: string) {

@@ -19,7 +19,6 @@ import style from "../styles/Profile.module.scss"
 export default function Perfil() {
     const { user } = useAuth()
 
-    getUserData
     const { isLoading: userDataLoading, error: userDataError, data: userDataData } = useQuery({
         queryKey: ['userDataData'],
         queryFn: async (): Promise<IUser | null> => {

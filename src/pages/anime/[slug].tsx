@@ -11,9 +11,10 @@ import { ButtonIcon } from "../../components/ButtonIcon"
 import Head from "next/head"
 import { EpisodeCard } from "../../components/EpisodeCard"
 import { useAuth } from "../../hooks/useAuth"
-import { updateUserData } from "../../service/firebase"
+import { getUserData, updateUserData } from "../../service/firebase"
 import { arrangeAndAddAttributes } from "../../utils/Object"
 import { useQuery } from "react-query"
+import { IUser } from "../../@types/User"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -25,6 +26,12 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     const [currentSeason, setCurrentSeason] = useState<string | null>(null)
 
     const { user } = useAuth()
+    const { isLoading: userDataLoading, error: userDataError, data: userDataData } = useQuery({
+        queryKey: ['userDataData'],
+        queryFn: async (): Promise<IUser | null> => {
+            return getUserData(user?.uid || null)
+        },
+    })
 
     function getNextSeasonAnimes(season: string | null): Promise<IEpisodesAnime[]> | undefined {
         if (!season) return undefined
@@ -50,9 +57,9 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     }
 
     function handleAddFavoriteAnime() {
-        if (!!user) {
-            updateUserData(user.uid, {
-                myListAnimes: arrangeAndAddAttributes(user.myListAnimes, anime.slug)
+        if (!!userDataData) {
+            updateUserData(userDataData.uid, {
+                myListAnimes: arrangeAndAddAttributes(userDataData.myListAnimes, anime.slug)
             })
         } else {
 

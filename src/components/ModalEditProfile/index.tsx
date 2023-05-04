@@ -83,7 +83,7 @@ export function ModalEditProfile() {
                                 <label className="Label" htmlFor="displayName">
                                     Nome
                                 </label>
-                                <input {...register("displayName")} className="Input" id="displayName" defaultValue={user?.displayName} />
+                                <input {...register("displayName")} className="Input" id="displayName" defaultValue={user?.displayName || ""} />
                             </fieldset>
 
                             <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
