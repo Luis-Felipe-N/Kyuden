@@ -5,6 +5,7 @@ import { CarouselAnimes } from '../components/Carousel'
 import { Hero } from '../components/Hero'
 import { PopularAnimes } from '../components/PopularAnimes'
 import { api } from '../service/api'
+import { useEffect } from 'react'
 
 
 interface IHomeProps {
@@ -13,8 +14,12 @@ interface IHomeProps {
 }
 
 
-export default function Home({animeHero, popularAnimes}: IHomeProps) { 
-  console.log(animeHero)
+export default function Home({animeHero, popularAnimes}: IHomeProps) {
+
+  if (process.env.NODE_ENV === 'development') {
+    Error.stackTraceLimit = 1;
+  }
+
   return (
     <>
     <Head>

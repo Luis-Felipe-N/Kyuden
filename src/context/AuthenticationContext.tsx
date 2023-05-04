@@ -1,9 +1,9 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, updateCurrentUser, setPersistence, browserSessionPersistence, User, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, setPersistence, browserSessionPersistence, User, onAuthStateChanged } from "firebase/auth";
 import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 import { auth } from "../libs/firebase";
-import { createUser, getUserData } from "../service/firebase";
+import { createUser } from "../service/firebase";
 import { IUser } from "../@types/User";
-import { get, ref } from "firebase/database";
+import { onValue, ref } from "firebase/database";
 import { db } from "../libs/firebase";
 interface IUserUpdate {
   displayName?: string | null
@@ -38,19 +38,22 @@ export const AuthContext = createContext({} as IAuthenticationContext)
 
 export function AuthenticationProvider({ children }: IAuthenticationProviderProps) {
   const [user, setUser] = useState<IUser | null>(null)
+  const [userId, setUserId] = useState<string | null>(null);
 
   let mounted = useRef<boolean>(false);
+  console.log("ALALA")
 
   useEffect(() => {
     mounted.current = true;
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         if (mounted.current) {
-          getUserData(user.uid, setUser)
+          setUserId(user.uid)
         }
       } else {
         if (mounted.current) {
           setUser(null);
+          setUserId(null);
         }
       }
     });
@@ -60,6 +63,22 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       unsubscribe();
     };
   }, [auth]);
+
+  useEffect(() => {
+    let unsubscribe: (() => void) | null = null;
+
+    if (userId) {
+      unsubscribe = onValue(ref(db, `users/${userId}`), (snapshot) => {
+        setUser(snapshot.val());
+      });
+    }
+
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, [userId]);
 
   async function createAccount({email, password, name, username}: ICreateUser): Promise<User | Error> {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -100,7 +119,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       .then(async (userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
 
-        getUserData(user.uid, setUser)
+        setUserId(user.uid)
 
       })
       .catch((error: any) => {
