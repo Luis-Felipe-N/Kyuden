@@ -47,9 +47,12 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       console.log("onAuthUserChanged", user);
       if (user) {
         if (mounted.current) {
-          const snapshot = await get(ref(db, 'users/' + user.uid));
-          const userData =  snapshot.val();
-          setUser(userData)
+          console.log("ANtes", user);
+          getUserData(user.uid).then(res => {
+            console.log("durante", user, res);
+            setUser(res)
+          })
+          console.log("depois", user);
         }
       } else {
         if (mounted.current) {
@@ -103,9 +106,9 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       .then(async (userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
 
-        const snapshot = await get(ref(db, 'users/' + user.uid));
-        const userData =  snapshot.val();
-        setUser(userData)
+        getUserData(user.uid).then(res => {
+          setUser(res)
+        })
 
       })
       .catch((error: any) => {

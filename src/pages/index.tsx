@@ -7,7 +7,6 @@ import { PopularAnimes } from '../components/PopularAnimes'
 import { api } from '../service/api'
 
 
-
 interface IHomeProps {
   animeHero: IAnimes;
   popularAnimes: IAnimes[]
