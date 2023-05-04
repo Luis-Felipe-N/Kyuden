@@ -3,10 +3,10 @@ import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 import { auth } from "../libs/firebase";
 import { createUser, getUserData } from "../service/firebase";
 import { IUser } from "../@types/User";
-import { get, ref } from "firebase/database";
-import { db } from "../libs/firebase";
+
 interface IUserAuth {
-  uid: string
+  uid: string;
+  displayName: string | null
 }
 
 interface ICreateUser {
@@ -25,7 +25,7 @@ interface IAuthenticationContext {
   createAccount: ({email, password, name, username}: ICreateUser) => Promise<User | Error>;
   login: ({email, password}: IUserLoginCredentials) => Promise<void | Error>;
   logout:  () => void;
-  user: IUser | null;
+  user: IUserAuth | null;
 }
 
 interface IAuthenticationProviderProps {
@@ -35,8 +35,7 @@ interface IAuthenticationProviderProps {
 export const AuthContext = createContext({} as IAuthenticationContext)
 
 export function AuthenticationProvider({ children }: IAuthenticationProviderProps) {
-  const [userAuth, setUserAuth] = useState<IUserAuth | null>(null)
-  const [userData, setUserData] = useState<IUser | null>(null)
+  const [user, setUser] = useState<IUserAuth | null>(null)
 
   let mounted = useRef<boolean>(false);
 
@@ -46,11 +45,11 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       console.log("onAuthUserChanged", user);
       if (user) {
         if (mounted.current) {
-          setUserAuth(user)
+          setUser({uid: user.uid, displayName: user?.displayName})
         }
       } else {
         if (mounted.current) {
-          setUserAuth(null);
+          setUser(null);
         }
       }
     });
@@ -60,16 +59,6 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       unsubscribe();
     };
   }, [auth]);
-
-  useEffect(() => {
-    console.log("AUTH: ", userAuth?.uid)
-    if (userAuth) {
-      getUserData(userAuth.uid).then(res => {
-        console.log("AUTHDATA: ", res)
-        setUserData(res)
-      })
-    }
-  }, [userAuth])
 
   async function createAccount({email, password, name, username}: ICreateUser): Promise<User | Error> {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -97,7 +86,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
 
   function logout() {
     signOut(auth).then(() => {
-      setUserAuth(null)
+      setUser(null)
     }).catch((error) => {
       // An error happened.
     });
@@ -108,8 +97,9 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
     return setPersistence(auth, browserSessionPersistence).then(() => {
       return  signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential: any) => {
+        console.log(userCredential.user.providerData[0])
         const {uid, ...user} = userCredential.user.providerData[0];
-        setUserAuth({uid: user.uid})
+        setUser({uid: user.uid, displayName: user.displayName})
       })
       .catch((error: any) => {
         return new Error(error)
@@ -119,7 +109,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
 
 
 
-  return (<AuthContext.Provider value={{ createAccount, login, logout, user: userData }}>
+  return (<AuthContext.Provider value={{ createAccount, login, logout, user }}>
     {children}
 </AuthContext.Provider>)
 }
