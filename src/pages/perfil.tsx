@@ -18,6 +18,7 @@ import style from "../styles/Profile.module.scss"
 
 export default function Perfil() {
     const { user } = useAuth()
+<<<<<<< HEAD
 
     const { isLoading: userDataLoading, error: userDataError, data: userDataData } = useQuery({
         queryKey: ['userDataData'],
@@ -25,9 +26,11 @@ export default function Perfil() {
             return getUserData(user?.uid || null)
         },
     })
+=======
+>>>>>>> parent of ee8c6e9 (:test_tube: new method login)
     
-    const myListAnimes = userDataData?.myListAnimes ? Object.entries(userDataData.myListAnimes).map(([,animeSlug]) => animeSlug) : []
-    const watchedAnimes = userDataData?.watchedAnimes ? Object.entries(userDataData.watchedAnimes).map(([,episodeId]) => episodeId) : []
+    const myListAnimes = user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : []
+    const watchedAnimes = user?.watchedAnimes ? Object.entries(user.watchedAnimes).map(([,episodeId]) => episodeId) : []
 
     function createRangeArrayByNumber(number: number) {
         return [...Array(number).keys()]
@@ -48,28 +51,28 @@ export default function Perfil() {
 
     return (
         <main className={style.profile}>
-            { userDataData ? (
+            { user ? (
                 <>
                 <Head>
                     <title>
-                        Kyuden :: {userDataData.displayName}
+                        Kyuden :: {user.displayName}
                     </title>
                 </Head>
-                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(180deg, rgba(23,25,35,.8) 100%, rgba(23,25,35,9) 100%), url(${userDataData.banner})`}}>
+                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(180deg, rgba(23,25,35,.8) 100%, rgba(23,25,35,9) 100%), url(${user.banner})`}}>
                         <div className={style.profile__banner_container}>
                             <div>
                             <ModalEditProfile />
                             </div>
 
                             <div>
-                                {userDataData?.avatar ? (
-                                    <Avatar style={{borderRadius: "10px"}} hasBorder className={style.profile__banner_avatar} src={userDataData?.avatar} fallback={userDataData.displayName[0]} />
+                                {user?.avatar ? (
+                                    <Avatar style={{borderRadius: "10px"}} hasBorder className={style.profile__banner_avatar} src={user?.avatar} fallback={user.displayName[0]} />
                                 ) : (
-                                    <Avatar className={style.profile__banner_avatar} fallback={userDataData.displayName[0]} />
+                                    <Avatar className={style.profile__banner_avatar} fallback={user.displayName[0]} />
                                 )}
                                 <div>
-                                    <h1>{userDataData?.displayName}</h1>
-                                    <small>{userDataData.email}</small>
+                                    <h1>{user?.displayName}</h1>
+                                    <small>{user.email}</small>
                                     <ul>
                                         <li>Favoritos ({myListAnimes.length})</li>
                                         <li>Animes assistidos ({watchedAnimes.length})</li>

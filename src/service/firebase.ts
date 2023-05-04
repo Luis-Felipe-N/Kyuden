@@ -40,15 +40,11 @@ export function createUser(providerUserInfo: IProviderUserInfo){
     });
 }
 
-export async function getUserData(userId: string | null): Promise<IUser | null> {
-    if (userId) {
-        const db = getDatabase();
-        const snapshot = get(ref(db, 'users/' + userId))
+export async function getUserData(userId: string): Promise<IUser | null> {
+    const db = getDatabase();
+    const snapshot = get(ref(db, 'users/' + userId))
 
-        return (await snapshot).val();
-    }
-
-    return null
+    return (await snapshot).val();
 }
 
 export async function updateUserData(userId: string, userData: IUpdateUserData): Promise<void | Error>{
