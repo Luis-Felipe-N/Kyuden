@@ -7,13 +7,13 @@
         background-size: cover;
         background-position: center;
         backdrop-filter: brightness(10%);
-        min-height: 40vh;
+        min-height: 50vh;
         padding: 0 15px;
         
         &_container {
             max-width: var(--max-width);
             width: 100%;
-            margin: 0 auto;
+            margin: 8rem auto 0;
 
             // display: flex;
             // align-items: flex-start;

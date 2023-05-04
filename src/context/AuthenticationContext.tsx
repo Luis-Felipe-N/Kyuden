@@ -46,9 +46,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         if (mounted.current) {
-          getUserData(user.uid).then(res => {
-            setUser(res)
-          })
+          getUserData(user.uid, setUser)
         }
       } else {
         if (mounted.current) {
@@ -102,9 +100,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       .then(async (userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
 
-        getUserData(user.uid).then(res => {
-          setUser(res)
-        })
+        getUserData(user.uid, setUser)
 
       })
       .catch((error: any) => {
