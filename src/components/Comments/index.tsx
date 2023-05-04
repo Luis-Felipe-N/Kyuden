@@ -12,13 +12,6 @@ import style from './style.module.scss'
 export function Comments() {
     const { user } = useAuth()
 
-    const { isLoading: userDataLoading, error: userDataError, data: userDataData } = useQuery({
-        queryKey: ['userDataData'],
-        queryFn: async (): Promise<IUser | null> => {
-            return getUserData(user?.uid || null)
-        },
-    })
-
     return (
         <section className={style.comments}>
             <div className={style.comments__header}>
@@ -29,12 +22,12 @@ export function Comments() {
             </div>
 
             <div className={style.comments__send}>
-                { userDataData ? (
+                { user ? (
                     <>
-                        {userDataData?.avatar ? (
-                            <Avatar hasBorder style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} src={userDataData?.avatar} fallback={userDataData.displayName[0]} />
+                        {user?.avatar ? (
+                            <Avatar hasBorder style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} src={user?.avatar} fallback={user.displayName[0]} />
                         ) : (
-                            <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} fallback={userDataData.displayName[0]} />
+                            <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} fallback={user.displayName[0]} />
                         )}
                         <form>
                             <textarea placeholder='Deixe um comentário' />
