@@ -42,15 +42,9 @@ export function createUser(providerUserInfo: IProviderUserInfo){
 
 export async function getUserData(userId: string): Promise<IUser | null> {
     const db = getDatabase();
-    let userData: IUser | null;
-    const unsubscribe = onValue(ref(db, 'users/' + userId), (snapshot) => {
-        userData = snapshot.val();
-        unsubscribe()
-    
-    })
+    const snapshot = get(ref(db, 'users/' + userId))
 
-    // @ts-ignore
-    return userData;
+    return (await snapshot).val();
 }
 
 export async function updateUserData(userId: string, userData: IUpdateUserData): Promise<void | Error>{
