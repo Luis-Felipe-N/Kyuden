@@ -40,9 +40,6 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   const [user, setUser] = useState<IUser | null>(null)
   const [userId, setUserId] = useState<string | null>(null);
 
-  let mounted = useRef<boolean>(false);
-  console.log("ALALA")
-
   useEffect(() =>  onAuthStateChanged(auth, (u) => setUserId(u?.uid || null)), []);
 
   useEffect(() => {
