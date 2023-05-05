@@ -12,6 +12,8 @@ import { useAuth } from "../../hooks/useAuth"
 import { updateUserData } from "../../service/firebase"
 import { arrangeAndAddAttributes } from "../../utils/Object"
 import { useQuery } from "react-query"
+import { createRangeArrayByNumber } from "../../utils/Array"
+import { Skeleton } from "../../components/Skeleton"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -133,12 +135,16 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                             </div>
 
                             <div className={style.season__episodes}>
-                                { !!data ? (
+                                { isLoading || isFetching ? (
+                                    createRangeArrayByNumber(8).map(item => (
+                                        <Skeleton key={item} height={200} />
+                                    ))
+                                ) : !!data ? (
                                     data.map(episode => (
                                         <EpisodeCard key={episode.id} episode={episode} anime={anime} />
                                     ))
                                 ) : (
-                                    "Buscando episódios"
+                                    "Sem episódios"
                                 )}
                             </div>
                         </section>

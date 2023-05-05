@@ -4,6 +4,7 @@
     background-size: 200%;
     border-radius: 5px;
     animation: skeleton 2s infinite linear;
+    backdrop-filter: blur(5rem);
 
     & + .skeleton {
         margin-block: .5rem;
