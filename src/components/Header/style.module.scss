@@ -1,5 +1,5 @@
 .headerContainer {
-    border-bottom: solid var(--primary-600) 2px;
+    border-bottom: solid var(--primary-900) 2px;
 
     .menu {
         display: flex;
@@ -145,8 +145,6 @@
                 z-index: 20;
 
                 transition: .2s;
-
-                border-radius: 10px 10px 0 0;
 
                 .userContainer {
                     flex: 0;

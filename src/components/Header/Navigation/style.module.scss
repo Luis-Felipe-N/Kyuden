@@ -15,8 +15,13 @@
         color: var(--gray-50);
         transition: .2s;
 
+        &__icon {
+            display: none;
+            visibility: hidden;
+        }
+
         &:hover {
-            color: var(--primary-400);
+            color: var(--primary-500);
         }
     }
 
@@ -143,6 +148,11 @@
             .active {
                 color: var(--primary-500);
                 border-top: 3px solid var(--primary-500);
+            }
+
+            &__icon {
+                display: block;
+                visibility: visible;
             }
         }
 
