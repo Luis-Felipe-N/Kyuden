@@ -46,6 +46,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   useEffect(() =>  onAuthStateChanged(auth, (u) => setUserId(u?.uid || null)), []);
 
   useEffect(() => {
+    console.log(userId)
 
     if (!userId) {
       return
