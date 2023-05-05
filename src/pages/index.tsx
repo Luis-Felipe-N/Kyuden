@@ -1,11 +1,10 @@
-import type { GetStaticProps, NextPage } from 'next'
+import type { GetStaticProps } from 'next'
 import Head from 'next/head'
 import { IAnimes } from '../@types/Anime'
 import { CarouselAnimes } from '../components/Carousel'
 import { Hero } from '../components/Hero'
 import { PopularAnimes } from '../components/PopularAnimes'
 import { api } from '../service/api'
-import { useEffect } from 'react'
 import { KeepWatching } from '../components/KeepWatching'
 import { useAuth } from '../hooks/useAuth'
 
@@ -23,7 +22,7 @@ interface IHomeProps {
 export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProps) {
 
   const { user } = useAuth()
-  console.log(!!user?.watchingEpisodes)
+  console.log(animesGenres)
   return (
     <>
     <Head>
@@ -33,7 +32,7 @@ export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProp
       <Hero anime={animeHero}/>
       <PopularAnimes animes={popularAnimes} />
       { !!user?.watchingEpisodes && <KeepWatching />}
-      { animesGenres && animesGenres.map(animeGenre => (
+      { animesGenres && animesGenres.map(animeGenre => !!animeGenre.animes.length && (
         <CarouselAnimes key={animeGenre.name} genre={animeGenre.name} animes={animeGenre.animes} />  
       ))}
     </main>
@@ -55,30 +54,30 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
       props: {
-          animeHero: animes[0],
+          animeHero: animes[3] || null,
           animesGenres: [
             {
               name: "Ecchi",
-              animes: animeGenreEcchi.animes
+              animes: animeGenreEcchi.animes || null
             },
             {
               name: "Aventura",
-              animes: animeGenreAdventure.animes
+              animes: animeGenreAdventure.animes || null
             },
             {
               name: "Comédia",
-              animes: animeGenreComedy.animes
+              animes: animeGenreComedy.animes || null
             },
             {
               name: "Ação",
-              animes: animeGenreAction.animes
+              animes: animeGenreAction.animes || null
             },
             {
               name: "Terror",
-              animes: animeGenreTerror.animes
+              animes: animeGenreTerror.animes || null
             },
           ],
-          popularAnimes: animes
+          popularAnimes: animes || null
       },
 
       revalidate: 60 * 60 * 24 * 2 // 1 Dia

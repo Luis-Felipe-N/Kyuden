@@ -43,10 +43,8 @@ export function NavigationUser() {
               <NavigationMenu.List className={style.dropdown}>
                 <NavigationMenu.Item className={style.dropdownItem}>
                   <Link href={"/perfil"}>
-                    <a>
                       <User size={20} />
                       Perfil
-                    </a>
                   </Link>
                 </NavigationMenu.Item>
                 <NavigationMenu.Item className={style.dropdownItem}>

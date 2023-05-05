@@ -1,6 +1,4 @@
-import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
 import { IAnimes } from "../../@types/Anime"
 import style from './style.module.scss'
 import { motion as m } from "framer-motion"
@@ -21,15 +19,10 @@ export function CardAnime({ anime }: ICardAnimesProps) {
             className={style.cardAnime}
         >
             <Link href={`/anime/${anime.slug}`}>
-                <a>
                     <img
                         src={anime.post}
-                        width={210}
-                        height={315}
                         alt={`Poste do anime ${anime.title}`}
                     />
-                    <span>{ anime.title }</span>
-                </a>
             </Link>
         </m.div>
     )

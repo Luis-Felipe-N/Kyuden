@@ -7,9 +7,13 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 210px;
+        height: 315px;
     }
 
     img {
+        width: 100%;
+        height: 100%;
         image-resolution: 40px !important;
         line-height: 0;
         border-radius: var(--border-radius);
@@ -28,16 +32,14 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;  
         overflow: hidden; 
-        // font-size: .8rem !important;
     }
 }
 
 @media (max-width: 500px) {
     .cardAnime {
-
         img {
-            width: 185px;
-            height: 278px;
+            width: 180px;
+            height: 270px;
         }
     }
 }

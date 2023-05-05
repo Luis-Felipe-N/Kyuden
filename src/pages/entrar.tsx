@@ -81,7 +81,7 @@ export default function SingIn() {
                         </Button>
                     </form>
 
-                    <p>Não tem uma conta? <Link href="/criarconta"><a>Crie aqui</a></Link></p>
+                    <p>Não tem uma conta? <Link href="/criarconta">Crie aqui</Link></p>
             </div>
         </main>
     )

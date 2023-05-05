@@ -27,11 +27,9 @@ export function Header() {
         <header className={style.headerContainer}>
             <div className={style.header} ref={menuRef}>
                 <Link href="/">
-                    <a>
-                        <h1>
-                            Kyuden
-                        </h1>
-                    </a>
+                    <h1>
+                        Kyuden
+                    </h1>
                 </Link>
                 <div className={menuIsOpen ? `${style.menu} ${style.active}` : style.menu}>
                     <Navigation setStateMenu={setMenuIsOpen} stateMenu={menuIsOpen} />
@@ -46,9 +44,7 @@ export function Header() {
                         <div className={style.userContainer__btns}>
                             <Button asChild>
                                 <Link href="/entrar">
-                                    <a>
                                         Entrar
-                                    </a>
                                 </Link>
                             </Button>
                         </div>

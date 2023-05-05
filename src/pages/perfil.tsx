@@ -51,7 +51,7 @@ export default function Perfil() {
                         Kyuden :: {user.displayName}
                     </title>
                 </Head>
-                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(0deg, rgb(23, 25, 35) 0%, rgba(23, 25, 35, 0.91) 8%, rgba(23, 25, 35, 0.84) 18%, rgba(23, 25, 35, 0.66) 26%, rgba(0, 212, 255, 0) 61%);, url(${user.banner})`}}>
+                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(0deg, rgb(23, 25, 35) 0%, rgba(23, 25, 35, 0.91) 8%, rgba(23, 25, 35, 0.84) 18%, rgba(23, 25, 35, 0.66) 26%, rgba(0, 212, 255, 0) 61%), url(${user.banner})`}}>
                         <div className={style.profile__banner_container}>
                             <div>
                             <ModalEditProfile />

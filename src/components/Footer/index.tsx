@@ -11,17 +11,13 @@ export function Footer() {
                 <p>Site desenvolvido para disponibilizar o entreterimento gratuito</p>
                 <div className={style.footer__links}>
                     <ButtonIcon>
-                        <Link href="http://github.com/Luis-Felipe-N" >
-                            <a target="_blank">
+                        <Link href="http://github.com/Luis-Felipe-N" target="_blank">
                                 <FaGithub size={25} />
-                            </a>
                         </Link>
                     </ButtonIcon>
                     <ButtonIcon>
-                        <Link href="http://github.com/Luis-Felipe-N" >
-                            <a target="_blank">
+                        <Link href="http://github.com/Luis-Felipe-N" target="_blank">
                                 <FaTwitter size={25} />
-                            </a>
                         </Link>
                     </ButtonIcon>
                 </div>

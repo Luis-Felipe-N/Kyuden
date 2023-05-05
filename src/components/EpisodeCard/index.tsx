@@ -37,8 +37,7 @@ export function EpisodeCard({episode, anime}: INextEpisodeProps) {
     }, [episode, user, getWatchedEpisodeData])
     
     return (
-        <Link href={`/episodio/${episode.id}`}>
-            <a className={style.episode}>
+        <Link className={style.episode} href={`/episodio/${episode.id}`}>
                 <div className={style.episode__cover}>
                     <div className={style.episode__cover_play}>
                         <FaPlay />
@@ -59,8 +58,6 @@ export function EpisodeCard({episode, anime}: INextEpisodeProps) {
                     <strong>{episode.title}</strong>
                     <span>{episode.duration > 0 && convertMillisecondsInMinutes(episode.duration)}</span>
                 </div>
-                
-            </a>
         </Link>
     )
 }

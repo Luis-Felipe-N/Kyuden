@@ -25,7 +25,7 @@ export function KeepWatching() {
         },
     })
 
-    console.log(watchinEpisodesData)
+    console.log({watchinEpisodesData})
 
     if (!user && !watchinEpisodesData) return null
 
@@ -33,13 +33,13 @@ export function KeepWatching() {
         <section className={style.keepWatching}>
             <h2>Continue assistido</h2>
             <Swiper
-                slidesPerView={4}
+                slidesPerView="auto"
                 spaceBetween={10}
             >            
                 {
                     watchinEpisodesData?.map(episode => (
                         <SwiperSlide key={episode.id}>
-                            <EpisodeCard  episode={episode} />
+                            <EpisodeCard episode={episode} />
                         </SwiperSlide>
                     ))
                 }

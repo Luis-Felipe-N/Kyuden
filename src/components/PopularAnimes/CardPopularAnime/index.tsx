@@ -11,7 +11,6 @@ interface ICardAnimesProps {
 export function CardPopularAnime({ anime }: ICardAnimesProps) {
   return (
     <Link href={`/anime/${anime.slug}`}>
-      <a>
         <div
           className={style.cardPopular}
           style={{
@@ -41,7 +40,6 @@ export function CardPopularAnime({ anime }: ICardAnimesProps) {
             </div>
           </div>
         </div>
-      </a>
     </Link>
   );
 }

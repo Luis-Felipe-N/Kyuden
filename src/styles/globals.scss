@@ -146,6 +146,9 @@ button {
   cursor: pointer;
 }
 
+.swiper-slide { width: auto !important; }
+.swiper-slide { padding: 15px 0 !important; }
+
 /* ===== Scrollbar CSS ===== */
 * {
   scrollbar-width: 3px;
