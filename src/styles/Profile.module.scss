@@ -1,4 +1,8 @@
 .profile {
+    &__title {
+        display: flex;
+        align-items: center;
+    }
     &__banner {
         display: flex;
         align-items: center;

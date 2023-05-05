@@ -43,9 +43,11 @@ export function createUser(providerUserInfo: IProviderUserInfo){
 }
 
 export async function getUserData(userId: string, setUser: (userData: IUser) => void) {
-    console.log("USER ID: ", userId)
+
     const unsubscribe = onValue(ref(db, 'users/' + userId), (snapshot) => {
         const userData: IUser = snapshot.val()
+
+        console.log(userData)
         setUser(userData)
 
         return () => unsubscribe()

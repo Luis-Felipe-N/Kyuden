@@ -38,7 +38,6 @@ export function Header() {
                 </div>
 
                 <div className={style.userContainer}>
-
                     { !!user ? (
                         <>
                             <NavigationUser  />
@@ -56,18 +55,6 @@ export function Header() {
                     )}
                     
                 </div>
-
-                <ButtonIcon
-                    className={style.header__btnMenu}
-                    aria-label={menuIsOpen ? "Fechar menu" : "Abrir menu"}
-                    title={menuIsOpen ? "Fechar menu" : "Abrir menu"}
-                    tabIndex={0}
-                    onClick={() => setMenuIsOpen(!menuIsOpen)}
-                    // ref={btnMenuRef}
-                >
-                    <span></span>
-                    <span></span>
-                </ButtonIcon>
             </div>
 
         </header>
