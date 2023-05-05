@@ -43,41 +43,17 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   let mounted = useRef<boolean>(false);
   console.log("ALALA")
 
-  useEffect(() => {
-    mounted.current = true;
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        if (mounted.current) {
-          setUserId(user.uid)
-        }
-      } else {
-        if (mounted.current) {
-          setUser(null);
-          setUserId(null);
-        }
-      }
-    });
-
-    return () => {
-      mounted.current = false;
-      unsubscribe();
-    };
-  }, [auth]);
+  useEffect(() =>  onAuthStateChanged(auth, (u) => setUserId(u?.uid || null)), []);
 
   useEffect(() => {
-    let unsubscribe: (() => void) | null = null;
 
-    if (userId) {
-      unsubscribe = onValue(ref(db, `users/${userId}`), (snapshot) => {
-        setUser(snapshot.val());
-      });
+    if (!userId) {
+      return
     }
 
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
+    return onValue(ref(db, `users/${userId}`), (snapshot) => {
+      setUser(snapshot.val());
+    })
   }, [userId]);
 
   async function createAccount({email, password, name, username}: ICreateUser): Promise<User | Error> {
