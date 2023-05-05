@@ -11,7 +11,7 @@ import { useAuth } from '../../../hooks/useAuth';
 import { ImCheckboxChecked } from 'react-icons/im'
 
 import style from './style.module.scss'
-import Image from 'next/future/image';
+import Image from 'next/image';
 
 interface IAvatarSliderProps {
     onSelectAvatar: (url: string) => void

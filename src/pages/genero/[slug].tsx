@@ -3,7 +3,7 @@ import { FaHeart, FaPlay, FaStar } from "react-icons/fa"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
 import { api } from "../../service/api"
 import style from '../../styles/Anime.module.scss'
-import Image from "next/future/image"
+import Image from "next/image"
 import { SelectSeason } from "../../components/SelectSeason"
 import { useEffect, useState } from "react"
 import Link from "next/link"

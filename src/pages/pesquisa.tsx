@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next'
-import Image from 'next/future/image'
+import Image from 'next/image'
 import Head from 'next/head'
 import { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'

@@ -5,7 +5,7 @@ const nextConfig = {
   images: {
     domains: ['animesonline.cc', 'media.kitsu.io', 'animesonlinecc.to', 'cdn.myanimelist.net'],
     minimumCacheTTL: 0
-  },
+  }
 }
 
 

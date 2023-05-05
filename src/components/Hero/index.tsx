@@ -1,4 +1,4 @@
-import Image from "next/future/image"
+import Image from "next/image"
 import Link from "next/link"
 import { FaPlay, FaPlus } from "react-icons/fa"
 import { IAnimes } from "../../@types/Anime"

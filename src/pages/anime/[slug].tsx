@@ -78,7 +78,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                     <>
                         <section
                             className={style.heroAnime}
-                            style={{backgroundImage: `linear-gradient(0deg, rgb(23, 25, 35) 0%, rgba(23, 25, 35, 0.91) 8%, rgba(23, 25, 35, 0.84) 18%, rgba(23, 25, 35, 0.66) 26%, rgba(0, 212, 255, 0) 61%);, url(${anime?.cover || '/banner.png'})`}}
+                            style={{backgroundImage: `linear-gradient(0deg, rgb(23, 25, 35) 0%, rgba(23, 25, 35, 0.91) 8%, rgba(23, 25, 35, 0.84) 18%, rgba(23, 25, 35, 0.66) 26%, rgba(0, 212, 255, 0) 61%), url(${anime?.cover || './banner.png'})`}}
                         >
                         
                             <div className="container">
