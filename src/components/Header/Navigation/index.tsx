@@ -10,6 +10,8 @@ import { MdFilter9Plus } from "react-icons/md";
 
 import style from "./style.module.scss";
 import Link from "next/link";
+import useWindowDimesions from "../../../hooks/useWindowDimensions";
+import { isMobile } from "../../../utils/Device";
 
 interface INavigationProps {
   setStateMenu: (value: boolean) => void,
@@ -17,6 +19,10 @@ interface INavigationProps {
 }
 
 export function Navigation({ setStateMenu, stateMenu }: INavigationProps) {
+
+  const [width, ] = useWindowDimesions()
+
+  // console.log(d)
 
   function handleCloseMenu() {
     if (stateMenu) {
@@ -45,10 +51,20 @@ export function Navigation({ setStateMenu, stateMenu }: INavigationProps) {
           </Link>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item className={style.item}>
+        { width < 700 ? (
+          <NavigationMenu.Item className={style.item}>
+            <Link href="/generos">
+              <a onClick={handleCloseMenu}>Gênero</a>
+            </Link>
+          </NavigationMenu.Item>
+        ) : (
+          <>
+          <NavigationMenu.Item className={style.item}>
             <NavigationMenu.Trigger className={`${style.item} ${style.trigger}`} >
-                Gênero
-                <FaChevronDown />
+                <span className={style.trigger__desktop}>
+                  Gênero
+                  <FaChevronDown />
+                </span>
             </NavigationMenu.Trigger>
 
           <NavigationMenu.Content>
@@ -99,6 +115,9 @@ export function Navigation({ setStateMenu, stateMenu }: INavigationProps) {
             </NavigationMenu.Sub>
           </NavigationMenu.Content>
         </NavigationMenu.Item>
+          </>
+        )}
+        
 
         </NavigationMenu.List>
       <NavigationMenu.Viewport />

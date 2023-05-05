@@ -62,7 +62,7 @@ export default function Perfil() {
 
                             <div>
                                 {user?.avatar ? (
-                                    <Avatar style={{borderRadius: "10px"}} hasBorder className={style.profile__banner_avatar} src={user?.avatar} fallback={user.displayName[0]} />
+                                    <Avatar hasBorder className={style.profile__banner_avatar} src={user?.avatar} fallback={user.displayName[0]} />
                                 ) : (
                                     <Avatar className={style.profile__banner_avatar} fallback={user.displayName[0]} />
                                 )}

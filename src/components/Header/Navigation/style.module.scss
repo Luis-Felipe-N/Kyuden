@@ -24,9 +24,15 @@
         background-color: transparent;
         border: none;
 
-        display: flex;
-        align-items: center;
-        gap: .5rem;
+        &__mobile {
+            display: none;
+        }
+
+        &__desktop {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
 
         svg {
             transition: .4s;
@@ -103,14 +109,10 @@
         width: 100%;
 
         ul {
-            margin: 1rem 0;
-            flex-direction: column;
+            margin: 0;
+            justify-content: space-between;
             align-items: flex-end;
             gap: 0;
-        }
-
-         button {
-            display: none !important;
         }
 
         li a {
@@ -128,11 +130,29 @@
         }
 
         .item {
-            text-align: end;
             width: 100%;
-            .active {
-                background-color: var(--gray-800);
 
+            a {
+                text-align: center;
+                width: 100%;
+                padding: 1.5rem 0;
+                display: block;
+                border-radius: 0;
+            }
+
+            .active {
+                color: var(--primary-500);
+                border-top: 3px solid var(--primary-500);
+            }
+        }
+
+        .trigger {
+            &__mobile {
+                display: block;
+            }
+    
+            &__desktop {
+                display: none;
             }
         }
     }

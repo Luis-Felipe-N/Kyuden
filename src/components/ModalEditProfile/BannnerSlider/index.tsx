@@ -11,6 +11,8 @@ import { Navigation } from 'swiper';
 import { useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { ImCheckboxChecked } from "react-icons/im";
+import { Skeleton } from "../../Skeleton";
+import { createRangeArrayByNumber } from "../../../utils/Array";
 
 interface IBannerSliderProps {
     onSelectBanner: (url: string) => void
@@ -61,15 +63,13 @@ export function BannerSlider({ onSelectBanner }: IBannerSliderProps) {
         return fetch('https://kitsu.io/api/edge/anime?page[limit]=10&page[offset]=' + (page * 10 + 1)).then((res): Promise<IAnimeKitsu>  => res.json()).then(res => res.data)
     }
 
-    const { isLoading: bannerSuggestionIsLoading, error: bannerSuggestionIsError, data: bannerSuggestion, fetchNextPage: fetchNextPageBanner } = useInfiniteQuery({
+    const { isLoading, data: bannerSuggestion, fetchNextPage: fetchNextPageBanner, isFetching } = useInfiniteQuery({
         queryKey: ['bannerSuggestion'],
         queryFn: ({pageParam}) => handleFetchDataBanner(pageParam),
         getNextPageParam: (lastPage, pages) => pages.length + 1,
     })
 
     function handleGetNextPageBanner(currentIndex: number, totalIndex: number) {
-        console.log(totalIndex, BANNERPERVIEW,  currentIndex)
-        console.log(totalIndex - (BANNERPERVIEW + 4),  currentIndex)
 
         if (totalIndex - (BANNERPERVIEW + 4) < currentIndex * BANNERPERVIEW) {
             console.log("fazendo fetch")
@@ -78,6 +78,24 @@ export function BannerSlider({ onSelectBanner }: IBannerSliderProps) {
     }
 
     console.log(bannerSuggestion)
+
+    if (isLoading) return (
+        <>
+             <Swiper
+                freeMode={true}
+                slidesPerView={3}
+                spaceBetween={10}
+                modules={[Navigation]}
+                className={style.bannerSlider}
+            >
+            { createRangeArrayByNumber(4).map( item => (
+                <SwiperSlide key={item}>
+                    <Skeleton width={500} height={100} />
+                </SwiperSlide>
+            ))}
+            </Swiper>
+        </>
+    )
 
     return (
         <>
@@ -89,18 +107,6 @@ export function BannerSlider({ onSelectBanner }: IBannerSliderProps) {
                 modules={[Navigation]}
                 className={style.bannerSlider}
             >
-            {/* {user?.banner && (
-                    <SwiperSlide>
-                    <Image
-                        src={user.banner}
-                        width={500}
-                        height={281}
-                        objectFit="cover"
-                        alt={`Banner do usuário ${user.displayName}`}
-                        title={`Banner do usuário ${user.displayName}`}
-                    />
-                </SwiperSlide>
-            )} */}
             { bannerSuggestion && bannerSuggestion.pages.map(page => page && (page.map(anime => !!anime.attributes.coverImage?.original && (
                 <SwiperSlide key={anime.attributes.slug}>
                     <div className={`${style.bannerSlider__item} ${bannerSelected == anime.attributes.slug ? style.bannerSlider__item_selected : ''}`}>
@@ -119,8 +125,6 @@ export function BannerSlider({ onSelectBanner }: IBannerSliderProps) {
                     </div>
                 </SwiperSlide>
             ))))}
-
-            { bannerSuggestionIsLoading && <span>carregando mais</span>}
             </Swiper>
         </>
     )
