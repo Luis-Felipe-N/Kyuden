@@ -35,8 +35,6 @@ export function EpisodeCard({episode, anime}: INextEpisodeProps) {
 
         return (Number(watchedEpisodeData.assistedTime) * 100) / episode.duration
     }, [episode, user, getWatchedEpisodeData])
-
-    console.log(assistedTimeInPercentage)
     
     return (
         <Link href={`/episodio/${episode.id}`}>
@@ -55,7 +53,7 @@ export function EpisodeCard({episode, anime}: INextEpisodeProps) {
                         alt={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
                         title={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
                     />
-                    { assistedTimeInPercentage && <div className={style.slideAssistedTime}><span style={{width: `${assistedTimeInPercentage}%`}}></span></div>}
+                    { assistedTimeInPercentage !== null && <div className={style.slideAssistedTime}><span style={{width: `${assistedTimeInPercentage}%`}}></span></div>}
                 </div>
                 <div className={style.episode__infos}>
                     <strong>{episode.title}</strong>

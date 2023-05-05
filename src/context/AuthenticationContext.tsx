@@ -99,8 +99,8 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
     return setPersistence(auth, browserSessionPersistence).then(() => {
       return  signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential: any) => {
-        const {uid, ...user} = userCredential.user.providerData[0];
-        getUserData(user.uid, setUser)
+        const {uid, ...user} = userCredential.user;
+        getUserData(uid, setUser)
       })
       .catch((error: any) => {
         return new Error(error)

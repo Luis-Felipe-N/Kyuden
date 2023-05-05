@@ -9,7 +9,6 @@ export function useClickOutSide() {
         function handleClickOutSide(event: any) {
                 if (ref.current !== null && event.target != null) {
                     if (!ref.current.contains(event.target)) {
-                        console.log('dentro')
                         setState(!state)
                         document.removeEventListener('click', handleClickOutSide)
                     }

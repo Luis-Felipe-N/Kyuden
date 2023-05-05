@@ -1,23 +1,21 @@
 .avatarSlider {
   &__item {
     position: relative;
-    overflow: hidden;
-
-    > span {
-      border-radius: var(--border-radius);
-    }
     
     img {
-      transform: scale(1.1);
+      border: 3px solid transparent;
+      object-fit: cover;
+      transition: .2s;
+
     }
     
     &_selected {
-    
+      img {
+        border: 3px solid var(--primary-400);
+      }
+
       svg {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        color: var(--primary-300);
+        display: none;
       }
     }
   }

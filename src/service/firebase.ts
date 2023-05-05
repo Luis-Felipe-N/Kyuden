@@ -46,8 +46,7 @@ export async function getUserData(userId: string, setUser: (userData: IUser) => 
 
     const unsubscribe = onValue(ref(db, 'users/' + userId), (snapshot) => {
         const userData: IUser = snapshot.val()
-
-        console.log(userData)
+        
         setUser(userData)
 
         return () => unsubscribe()

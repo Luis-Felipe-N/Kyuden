@@ -9,8 +9,7 @@ export async function getUrlBaseVideo(link: string): Promise<IStreamsBlogger[] |
                 userAgent: window.navigator.userAgent
             }
         });    
-        
-        console.log("Data", data)
+    
         const dataContainer = document.createElement('div')
         dataContainer.innerHTML = data.html
         

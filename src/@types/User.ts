@@ -14,7 +14,10 @@ export interface IUser {
     watchedAnimes: {};
     myListAnimes: {};
     myListfriends: {};
-    watchingEpisodes: {};
+    watchingEpisodes: {
+        assistedTime: number;
+        id: string
+    }[];
     banner: string | null;
     avatar: string | null;
 }

@@ -38,8 +38,6 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
 
     const { getNextEpisode, getWatchedEpisodeData } = useEpisode()
 
-    console.log("rederizando")
-
     const savePreviosTime = useCallback(() => {
         if (refVideo.current !== null) {
             if (user) {
@@ -214,7 +212,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({params}) => {
     const id = params?.id
     try {
-        console.log(id)
         const { data } = await api.get(`/animes/episode/${id}`)
 
         return {

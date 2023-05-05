@@ -15,21 +15,13 @@ import style from './style.module.scss'
 
 interface ICarouselAnimes {
     genre: string
+    animes: IAnimes[]
 }
 
-export function CarouselAnimes({ genre }: ICarouselAnimes) {
+export function CarouselAnimes({ genre, animes }: ICarouselAnimes) {
   const containerCarouselRef = useRef<HTMLDivElement>(null)
 
-  const { data, isLoading, error } = useQuery(`animes${genre}`, async () => {
-    const { data } = await api.get(`animes/genre/${genre}?take=10`)
-    return data.animes
-  })
-
-  function createRangeArrayByNumber(number: number) {
-    return [...Array(number).keys()]
-  }
-
-  if (!data || !data.length) return null
+  if (!animes) return null
 
   return (
     <section className={style.row}>
@@ -59,20 +51,13 @@ export function CarouselAnimes({ genre }: ICarouselAnimes) {
           modules={[Navigation]}
           className={style.carousel}
         >
-          { isLoading ? (
-              <SwiperSlide>
-                <Skeleton width={210} height={305}/>
-                { createRangeArrayByNumber(10).map(item => (
-                  <Skeleton key={item} width={210} height={305} />
-                ))}
-              </SwiperSlide>
-          ) : (
-            data.map((anime: IAnimes) => (
+          { 
+            animes.map((anime: IAnimes) => (
               <SwiperSlide key={anime.slug}>
                 <CardAnime anime={anime} />
               </SwiperSlide>
             ))
-          )}
+            }
           
         </Swiper>
       </div>

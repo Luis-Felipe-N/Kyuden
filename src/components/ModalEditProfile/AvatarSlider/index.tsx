@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -12,6 +11,7 @@ import { useAuth } from '../../../hooks/useAuth';
 import { ImCheckboxChecked } from 'react-icons/im'
 
 import style from './style.module.scss'
+import Image from 'next/future/image';
 
 interface IAvatarSliderProps {
     onSelectAvatar: (url: string) => void
@@ -90,13 +90,11 @@ export function AvatarSlider({ onSelectAvatar }: IAvatarSliderProps) {
             <SwiperSlide key={anime.mal_id}>
                 <div className={`${style.avatarSlider__item} ${avatarSelected == anime.mal_id ? style.avatarSlider__item_selected : ''}`}>
                     <Image
-                        quality={50}
+                        quality={10}
                         src={anime.images.jpg.image_url}
                         width={150}
                         height={150}
                         loading="lazy"
-                        objectFit="cover"
-                        objectPosition="top"
                         alt={`Poster do personagem ${anime.name}`}
                         title={`Poster do personagem ${anime.name}`}
                         onClick={() => handleSelectAvatar(anime.images.jpg.image_url, anime.mal_id)}

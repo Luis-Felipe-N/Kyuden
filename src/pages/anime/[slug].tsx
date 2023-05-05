@@ -21,7 +21,6 @@ interface IAnimePageProps {
 }
 
 export default function Anime({anime, firstSeason}: IAnimePageProps) {
-    console.log('Rederizou')
     const [currentSeason, setCurrentSeason] = useState<string | null>(null)
 
     const { user } = useAuth()
@@ -79,7 +78,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                     <>
                         <section
                             className={style.heroAnime}
-                            style={{backgroundImage: `linear-gradient(0deg, rgba(23,25,35,1) 2%, rgba(23,25,35,0.9093838218881303) 17%, rgba(23,25,35,0.8393558106836485) 27%, rgba(23,25,35,0.6600841020001751) 40%, rgba(0,212,255,0) 99%), url(${anime?.cover || '/banner.png'})`}}
+                            style={{backgroundImage: `linear-gradient(0deg, rgb(23, 25, 35) 0%, rgba(23, 25, 35, 0.91) 8%, rgba(23, 25, 35, 0.84) 18%, rgba(23, 25, 35, 0.66) 26%, rgba(0, 212, 255, 0) 61%);, url(${anime?.cover || '/banner.png'})`}}
                         >
                         
                             <div className="container">
@@ -158,6 +157,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
 
 export const getStaticPaths: GetStaticPaths = async ({ }) => {
     const { data } = await api.get(`/animes/`)
+    console.log("DATA ANIME: ", data)
 
     const animes = data.animes.map((anime: IAnimes) => {
         return {

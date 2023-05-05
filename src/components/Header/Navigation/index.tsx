@@ -27,8 +27,6 @@ export function Navigation({ setStateMenu, stateMenu }: INavigationProps) {
 
   const [width, ] = useWindowDimesions()
 
-  // console.log(d)
-
   function handleCloseMenu() {
     if (stateMenu) {
       setStateMenu(!stateMenu)
@@ -69,7 +67,7 @@ export function Navigation({ setStateMenu, stateMenu }: INavigationProps) {
           </ActiveLink>
         </NavigationMenu.Item>
 
-        { width < 700 ? (
+        { width && width < 700 ? (
           <NavigationMenu.Item className={style.item}>
             <ActiveLink activeClassName={style.active} href="/generos">
               

@@ -9,7 +9,6 @@ import { useInfiniteQuery } from 'react-query';
 import Image from 'next/image';
 import { Navigation } from 'swiper';
 import { useState } from 'react';
-import { useAuth } from '../../../hooks/useAuth';
 import { ImCheckboxChecked } from "react-icons/im";
 import { Skeleton } from "../../Skeleton";
 import { createRangeArrayByNumber } from "../../../utils/Array";
@@ -72,18 +71,15 @@ export function BannerSlider({ onSelectBanner }: IBannerSliderProps) {
     function handleGetNextPageBanner(currentIndex: number, totalIndex: number) {
 
         if (totalIndex - (BANNERPERVIEW + 4) < currentIndex * BANNERPERVIEW) {
-            console.log("fazendo fetch")
             fetchNextPageBanner()
         }
     }
-
-    console.log(bannerSuggestion)
 
     if (isLoading) return (
         <>
              <Swiper
                 freeMode={true}
-                slidesPerView={3}
+                slidesPerView={2}
                 spaceBetween={10}
                 modules={[Navigation]}
                 className={style.bannerSlider}
@@ -116,7 +112,7 @@ export function BannerSlider({ onSelectBanner }: IBannerSliderProps) {
                             src={anime.attributes.coverImage.original}
                             width={500}
                             height={281}
-                            objectFit="cover"
+                        
                             alt={`Poster do anime ${anime.attributes.canonicalTitle}`}
                             title={`Poster do anime ${anime.attributes.canonicalTitle}`}
                             onClick={() => handleSelectBanner(anime.attributes.coverImage.original, anime.attributes.slug)}

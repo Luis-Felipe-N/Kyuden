@@ -156,8 +156,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
         const anime: IAnimes = data.anime
 
-        console.log(data.anime)
-
         return {
             props: {
                 anime,

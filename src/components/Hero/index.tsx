@@ -7,6 +7,7 @@ import { ButtonIcon } from "../ButtonIcon"
 import { motion as m } from "framer-motion";
 
 import style from './style.module.scss'
+import { useRef } from "react"
 
 interface IHeroProps {
     anime: IAnimes
@@ -15,7 +16,7 @@ interface IHeroProps {
 
 export function Hero({ anime }: IHeroProps) {
 
-    const backgroundImage = `linear-gradient(1.68deg, rgba(23, 25, 35, 0.99) 20%, rgba(23, 25, 35, 0) 80%) ${anime.cover}`
+    const trailerRef = useRef<HTMLIFrameElement>(null)
     
     return (    
         <section 
@@ -24,9 +25,9 @@ export function Hero({ anime }: IHeroProps) {
             { anime?.youtubeVideoId && (
                 <div className={style.trailer}>
                     <iframe 
-                        // src={`https://www.youtube.com/embed/${anime.youtubeVideoId}?autoplay=1&controls=0`} 
+                        ref={trailerRef}
                         src={`https://www.youtube.com/embed/${anime.youtubeVideoId}?autoplay=1&mute=1&controls=0playlist&version=3&loop=1&playlist=${anime.youtubeVideoId}`} 
-                        frameBorder="0"
+                    
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         >
                         

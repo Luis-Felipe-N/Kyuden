@@ -45,7 +45,6 @@ export default function SingUp() {
         const user = await createAccount(data)
 
         if (user instanceof Error) {
-            console.log(user.cause)
             setError(user.message)
         }
 

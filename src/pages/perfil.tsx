@@ -20,10 +20,10 @@ export default function Perfil() {
         return [...Array(number).keys()]
     }
 
-    const { isLoading: myListAnimesLoading, error: myListAnimesError, data: myListAnimesData } = useQuery({
+    const { isLoading: myListAnimesLoading, error: myListAnimesError, data: myListAnimesData, isFetching: myListAnimesFetching } = useQuery({
         queryKey: ['myListAnimesData'],
         queryFn: async (): Promise<IAnimes[]> =>{
-            const { data } = await api.post('animes/slugs', {
+            const { data } = await api.post('animes/', {
                 animesSlug: myListAnimes
             })
             
@@ -41,9 +41,6 @@ export default function Perfil() {
             <h1>NSem user</h1>
         </main>
     )
-    
-
-    console.log(myListAnimesData)
 
     return (
         <main className={style.profile}>
@@ -54,7 +51,7 @@ export default function Perfil() {
                         Kyuden :: {user.displayName}
                     </title>
                 </Head>
-                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(0deg, rgba(23,25,35,1) 2%, rgba(23,25,35,0.9093838218881303) 17%, rgba(23,25,35,0.8393558106836485) 27%, rgba(23,25,35,0.6600841020001751) 40%, rgba(0,212,255,0) 99%), url(${user.banner})`}}>
+                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(0deg, rgb(23, 25, 35) 0%, rgba(23, 25, 35, 0.91) 8%, rgba(23, 25, 35, 0.84) 18%, rgba(23, 25, 35, 0.66) 26%, rgba(0, 212, 255, 0) 61%);, url(${user.banner})`}}>
                         <div className={style.profile__banner_container}>
                             <div>
                             <ModalEditProfile />
@@ -86,7 +83,7 @@ export default function Perfil() {
                         </ul>
                     </div>
                     <div className={style.profile__animes_container}>
-                        { myListAnimesLoading 
+                        { myListAnimesLoading || myListAnimesFetching
                         ? (
                             createRangeArrayByNumber(myListAnimes.length).map((item: any) => (<Skeleton key={item} width={210} height={305} />))
                         ) : myListAnimesError 

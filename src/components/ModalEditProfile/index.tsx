@@ -31,8 +31,6 @@ export function ModalEditProfile() {
     
     const { user } = useAuth()
 
-    console.log("renderizando modal")
-
     const { register, handleSubmit, formState:{ errors }, setValue } = useForm({
         resolver: yupResolver(editProfileFormSchema)
     });
