@@ -1,10 +1,9 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, setPersistence, browserSessionPersistence, User, onAuthStateChanged } from "firebase/auth";
 import { createContext, ReactNode, useEffect, useRef, useState } from "react";
 import { auth } from "../libs/firebase";
-import { createUser } from "../service/firebase";
+import { createUser, getUserData } from "../service/firebase";
 import { IUser } from "../@types/User";
-import { onValue, ref } from "firebase/database";
-import { db } from "../libs/firebase";
+
 interface IUserUpdate {
   displayName?: string | null
   photoURL?: string | null
@@ -41,14 +40,13 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
   const [userId, setUserId] = useState<string | null>(null);
 
   let mounted = useRef<boolean>(false);
-  console.log("ALALA")
 
   useEffect(() => {
     mounted.current = true;
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         if (mounted.current) {
-          setUserId(user.uid)
+          getUserData(user.uid, setUser)
         }
       } else {
         if (mounted.current) {
@@ -62,23 +60,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       mounted.current = false;
       unsubscribe();
     };
-  }, [auth]);
-
-  useEffect(() => {
-    let unsubscribe: (() => void) | null = null;
-
-    if (userId) {
-      unsubscribe = onValue(ref(db, `users/${userId}`), (snapshot) => {
-        setUser(snapshot.val());
-      });
-    }
-
-    return () => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    };
-  }, [userId]);
+  }, []);
 
   async function createAccount({email, password, name, username}: ICreateUser): Promise<User | Error> {
     return createUserWithEmailAndPassword(auth, email, password)
@@ -118,9 +100,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       return  signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential: any) => {
         const {uid, ...user} = userCredential.user.providerData[0];
-
-        setUserId(user.uid)
-
+        getUserData(user.uid, setUser)
       })
       .catch((error: any) => {
         return new Error(error)
