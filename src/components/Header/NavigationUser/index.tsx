@@ -8,6 +8,7 @@ import Link from "next/link";
 import { SignOut, User } from "phosphor-react";
 import { useAuth } from "../../../hooks/useAuth";
 import { Avatar } from "../../Avatar";
+import useWindowDimesions from "../../../hooks/useWindowDimensions";
 
 interface INavigationProps {
   setStateMenu: (value: boolean) => void,
@@ -16,6 +17,10 @@ interface INavigationProps {
 
 export function NavigationUser() {
   const { user, logout } = useAuth()
+
+  const [width, ] = useWindowDimesions()
+
+  console.log(width)
 
   return (
     <NavigationMenu.Root className={style.navigation}>
@@ -26,7 +31,8 @@ export function NavigationUser() {
               { user && (
                 <>
                 <div className={style.navigation__user}>
-                  <span>Olá, <strong>{user.displayName}</strong></span>
+                { width && width > 700 &&  <span>Olá, <strong>{user.displayName}</strong></span> }
+                 
                 </div>
                 {user?.avatar ? (
                     <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} src={user?.avatar} fallback={user.displayName[0]} />
@@ -35,7 +41,7 @@ export function NavigationUser() {
                 )}
                 </>
               )}
-                <FaChevronDown />
+                { width && width > 700 && <FaChevronDown /> }
             </NavigationMenu.Trigger>
 
           <NavigationMenu.Content>

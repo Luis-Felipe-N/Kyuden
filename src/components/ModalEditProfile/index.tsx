@@ -59,49 +59,50 @@ export function ModalEditProfile() {
             <button className="Button violet">Editar perfil</button>
             </Dialog.Trigger>
             <Dialog.Portal className={style.modal}>
-                <Dialog.Overlay className={style.modal__overlay} />
-                <Dialog.Content className={style.modal__content}>
-                    <div className={style.modal__content_header}>
-                        <div>
-                            <Dialog.Title className={style.modal__content_title}>Editar perfil</Dialog.Title>
-                            <Dialog.Description className={style.modal__content_description}>
-                                Faça alterações no seu perfil aqui. Clique em salvar quando terminar..
-                            </Dialog.Description>
+                <Dialog.Overlay className={style.modal__overlay}>
+                    <Dialog.Content className={style.modal__content}>
+                        <div className={style.modal__content_header}>
+                            <div>
+                                <Dialog.Title className={style.modal__content_title}>Editar perfil</Dialog.Title>
+                                <Dialog.Description className={style.modal__content_description}>
+                                    Faça alterações no seu perfil aqui. Clique em salvar quando terminar..
+                                </Dialog.Description>
+                            </div>
+                            <Dialog.Close asChild>
+                            <button className="IconButton" aria-label="Close">
+                                <IoMdClose size={25} />
+                            </button>
+                            </Dialog.Close>
                         </div>
-                        <Dialog.Close asChild>
-                        <button className="IconButton" aria-label="Close">
-                            <IoMdClose size={25} />
-                        </button>
-                        </Dialog.Close>
-                    </div>
 
-                    <div className={style.modal__content_form}>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <fieldset className={style.modal__content_fieldset}>
-                                <label className="Label" htmlFor="displayName">
-                                    Nome
-                                </label>
-                                <input {...register("displayName")} className="Input" id="displayName" defaultValue={user?.displayName || ""} />
-                            </fieldset>
+                        <div className={style.modal__content_form}>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <fieldset className={style.modal__content_fieldset}>
+                                    <label className="Label" htmlFor="displayName">
+                                        Nome
+                                    </label>
+                                    <input {...register("displayName")} className="Input" id="displayName" defaultValue={user?.displayName || ""} />
+                                </fieldset>
 
-                            <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
-                                <Button type="submit" className={style.modal__btnsave}>Salvar</Button>
-                            </div>
-                        </form>
-                        <div className={style.modal__suggestion}>
-                            <strong>Avatares</strong>
-                            <div className={style.modal__suggestion_avatar}>
-                                <AvatarSlider onSelectAvatar={handleSelectAvatar} />                                
-                            </div>
+                                <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
+                                    <Button type="submit" className={style.modal__btnsave}>Salvar</Button>
+                                </div>
+                            </form>
+                            <div className={style.modal__suggestion}>
+                                <strong>Avatares</strong>
+                                <div className={style.modal__suggestion_avatar}>
+                                    <AvatarSlider onSelectAvatar={handleSelectAvatar} />                                
+                                </div>
 
-                            <strong>Banners</strong>
-                            <div className={style.modal__suggestion_banner}>
-                                <BannerSlider onSelectBanner={handleSelectBanner} />
+                                <strong>Banners</strong>
+                                <div className={style.modal__suggestion_banner}>
+                                    <BannerSlider onSelectBanner={handleSelectBanner} />
+                                </div>
                             </div>
+                        
                         </div>
-                       
-                    </div>
-                </Dialog.Content>
+                    </Dialog.Content>
+                </Dialog.Overlay>
             </Dialog.Portal>
         </Dialog.Root>
     )

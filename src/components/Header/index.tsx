@@ -51,6 +51,9 @@ export function Header() {
                     )}
                     
                 </div>
+                <button tabIndex={0} className={menuIsOpen ? `${style.header__btnMenu} ${style.active}` : style.header__btnMenu} onClick={() => setMenuIsOpen(!menuIsOpen)}>
+                    <span></span>
+                </button>
             </div>
 
         </header>

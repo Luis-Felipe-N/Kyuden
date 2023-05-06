@@ -107,11 +107,11 @@ export function BannerSlider({ onSelectBanner }: IBannerSliderProps) {
                 <SwiperSlide key={anime.attributes.slug}>
                     <div className={`${style.bannerSlider__item} ${bannerSelected == anime.attributes.slug ? style.bannerSlider__item_selected : ''}`}>
                         <Image
-                            quality={50}
+                            quality={70}
                             blurDataURL='./background.png'
                             src={anime.attributes.coverImage.original}
-                            width={500}
-                            height={281}
+                            width={250}
+                            height={140.63}
                         
                             alt={`Poster do anime ${anime.attributes.canonicalTitle}`}
                             title={`Poster do anime ${anime.attributes.canonicalTitle}`}

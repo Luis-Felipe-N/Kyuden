@@ -116,8 +116,10 @@
         ul {
             margin: 0;
             justify-content: space-between;
-            align-items: flex-end;
+            flex-direction: column;
             gap: 0;
+            align-items: self-start;
+
         }
 
         li a {
@@ -138,16 +140,17 @@
             width: 100%;
 
             a {
-                text-align: center;
+                text-align: start;
                 width: 100%;
-                padding: 1.5rem 0;
+                padding: 1.5rem 4rem;
                 display: block;
                 border-radius: 0;
+                display: flex;
+                gap: 1rem;
             }
 
             .active {
                 color: var(--primary-500);
-                border-top: 3px solid var(--primary-500);
             }
 
             &__icon {

@@ -6,6 +6,9 @@
       border: 3px solid transparent !important;
       object-fit: cover;
       transition: .2s;
+      width: 250px;
+      height: 140.63px;
+      aspect-ratio: 16 / 9;
     }
 
     &_selected {

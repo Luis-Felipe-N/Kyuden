@@ -1,13 +1,6 @@
 .headerContainer {
     border-bottom: solid var(--primary-900) 2px;
 
-    .menu {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-    }
-
     .header {
         max-width: var(--max-width);
         margin: 0 auto;
@@ -21,7 +14,6 @@
         .userContainer {
             display: flex;
             justify-content: flex-end;
-            // flex: 1;
             
             &__user {
                 position: relative;
@@ -55,45 +47,6 @@
                 }
             }
 
-            &__dropdown {
-                display: none;
-                position: absolute;
-                right: 0;
-                background-color: var(--gray-800);
-                padding: 2rem;
-                border-radius: 5px;
-                width: 230px;
-                font-weight: 500;
-
-                ul {
-                    
-                    list-style: none;
-
-                    li:not(:last-child) {
-                        padding-bottom: .5rem;
-                    }
-                    width: 100%;
-                }
-
-                button, a {
-                    display: flex;
-                    align-items: center;
-                    gap: .5rem;
-                    font-size: 1rem;
-                    width: 100%;
-                    
-                }
-
-                button {
-                    background: transparent;
-                    border: 0;
-                    color: var(--red-400);
-                    border-top: 1px solid var(--primary-800);
-                    padding-top: .5rem;
-                    padding-inline: 1rem;
-                }
-            }
-
             &__btns {
                 display: flex;
                 gap: 1rem;
@@ -116,7 +69,13 @@
             display: none;
         }
     }  
-    
+
+    .menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
 }
 
 
@@ -129,57 +88,75 @@
 
         .header {
             justify-content: space-between;
-            font-size: 18px;
+
+            a {
+                flex: 1;
+            }
 
             .menu {
-                width: 100%;
-                padding: 0;
-                justify-content: space-between;
-                align-items: center;
+                height: 100vh;
                 position: fixed;
-
-                right: 0;
-                left: 0;
+                padding: 7rem 0;
+                width: 70vw;
+                top: calc(5rem + 2px);
                 bottom: 0;
-                background-color: var(--gray-800);
-                z-index: 20;
-
+                right: -100%;
                 transition: .2s;
+                
+                background-color: var(--gray-900);
 
-                .userContainer {
-                    flex: 0;
-                    width: 100%;
-                }
+                align-items: flex-start;
             }
 
             &__btnMenu {
-                display: block;
-                position: relative;
-                z-index: 20;
-
-                width: 2.1rem;
-                height: 3rem;
-                border: none;
-
-                line-height: 0;
-                background-color: transparent;
-
-                color: var(--gray-100);
+                z-index: 4;
                 display: flex;
-                gap: .5rem;
-                flex-direction: column;
+                background-color: transparent;
+                border: 0;
+                cursor: pointer;
+                height: 4rem;
+                line-height: 4rem;
                 align-items: center;
                 justify-content: center;
-
                 span {
-                    width: 100%;
-                    display: block;
-                    background-color: var(--gray-50);
-                    height: 3px;
-                    border-radius: 2px;
+                    position: relative;
+                    display: inline-block;
+                    width: 30px;
+                    height: 2px;
+                    background-color: white;
                     transition: .2s;
+
+                    &::after {
+                        background-color: white;
+                        position: absolute;
+                        left: 0;
+                        top: 10px;
+                        display: inline-block;
+                        content: '';
+                        width: 100%;
+                        height: 100%;
+                        transform-origin: left;
+
+                    }
+                }
+            }
+
+            .menu.active {
+                right: 0;
+            }
+
+            &__btnMenu.active {
+                    
+                span {
+                    transform: rotate(45deg);
+                    &::after {
+                        top: 0;
+                        left: 15px;
+                        transform: rotate(-90deg) translateX(-15px);
+                    }
                 }
             }
         }
+
     }
 }
