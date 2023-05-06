@@ -42,16 +42,19 @@ export function EpisodeCard({episode, anime}: INextEpisodeProps) {
                     <div className={style.episode__cover_play}>
                         <FaPlay />
                     </div>
-                    <Image
-                        src={episode.image}
-                        width={305}
-                        height={190}
-                        placeholder="blur"
-                        blurDataURL={episode.image}
-                        unoptimized
-                        alt={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
-                        title={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
-                    />
+
+                    { episode.image && (
+                        <Image
+                            src={episode.image}
+                            width={305}
+                            height={190}
+                            placeholder="blur"
+                            blurDataURL={episode.image}
+                            unoptimized
+                            alt={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
+                            title={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
+                        />
+                    )}
                     { assistedTimeInPercentage !== null && <div className={style.slideAssistedTime}><span style={{width: `${assistedTimeInPercentage}%`}}></span></div>}
                 </div>
                 <div className={style.episode__infos}>

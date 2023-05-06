@@ -14,7 +14,7 @@ export function CardPopularAnime({ anime }: ICardAnimesProps) {
         <div
           className={style.cardPopular}
           style={{
-            backgroundImage: `linear-gradient(180deg, rgba(23, 25, 35, 0) -7.34%, rgba(23, 25, 35, 1) 99.99%, rgba(23, 25, 35, 1) 100%), url(${anime?.cover}) `,
+            backgroundImage: `linear-gradient(180deg, rgba(23,25,35,0.09007352941176472) 0%, rgba(23,25,35,0.3449754901960784) 35%, rgba(23,25,35,0.6867121848739496) 100%), url(${anime?.cover}) `,
           }}
         >
           <div className={style.infos}>

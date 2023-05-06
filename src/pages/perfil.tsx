@@ -11,7 +11,7 @@ import { api } from "../service/api"
 import style from "../styles/Profile.module.scss"
 
 export default function Perfil() {
-    const { user } = useAuth()
+    const { user, loadingUser } = useAuth()
 
     const myListAnimes = user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : []
     const watchedAnimes = user?.watchedAnimes ? Object.entries(user.watchedAnimes).map(([,episodeId]) => episodeId) : []
@@ -31,14 +31,14 @@ export default function Perfil() {
         },
     })
 
-    if (!user) return (
+    if (loadingUser) return (
         <main className={style.profile}>
             <Head>
                 <title>
                     Kyuden :: Perfil
                 </title>
             </Head>
-            <h1>NSem user</h1>
+            <h1>CArregando user</h1>
         </main>
     )
 

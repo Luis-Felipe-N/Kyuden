@@ -27,6 +27,7 @@ interface IAuthenticationContext {
   login: ({email, password}: IUserLoginCredentials) => Promise<void | Error>;
   logout:  () => void;
   user: IUser | null;
+  loadingUser: boolean;
 }
 
 interface IAuthenticationProviderProps {
@@ -37,21 +38,22 @@ export const AuthContext = createContext({} as IAuthenticationContext)
 
 export function AuthenticationProvider({ children }: IAuthenticationProviderProps) {
   const [user, setUser] = useState<IUser | null>(null)
-  const [userId, setUserId] = useState<string | null>(null);
+  const [loadingUser, setLoadingUser] = useState(false);
 
   let mounted = useRef<boolean>(false);
 
   useEffect(() => {
+    setLoadingUser(true)
     mounted.current = true;
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         if (mounted.current) {
-          getUserData(user.uid, setUser)
+          getUserData(user.uid, setUser).then(res => setLoadingUser(false))
         }
       } else {
         if (mounted.current) {
           setUser(null);
-          setUserId(null);
+          setLoadingUser(false)
         }
       }
     });
@@ -110,7 +112,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
 
 
 
-  return (<AuthContext.Provider value={{ createAccount, login, logout, user }}>
+  return (<AuthContext.Provider value={{ createAccount, login, logout, user, loadingUser }}>
     {children}
 </AuthContext.Provider>)
 }
