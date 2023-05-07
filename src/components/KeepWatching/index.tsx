@@ -2,10 +2,10 @@ import { useQuery } from "react-query"
 import { IEpisodesAnime } from "../../@types/Anime"
 import { useAuth } from "../../hooks/useAuth"
 import { api } from "../../service/api"
-import { EpisodeCard } from "../EpisodeCard"
 
 import style from "./style.module.scss"
 import { Swiper, SwiperSlide } from "swiper/react"
+import { EpisodeCardWatched } from "../EpisodeCardWatched"
 
 export function KeepWatching() {
     const { user } = useAuth()
@@ -39,7 +39,7 @@ export function KeepWatching() {
                 {
                     watchinEpisodesData?.map(episode => (
                         <SwiperSlide key={episode.id}>
-                            <EpisodeCard episode={episode} />
+                            <EpisodeCardWatched episode={episode} />
                         </SwiperSlide>
                     ))
                 }

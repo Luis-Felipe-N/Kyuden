@@ -20,6 +20,7 @@
 
     &__cover {
         position: relative;
+
         &_play {
             transition: .2s;
             opacity: 0;
@@ -53,6 +54,17 @@
             }
         }
     }
+
+    video {
+        border-radius: var(--border-radius);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        max-width: 100%;
+        max-height: calc(100% + 10px);
+    }
 }
 
 .slideAssistedTime {
@@ -60,9 +72,19 @@
     bottom: 1.2rem;
     right: 1rem;
     left: 1rem;
-    background-color: rgba(255, 255, 255, .2);
     border-radius: 4px;
     overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .4rem;
+    z-index: 3;
+
+    div {
+        background-color: rgba(255, 255, 255, .2);
+        flex: 1;
+    }
 
     span {
         display: block;

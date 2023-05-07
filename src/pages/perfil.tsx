@@ -3,6 +3,7 @@ import { useQuery } from "react-query"
 import { IAnimes, IEpisodesAnime } from "../@types/Anime"
 import { Avatar } from "../components/Avatar"
 import { CardAnime } from "../components/CardAnime"
+import { Loading } from "../components/Loading"
 import { ModalEditProfile } from "../components/ModalEditProfile"
 import { Skeleton } from "../components/Skeleton"
 import { useAuth } from "../hooks/useAuth"
@@ -38,7 +39,7 @@ export default function Perfil() {
                     Kyuden :: Perfil
                 </title>
             </Head>
-            <h1>CArregando user</h1>
+            <Loading />
         </main>
     )
 
