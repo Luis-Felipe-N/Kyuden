@@ -1,26 +1,72 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { ChangeEvent, FormEvent, FormEventHandler, useEffect, useId, useState } from 'react'
 import { useQuery } from 'react-query'
-import { IUser } from '../../@types/User'
+import { toast } from 'react-toastify'
+import { IEpisodesAnime } from '../../@types/Anime'
+import { IComment, IUser } from '../../@types/User'
 import { useAuth } from '../../hooks/useAuth'
-import { getUserData } from '../../service/firebase'
+import { addCommentEpisode, getCommentsEpisode, getUserData } from '../../service/firebase'
+import { formartDistanceDate } from '../../utils/date'
 import { Avatar } from '../Avatar'
 import { Button } from '../Button'
 import style from './style.module.scss'
 
-export function Comments() {
+interface ICommentsProps {
+    episode: IEpisodesAnime
+}
+
+export function Comments({ episode }: ICommentsProps) {
+    const [commentValue, setCommentValue] = useState<string>('')
+    const [comments, setComments] = useState<IComment[]>()
     const { user } = useAuth()
+
+    function handleSetComment(event: ChangeEvent<HTMLTextAreaElement>) {
+        setCommentValue(event.target.value.trim())
+    }
+
+    function handleComment(event: FormEvent) {
+        event.preventDefault()
+
+        if (user) {
+            addCommentEpisode(user.uid, episode.id, commentValue).then(res => {
+                toast.success('Comentário adicionado')
+                if (comments) {
+                    setComments([...comments, {
+                        id: '',
+                        episodeId: episode.id,
+                        userId: user.uid,
+                        comment: commentValue,
+                        createdAt: new Date().getTime()
+                    }])
+                } else {
+                    setComments([{
+                        id: '',
+                        episodeId: episode.id,
+                        userId: user.uid,
+                        comment: commentValue,
+                        createdAt: new Date().getTime()
+                    }])
+                }
+            })
+        }
+    }
+
+    useEffect(() => {
+
+        if (episode.id) {
+            getCommentsEpisode(episode.id).then(res => {
+                console.log(res)
+                setComments(res)
+            }).catch(res => {
+                toast.warn('Nao foi possível carregar os comentários')
+            })
+        }
+
+    }, [episode.id])
 
     return (
         <section className={style.comments}>
-            <div className={style.comments__header}>
-                <span>
-                    2
-                </span>
-                <strong>comentários</strong>
-            </div>
-
             <div className={style.comments__send}>
                 { user ? (
                     <>
@@ -29,34 +75,33 @@ export function Comments() {
                         ) : (
                             <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} className={style.navigation__avatar} fallback={user.displayName[0]} />
                         )}
-                        <form>
-                            <textarea placeholder='Deixe um comentário' />
+                        <form onSubmit={handleComment}>
+                            <textarea placeholder='Deixe um comentário' onChange={handleSetComment} />
                             <div>
-                                <Button>Enviar</Button>
+                                <Button disabled={!commentValue}>Enviar</Button>
                             </div>
                         </form>
                     </>
                 ) : (   
                     <h1>Faca <Link href='/entrar'>login</Link> para deixar um comentario</h1>
                 )}
-            </div>  
+            </div>
+
+            <div className={style.comments__count}>
+                <strong>{comments?.length} comentários</strong>
+            </div>
 
             <ul className={style.comments__content}>
-                <li className={style.comment}>
-                    <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} src="/avatar.jpeg" alt="Imagem de perfil do usuario" />
-                    <div>
-                        <strong>Luis Felipe</strong> <span>@luisfelipe</span>
-                        <time>Enviado a 2 horas atrás</time>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore omnis consequuntur impedit, doloribus doloremque labore exercitationem illo magnam quo harum quaerat dolore iusto illum delectus molestiae aspernatur. In, minus vel!</p>
-                    </div>
-                </li>
-                <li className={style.comment}>
-                <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} src="/avatar.jpeg" alt="Imagem de perfil do usuario" />
-                    <div>
-                        <strong>Luis Felipe</strong> <span>@luisfelipe</span>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore omnis consequuntur impedit, doloribus doloremque labore exercitationem illo magnam quo harum quaerat dolore iusto illum delectus molestiae aspernatur. In, minus vel!</p>
-                    </div>
-                </li>
+                { comments && comments.map(comment => (
+                    <li key={comment.id} className={style.comment}>
+                        <Avatar style={{width: "3rem", height: "3rem", lineHeight: "3rem"}} src="/avatar.jpeg" alt="Imagem de perfil do usuario" />
+                        <div>
+                            <strong className={style.comments__content__user}>Luis Felipe</strong> {comment.userId === user?.uid && <span className={style.comments__content__you}>Você</span>}
+                            <time>{formartDistanceDate(new Date(comment.createdAt))}</time>
+                            <p>{comment.comment}</p>
+                        </div>
+                    </li>
+                ))}
             </ul>
         </section>
     )

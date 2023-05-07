@@ -36,17 +36,7 @@ export function ButtonFavorite({anime}: IButtonFavoriteProps) {
             updateUserData(user.uid, {
                 myListAnimes: arrangeAndAddAttributes(user.myListAnimes, anime.slug)
             }).then(res => {
-                toast.success(`Anime adicionado aos favoritos`, {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: true,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: false,
-                    progress: undefined,
-                    closeButton: false,
-                    theme: "dark",
-                })
+                toast.success(`Anime adicionado aos favoritos`)
             })
         }
     }

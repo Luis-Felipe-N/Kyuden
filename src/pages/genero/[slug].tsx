@@ -7,7 +7,7 @@ import { SelectSeason } from "../../components/SelectSeason"
 import { useEffect, useState } from "react"
 import { ButtonIcon } from "../../components/ButtonIcon"
 import Head from "next/head"
-import { EpisodeCard } from "../../components/EpisodeCard"
+import { EpisodeCard } from "../../components/Episode/EpisodeCard"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -83,7 +83,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                                 className={style.heroAnime__btns_button}
                                                 aria-label={`Assistir trailer do anime ${anime.title}`}
                                                 title={`Assistir trailer do anime ${anime.title}`}
-                                                hasChild
+                                                aschild="true"
                                             >
                                                 <a target="__black" href={`https://www.youtube.com/watch?v=${anime.youtubeVideoId}`}>
                                                     <FaPlay size={17} />

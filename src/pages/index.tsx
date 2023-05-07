@@ -28,12 +28,13 @@ export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProp
     <>
     <Head>
       <title>Kyuden :: Inicio</title>
+      
     </Head>
     <main className={style.home}>
       <Hero anime={animeHero}/>
       <PopularAnimes animes={popularAnimes} />
       { !!user?.watchingEpisodes && <KeepWatching />}
-      { animesGenres && animesGenres.map(animeGenre => !!animeGenre.animes.length && (
+      { animesGenres && animesGenres.map((animeGenre, index) => !!animeGenre.animes.length && (
         <CarouselAnimes key={animeGenre.name} genre={animeGenre.name} animes={animeGenre.animes} />  
       ))}
     </main>
@@ -43,7 +44,6 @@ export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProp
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('/animes/popular')
-  const { data: animeGenreEcchi } =  await api.get(`animes/genre/ecchi?take=20`)
   const { data: animeGenreAction } =  await api.get(`animes/genre/Ação?take=20`)
   const { data: animeGenreTerror } =  await api.get(`animes/genre/Terror?take=20`)
   const { data: animeGenreAdventure } =  await api.get(`animes/genre/Aventura?take=20`)
@@ -53,12 +53,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
       props: {
-          animeHero: animes[3] || null,
+          animeHero: animes[0] || null,
           animesGenres: [
-            {
-              name: "Ecchi",
-              animes: animeGenreEcchi.animes || null
-            },
             {
               name: "Aventura",
               animes: animeGenreAdventure.animes || null

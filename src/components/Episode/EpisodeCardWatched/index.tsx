@@ -2,13 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa";
-import { IAnimes, IEpisodesAnime } from "../../@types/Anime";
-import { useAuth } from "../../hooks/useAuth";
-import { useEpisode } from "../../hooks/useEpisode";
-import { IStreamsBlogger } from "../../types";
-import { Skeleton } from "../Skeleton";
-import { convertMillisecondsInMinutes, convertSecondsInInMinute } from "../utils/convertTime";
-import { getUrlBaseVideo } from "../utils/getUrlBaseVideo";
+import { IAnimes, IEpisodesAnime } from "../../../@types/Anime";
+import { useAuth } from "../../../hooks/useAuth";
+import { useEpisode } from "../../../hooks/useEpisode";
+import { IStreamsBlogger } from "../../../types";
+import { Skeleton } from "../../Skeleton";
+import { convertMillisecondsInMinutes, convertSecondsInInMinute } from "../../utils/convertTime";
+import { getUrlBaseVideo } from "../../utils/getUrlBaseVideo";
 import style from './style.module.scss'
 
 interface INextEpisodeProps {
@@ -16,15 +16,9 @@ interface INextEpisodeProps {
     anime?: IAnimes
 }
 
-function customLoadImage() {
-    return (
-        <Skeleton width={305} height={160} />
-    )
-}
-
 export function EpisodeCardWatched({episode, anime}: INextEpisodeProps) {
-    const [streams, setStreams] = useState<IStreamsBlogger[]>()
     const { user } = useAuth()
+
     const { getWatchedEpisodeData } = useEpisode()
 
     let linkStream: string;
@@ -35,13 +29,14 @@ export function EpisodeCardWatched({episode, anime}: INextEpisodeProps) {
         if (!user) return null
 
         const watchedEpisodeData = getWatchedEpisodeData(user, episode)
-
+        console.log({watchedEpisodeData})
         if (!watchedEpisodeData) return null
 
         return watchedEpisodeData
     }, [episode, user, getWatchedEpisodeData])
 
     const assistedTimeInPercentage = (Number(getWatchedEpisode?.assistedTime) * 100) / episode.duration
+
 
     function handleSetEpsiode() {
         if (!episodeVideoRef?.current || !linkStream) return

@@ -8,7 +8,6 @@ import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
 import { Button } from "../../components/Button"
 import { Comments } from "../../components/Comments"
-import { EpisodeCard } from "../../components/EpisodeCard"
 import { Skeleton } from "../../components/Skeleton"
 import { getUrlBaseVideo } from "../../components/utils/getUrlBaseVideo"
 import { useEpisode } from "../../hooks/useEpisode"
@@ -20,6 +19,7 @@ import { useRouter } from "next/router"
 import { updateUserData } from "../../service/firebase"
 import { useAuth } from "../../hooks/useAuth"
 import { arrangeAndAddObject } from "../../utils/object"
+import { NextEpisode } from "../../components/Episode/nextEpisode"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
@@ -29,14 +29,17 @@ interface IEpisodeProps {
 
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
     const [streams, setStreams] = useState<IStreamsBlogger[]>()
-    const [nextEpisode, setNextEpisode] = useState<IEpisodesAnime | undefined>()
+
+    console.count("Page count")
 
     const { user } = useAuth()
 
     const router   = useRouter()
     const refVideo = useRef<HTMLVideoElement>(null)
 
-    const { getNextEpisode, getWatchedEpisodeData } = useEpisode()
+    const { getWatchedEpisodeData } = useEpisode()
+
+    const watchedEpisodeData = user && episode ? getWatchedEpisodeData(user, episode) : null;
 
     const savePreviosTime = useCallback(() => {
         if (refVideo.current !== null) {
@@ -44,29 +47,20 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                 updateUserData(user.uid, {
                     watchingEpisodes: arrangeAndAddObject(user.watchingEpisodes || {}, {
                         id: episode.id,
-                        assistedTime: refVideo.current.currentTime
+                        assistedTime: refVideo.current.currentTime,
+                        updatedAt: ''
                     }, episode.id)
                 })
             }
         }
     }, [refVideo, episode, user])
 
-    const returnToPreviosTime = useCallback(() => {
-        if (user) {
-            const watchedEpisodeData = getWatchedEpisodeData(user, episode)
-            if (refVideo.current) {
-                if (watchedEpisodeData) {
-                    refVideo.current.currentTime = watchedEpisodeData.assistedTime
-                } else {
-                    refVideo.current.currentTime = 0
-                }
-            }
+    useEffect(() => {
+        if (!!refVideo.current && watchedEpisodeData) {
+            console.log(watchedEpisodeData)
+            refVideo.current.currentTime = watchedEpisodeData.assistedTime
         }
-    }, [refVideo, episode, user, getWatchedEpisodeData])
-
-    if (episode && user?.watchingEpisodes) {
-        returnToPreviosTime()
-    }
+    }, [watchedEpisodeData])
 
     function formatDate(date: Date) {
         const dateFormated = new Date(date).toLocaleDateString("pt-BR", {
@@ -89,11 +83,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
         getUrlBase()
     }, [episode?.linkEmbed])
 
-    useEffect(() => {
-        if (episode && remainingEpisodes) {
-            setNextEpisode(getNextEpisode(remainingEpisodes, episode))
-        }        
-    }, [episode, remainingEpisodes, getNextEpisode])
+
 
     useEffect(() => {    
         router.events.on("routeChangeStart", savePreviosTime);
@@ -129,7 +119,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         <div className={style.episode__info}>
                            <div className={style.episode__info_ep}>
                                 <h3>{episode.title}</h3>
-                                <Link href={`/anime/${anime.slug}`} prefetch>
+                                <Link href={`/anime/${anime.slug}`}>
                                     <div className={style.episode__info_anime}>
                                         <Image
                                             src={anime.post}
@@ -152,7 +142,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                                     <Button
                                         title="Baixar episódio"
                                         aria-label="Baixar episódio"
-                                        hasChild
+                                        aschild="true"
                                     >
                                         <a href={streams[streams.length - 1].play_url} download={episode.title}>
                                             <FiDownload size={20} />
@@ -172,14 +162,9 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         </div>
 
                     </section>
-                    <Comments />
+                    <Comments episode={episode} />
                     <aside className={style.episode__remainingEpisodes}>
-                        { nextEpisode && (
-                            <>
-                            <h3>Próximo episódio</h3>
-                            <EpisodeCard episode={nextEpisode} />
-                            </>
-                        )}
+                        <NextEpisode episode={episode} remainingEpisodes={remainingEpisodes} />
                     </aside>
                 </>
             ) : (
@@ -193,7 +178,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         <Skeleton width={1000} height={500} />
                     </section>
                     <aside className={style.episode__remainingEpisodes}>
-                    <Skeleton height={1000}  />
+                        <Skeleton height={1000}  />
                     </aside>
                 </>
             )}

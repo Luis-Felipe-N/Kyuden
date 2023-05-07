@@ -5,7 +5,7 @@ import { api } from "../../service/api"
 
 import style from "./style.module.scss"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { EpisodeCardWatched } from "../EpisodeCardWatched"
+import { EpisodeCardWatched } from "../Episode/EpisodeCardWatched"
 
 export function KeepWatching() {
     const { user } = useAuth()

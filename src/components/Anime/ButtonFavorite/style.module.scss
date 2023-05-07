@@ -12,12 +12,7 @@
     font-family: var(--font-secondary);
 
     border: none;
-    border-radius: var(--border-radius);
-
-    svg {
-        border-radius: 100%;
-    }
-        
+    border-radius: var(--border-radius);        
     
     &__favorite {
         color: #F56565;

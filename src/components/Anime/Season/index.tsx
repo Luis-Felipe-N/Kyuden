@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { IAnimes, IEpisodesAnime } from '../../../@types/Anime'
 import { api } from '../../../service/api';
 import { createRangeArrayByNumber } from '../../../utils/array';
-import { EpisodeCard } from '../../EpisodeCard';
+import { EpisodeCard } from '../../Episode/EpisodeCard';
 import { SelectSeason } from '../../SelectSeason'
 import { Skeleton } from '../../Skeleton';
 import style from './style.module.scss'

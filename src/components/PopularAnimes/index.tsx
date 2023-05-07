@@ -9,7 +9,7 @@ interface IPopularAnimesProps {
 }
 
 export function PopularAnimes({ animes }: IPopularAnimesProps) {
-    
+    console.log(animes)
     return (
         <section className={style.popularAnimesContainer}>
             <Swiper 

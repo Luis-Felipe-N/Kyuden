@@ -68,7 +68,7 @@ export function Hero({ anime }: IHeroProps) {
                             >
                                 <FaPlus />
                             </ButtonIcon>
-                            <Button hasChild>
+                            <Button aschild="true">
                                 <Link href={`/anime/${anime.slug}`}>
                                     <FaPlay />
                                     Assistir

@@ -3,11 +3,11 @@ import { ButtonHTMLAttributes } from "react"
 import style from './style.module.scss'
 
 interface IButtonIconProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    hasChild?: boolean
+    aschild?: string
 }
 
 export function Button({className, ...props}: IButtonIconProps) {
-    const Component = props.hasChild ? Slot : 'button'
+    const Component = props.aschild === "true" ? Slot : 'button'
 
     return (    
         <Component

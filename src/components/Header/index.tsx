@@ -42,7 +42,7 @@ export function Header() {
                         </>
                     ) : (
                         <div className={style.userContainer__btns}>
-                            <Button hasChild>
+                            <Button aschild="true">
                                 <Link href="/entrar">
                                         Entrar
                                 </Link>

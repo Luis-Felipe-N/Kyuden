@@ -37,7 +37,18 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Header />
         <Component {...pageProps} />  
         <Footer />
-        <ToastContainer />
+        <ToastContainer 
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={true}
+          closeOnClick={false}
+          pauseOnHover={true}
+          // draggable={false}
+          closeButton={false}
+          theme='dark'
+          draggable={false}
+
+        />
       </QueryClientProvider>
       </AuthenticationProvider>
   )

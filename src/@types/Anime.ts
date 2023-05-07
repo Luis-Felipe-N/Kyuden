@@ -4,7 +4,7 @@ export interface IGenres {
 }
 
 export interface IEpisodesAnime {
-    id?: string;
+    id: string;
     title: string;
     image: string;
     uploaded_at: Date;

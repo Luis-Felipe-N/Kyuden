@@ -2,22 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 import { FaPlay } from "react-icons/fa";
-import { IAnimes, IEpisodesAnime } from "../../@types/Anime";
-import { useAuth } from "../../hooks/useAuth";
-import { useEpisode } from "../../hooks/useEpisode";
-import { Skeleton } from "../Skeleton";
-import { convertMillisecondsInMinutes } from "../utils/convertTime";
+import { IAnimes, IEpisodesAnime } from "../../../@types/Anime";
+import { useAuth } from "../../../hooks/useAuth";
+import { useEpisode } from "../../../hooks/useEpisode";
+import { convertMillisecondsInMinutes } from "../../utils/convertTime";
 import style from './style.module.scss'
 
 interface INextEpisodeProps {
     episode: IEpisodesAnime;
     anime?: IAnimes
-}
-
-function customLoadImage() {
-    return (
-        <Skeleton width={305} height={160} />
-    )
 }
 
 export function EpisodeCard({episode, anime}: INextEpisodeProps) {
@@ -45,11 +38,10 @@ export function EpisodeCard({episode, anime}: INextEpisodeProps) {
 
                     { episode.image && (
                         <Image
+                            quality={50}
                             src={episode.image}
                             width={305}
                             height={190}
-                            blurDataURL={episode.image}
-                            unoptimized
                             alt={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
                             title={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
                         />

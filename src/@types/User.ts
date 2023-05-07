@@ -16,8 +16,16 @@ export interface IUser {
     myListfriends: [];
     watchingEpisodes: {
         assistedTime: number;
-        id: string
+        id: string;
     }[];
     banner: string | null;
     avatar: string | null;
+}
+
+export interface IComment {
+    id: string;
+    episodeId: string,
+    userId: string,
+    comment: string,
+    createdAt: number
 }

@@ -29,7 +29,7 @@ export function CardPopularAnime({ anime }: ICardAnimesProps) {
               <ul className={style.infos__content_genres}>
                 {anime.genres
                   ? anime.genres.map((genre, index) => (
-                      <li key={`${anime.slug}${index}`}>{genre.name}</li>
+                      <li key={`${anime.slug}genre${index}`}>{genre.name}</li>
                     ))
                   : "Sem gêneros"}
               </ul>

@@ -1,7 +1,9 @@
 // Nome, data de criação, usuário que quer criar
-import { onValue, ref, set, update, getDatabase } from "firebase/database"
-import { IProviderUserInfo, IUser } from "../@types/User"
+import { onValue, ref, set, update, getDatabase, get, child } from "firebase/database"
+import { IComment, IProviderUserInfo, IUser } from "../@types/User"
 import { db } from "../libs/firebase";
+import { v4 as uuidV4 } from 'uuid'
+
 
 interface IUpdateUserData {
     displayName?: string;
@@ -13,8 +15,6 @@ interface IUpdateUserData {
     myListfriends?: {};
     watchingEpisodes?: {};
 }
-
-let userData: IUser | null;
 
 export function createUser(providerUserInfo: IProviderUserInfo){
     const createdAt = new Date().toString()
@@ -51,8 +51,6 @@ export async function getUserData(userId: string, setUser: (userData: IUser) => 
 
         return () => unsubscribe()
     })
-    
-
 }
 
 export async function updateUserData(userId: string, userData: IUpdateUserData): Promise<void | Error>{
@@ -62,4 +60,28 @@ export async function updateUserData(userId: string, userData: IUpdateUserData):
     console.log(userData)
 
     return await update(userRef, userData)
+}
+
+export function addCommentEpisode(userId: string, episodeId: string, text: string){
+    const createdAt = new Date().getTime()
+    const db = getDatabase();
+    
+    return set(ref(db, `comments/episodes/${episodeId}/`  + uuidV4()), {
+        episodeId,
+        userId,
+        comment: text,
+        createdAt
+    });
+}
+
+export async function getCommentsEpisode(episodeId: string): Promise<IComment[]> {
+    const snapshot = await get(ref(db, `comments/episodes/${episodeId}/`))
+    const comments: IComment[] = snapshot.val()
+    const commentsFormated = comments ? Object.entries(comments).map(([key, comment]) => {
+        return {
+            ...comment, 
+            id: key
+        }
+    }).sort((a, b) => a.createdAt > b.createdAt ? 1 : (b.createdAt > a.createdAt ? 1 : 0)) : []
+    return commentsFormated
 }
