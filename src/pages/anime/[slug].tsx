@@ -1,24 +1,14 @@
 import Head from "next/head"
 import { GetStaticPaths, GetStaticProps } from "next"
-import { useEffect, useState } from "react"
-import { FaHeart, FaPlay, FaStar } from "react-icons/fa"
-import { useQuery } from "react-query"
-import { toast, ToastContainer } from "react-toastify"
+import { FaPlay, FaStar } from "react-icons/fa"
 
 import { ButtonIcon } from "../../components/ButtonIcon"
-import { EpisodeCard } from "../../components/EpisodeCard"
-import { SelectSeason } from "../../components/SelectSeason"
-import { Skeleton } from "../../components/Skeleton"
 
 import { api } from "../../service/api"
-import { updateUserData } from "../../service/firebase"
-import { useAuth } from "../../hooks/useAuth"
-import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
-import { arrangeAndAddAttributes } from "../../utils/object"
-import { createRangeArrayByNumber } from "../../utils/array"
-
+import { IAnimes } from "../../@types/Anime"
 import style from '../../styles/Anime.module.scss'
-import { useAnime } from "../../hooks/useAnime"
+import { ButtonFavorite } from "../../components/Anime/ButtonFavorite"
+import { Season } from "../../components/Anime/Season"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -26,59 +16,9 @@ interface IAnimePageProps {
 }
 
 export default function Anime({anime, firstSeason}: IAnimePageProps) {
-    const [currentSeason, setCurrentSeason] = useState<string | null>(null)
 
-    const { user } = useAuth()
-    const { checkAnimeIsFavorite } = useAnime()
 
-    const animeIsFavorite = user?.myListAnimes ? checkAnimeIsFavorite(anime.slug, user?.myListAnimes) : false
-
-    function getNextSeasonAnimes(season: string | null): Promise<IEpisodesAnime[]> | undefined {
-        if (!season) return undefined
-
-        return api.get(`/animes/season/${currentSeason}/episodes`).then(res => res.data.episodes)
-    }
-
-    const {
-        isLoading,
-        data,
-        isFetching,
-      } = useQuery({
-        queryKey: ['episodes', currentSeason],
-        queryFn: () => getNextSeasonAnimes(currentSeason),
-        keepPreviousData : true
-      })
-
-    function handleChangeSeason(value: string) {
-        setCurrentSeason(value)
-    }
-
-    function handleAddFavoriteAnime() {
-        if (!!user) {
-            updateUserData(user.uid, {
-                myListAnimes: arrangeAndAddAttributes(user.myListAnimes, anime.slug)
-            }).then(res => {
-                console.log("deu certo")
-                toast.success(`Anime adicionado aos favoritos`, {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: true,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: false,
-                    progress: undefined,
-                    closeButton: false,
-                    theme: "dark",
-                })
-            })
-        } else {
-
-        }
-    }
-
-    useEffect(() => {
-        setCurrentSeason(firstSeason)
-    }, [firstSeason])
+    console.count("Pagina renderizada")
 
     return (
         <>
@@ -107,7 +47,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                         <FaStar />
                                         {anime.rating}/10
                                     </i>
-                                    {/* <span>{anime.}</span> */}
+                                    
                                     <ul className={style.heroAnime__infos__genres}>
                                         {anime.genres.map(genre => (
                                             <li key={genre.slug}>{genre.name}</li>
@@ -132,54 +72,14 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                     )}
 
                                     <div>
-                                        { animeIsFavorite ? (
-                                            <>
-                                                <button
-                                                    className={`${style.heroAnime__btns_button} ${style.heroAnime__btns_favorite}`}
-                                                    aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
-                                                    title={`Adicionar o anime ${anime.title} aos favoritos`}
-                                                    onClick={handleAddFavoriteAnime}
-                                                >
-                                                    <FaHeart size={17} />
-                                                </button>
-                                                <strong>Remover dos Favoritos</strong>
-                                            </>
-                                        ) : (
-                                        <>
-                                            <button
-                                                className={style.heroAnime__btns_button}
-                                                aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
-                                                title={`Adicionar o anime ${anime.title} aos favoritos`}
-                                                onClick={handleAddFavoriteAnime}
-                                            >
-                                                <FaHeart size={17} />
-                                            </button>
-                                            <strong>Favoritar</strong>
-                                        </>
-                                        )}
+                                        <ButtonFavorite anime={anime}/>
                                     </div>
                                     
                                 </div>
                             </div>
                         </section>
                         <section className={`${style.season} container`}>
-                            <div className={style.season__header}>
-                                <SelectSeason seasons={anime.seasons}  onChangeSeason={handleChangeSeason}/>
-                            </div>
-
-                            <div className={style.season__episodes}>
-                                { isLoading || isFetching ? (
-                                    createRangeArrayByNumber(8).map(item => (
-                                        <Skeleton key={item} height={200} />
-                                    ))
-                                ) : !!data ? (
-                                    data.map(episode => (
-                                        <EpisodeCard key={episode.id} episode={episode} anime={anime} />
-                                    ))
-                                ) : (
-                                    "Sem episódios"
-                                )}
-                            </div>
+                            <Season anime={anime} firstSeason={firstSeason} />
                         </section>
                     </>
                 )}

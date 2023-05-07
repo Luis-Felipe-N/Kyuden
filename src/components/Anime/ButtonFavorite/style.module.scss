@@ -1,0 +1,39 @@
+.buttonFavorite {
+    --button-width: 3rem;
+    line-height: 0;
+    width: var(--button-width);
+    height: var(--button-width);
+    text-align: center;
+    background-color: var(--gray-700-alpha);
+    color: var(--gray-50);
+    transition: .2s;
+    overflow: hidden;
+
+    font-family: var(--font-secondary);
+
+    border: none;
+    border-radius: var(--border-radius);
+
+    svg {
+        border-radius: 100%;
+    }
+        
+    
+    &__favorite {
+        color: #F56565;
+
+        svg {
+            animation: pulse .3s;
+        }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.3);
+    }
+
+}

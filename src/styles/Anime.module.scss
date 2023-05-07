@@ -93,26 +93,9 @@
             border: none;
             border-radius: var(--border-radius);
         }
-
-        &_favorite {
-            color: #F56565;
-        }
     }
 }
 
-.season {
-    margin-block: 2rem;
-
-    &__header {
-        margin-bottom: 2rem;
-    }
-
-    &__episodes {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: repeat(auto-fill, minmax(315px, 1fr));
-    }
-}
 
 @media (max-width: 600px) {
     .heroAnime {
