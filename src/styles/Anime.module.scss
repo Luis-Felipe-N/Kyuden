@@ -93,6 +93,10 @@
             border: none;
             border-radius: var(--border-radius);
         }
+
+        &_favorite {
+            color: #F56565;
+        }
     }
 }
 

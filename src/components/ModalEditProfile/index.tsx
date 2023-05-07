@@ -18,7 +18,7 @@ import { Button } from '../Button';
 import { AvatarSlider } from './AvatarSlider';
 import { BannerSlider } from './BannnerSlider';
 
-import { removeEmptyAttribute } from '../../utils/Object';
+import { removeEmptyAttribute } from '../../utils/object';
 
 const editProfileFormSchema = yup.object().shape({
     displayName: yup.string(),

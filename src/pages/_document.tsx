@@ -21,7 +21,6 @@ export default class MyDocument extends Document {
                     <link rel="shortcut icon" href="/icon.png" type="image/x-icon" />
                 </Head>
 
-                
                 <body>
                     <Main />
                     <NextScript />

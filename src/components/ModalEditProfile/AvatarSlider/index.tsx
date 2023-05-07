@@ -6,7 +6,6 @@ import "swiper/css/navigation";
 
 import { useInfiniteQuery } from 'react-query';
 import { Navigation } from 'swiper';
-import { useAuth } from '../../../hooks/useAuth';
 
 import { ImCheckboxChecked } from 'react-icons/im'
 

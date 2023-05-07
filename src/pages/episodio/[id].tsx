@@ -19,7 +19,7 @@ import { IStreamsBlogger } from "../../types"
 import { useRouter } from "next/router"
 import { updateUserData } from "../../service/firebase"
 import { useAuth } from "../../hooks/useAuth"
-import { arrangeAndAddObject } from "../../utils/Object"
+import { arrangeAndAddObject } from "../../utils/object"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
@@ -152,7 +152,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                                     <Button
                                         title="Baixar episódio"
                                         aria-label="Baixar episódio"
-                                        asChild
+                                        hasChild
                                     >
                                         <a href={streams[streams.length - 1].play_url} download={episode.title}>
                                             <FiDownload size={20} />

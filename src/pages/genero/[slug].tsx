@@ -3,10 +3,8 @@ import { FaHeart, FaPlay, FaStar } from "react-icons/fa"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
 import { api } from "../../service/api"
 import style from '../../styles/Anime.module.scss'
-import Image from "next/image"
 import { SelectSeason } from "../../components/SelectSeason"
 import { useEffect, useState } from "react"
-import Link from "next/link"
 import { ButtonIcon } from "../../components/ButtonIcon"
 import Head from "next/head"
 import { EpisodeCard } from "../../components/EpisodeCard"
@@ -85,7 +83,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                                 className={style.heroAnime__btns_button}
                                                 aria-label={`Assistir trailer do anime ${anime.title}`}
                                                 title={`Assistir trailer do anime ${anime.title}`}
-                                                asChild
+                                                hasChild
                                             >
                                                 <a target="__black" href={`https://www.youtube.com/watch?v=${anime.youtubeVideoId}`}>
                                                     <FaPlay size={17} />

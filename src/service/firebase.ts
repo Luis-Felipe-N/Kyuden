@@ -59,7 +59,7 @@ export async function updateUserData(userId: string, userData: IUpdateUserData):
     const db = getDatabase();
     const userRef = ref(db, 'users/' + userId);
 
+    console.log(userData)
+
     return await update(userRef, userData)
-    .then(() => {})
-    .catch((err) => new Error(err))
 }

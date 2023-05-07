@@ -1,19 +1,24 @@
-import { GetStaticPaths, GetStaticProps } from "next"
-import { FaHeart, FaPlay, FaStar } from "react-icons/fa"
-import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
-import { api } from "../../service/api"
-import style from '../../styles/Anime.module.scss'
-import { SelectSeason } from "../../components/SelectSeason"
-import { useEffect, useState } from "react"
-import { ButtonIcon } from "../../components/ButtonIcon"
 import Head from "next/head"
-import { EpisodeCard } from "../../components/EpisodeCard"
-import { useAuth } from "../../hooks/useAuth"
-import { updateUserData } from "../../service/firebase"
-import { arrangeAndAddAttributes } from "../../utils/Object"
+import { GetStaticPaths, GetStaticProps } from "next"
+import { useEffect, useState } from "react"
+import { FaHeart, FaPlay, FaStar } from "react-icons/fa"
 import { useQuery } from "react-query"
-import { createRangeArrayByNumber } from "../../utils/Array"
+import { toast, ToastContainer } from "react-toastify"
+
+import { ButtonIcon } from "../../components/ButtonIcon"
+import { EpisodeCard } from "../../components/EpisodeCard"
+import { SelectSeason } from "../../components/SelectSeason"
 import { Skeleton } from "../../components/Skeleton"
+
+import { api } from "../../service/api"
+import { updateUserData } from "../../service/firebase"
+import { useAuth } from "../../hooks/useAuth"
+import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
+import { arrangeAndAddAttributes } from "../../utils/object"
+import { createRangeArrayByNumber } from "../../utils/array"
+
+import style from '../../styles/Anime.module.scss'
+import { useAnime } from "../../hooks/useAnime"
 
 interface IAnimePageProps {
     anime: IAnimes,
@@ -24,6 +29,9 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     const [currentSeason, setCurrentSeason] = useState<string | null>(null)
 
     const { user } = useAuth()
+    const { checkAnimeIsFavorite } = useAnime()
+
+    const animeIsFavorite = user?.myListAnimes ? checkAnimeIsFavorite(anime.slug, user?.myListAnimes) : false
 
     function getNextSeasonAnimes(season: string | null): Promise<IEpisodesAnime[]> | undefined {
         if (!season) return undefined
@@ -33,11 +41,8 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
 
     const {
         isLoading,
-        isError,
-        error,
         data,
         isFetching,
-        isPreviousData,
       } = useQuery({
         queryKey: ['episodes', currentSeason],
         queryFn: () => getNextSeasonAnimes(currentSeason),
@@ -52,6 +57,19 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
         if (!!user) {
             updateUserData(user.uid, {
                 myListAnimes: arrangeAndAddAttributes(user.myListAnimes, anime.slug)
+            }).then(res => {
+                console.log("deu certo")
+                toast.success(`Anime adicionado aos favoritos`, {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    closeButton: false,
+                    theme: "dark",
+                })
             })
         } else {
 
@@ -103,7 +121,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                                 className={style.heroAnime__btns_button}
                                                 aria-label={`Assistir trailer do anime ${anime.title}`}
                                                 title={`Assistir trailer do anime ${anime.title}`}
-                                                asChild
+                                                hasChild
                                             >
                                                 <a target="__black" href={`https://www.youtube.com/watch?v=${anime.youtubeVideoId}`}>
                                                     <FaPlay size={17} />
@@ -114,15 +132,31 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                                     )}
 
                                     <div>
-                                        <button
-                                            className={style.heroAnime__btns_button}
-                                            aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
-                                            title={`Adicionar o anime ${anime.title} aos favoritos`}
-                                            onClick={handleAddFavoriteAnime}
-                                        >
-                                            <FaHeart size={17} />
-                                        </button>
-                                        <strong>Favoritar</strong>
+                                        { animeIsFavorite ? (
+                                            <>
+                                                <button
+                                                    className={`${style.heroAnime__btns_button} ${style.heroAnime__btns_favorite}`}
+                                                    aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
+                                                    title={`Adicionar o anime ${anime.title} aos favoritos`}
+                                                    onClick={handleAddFavoriteAnime}
+                                                >
+                                                    <FaHeart size={17} />
+                                                </button>
+                                                <strong>Remover dos Favoritos</strong>
+                                            </>
+                                        ) : (
+                                        <>
+                                            <button
+                                                className={style.heroAnime__btns_button}
+                                                aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
+                                                title={`Adicionar o anime ${anime.title} aos favoritos`}
+                                                onClick={handleAddFavoriteAnime}
+                                            >
+                                                <FaHeart size={17} />
+                                            </button>
+                                            <strong>Favoritar</strong>
+                                        </>
+                                        )}
                                     </div>
                                     
                                 </div>

@@ -2,7 +2,7 @@ export function removeEmptyAttribute(object: Object): Object {
     return Object.fromEntries(Object.entries(object).filter(([,v])=>!!v))
 }
 
-export function arrangeAndAddAttributes(object: Object, valueToAdd: any) {
+export function arrangeAndAddAttributes(object: Object = {}, valueToAdd: any) {
     const arrangedObject = Object.entries(object).map(([,v], i) => [i, v])
     const alreadyHaveThisValue = arrangedObject.find(([,value]) => value === valueToAdd)
 
@@ -10,6 +10,7 @@ export function arrangeAndAddAttributes(object: Object, valueToAdd: any) {
 
     const newValue = [Object.entries(object).length, valueToAdd]
     const newArray = [...arrangedObject, newValue]
+    
     return Object.fromEntries(newArray)
 }
 

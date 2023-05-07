@@ -7,6 +7,7 @@ import { PopularAnimes } from '../components/PopularAnimes'
 import { api } from '../service/api'
 import { KeepWatching } from '../components/KeepWatching'
 import { useAuth } from '../hooks/useAuth'
+import style from '../styles/Home.module.scss'
 
 
 interface IHomeProps {
@@ -22,13 +23,13 @@ interface IHomeProps {
 export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProps) {
 
   const { user } = useAuth()
-  console.log(animesGenres)
+  
   return (
     <>
     <Head>
       <title>Kyuden :: Inicio</title>
     </Head>
-    <main>
+    <main className={style.home}>
       <Hero anime={animeHero}/>
       <PopularAnimes animes={popularAnimes} />
       { !!user?.watchingEpisodes && <KeepWatching />}
@@ -39,8 +40,6 @@ export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProp
     </>
   )
 }
-
-
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('/animes/popular')
@@ -80,6 +79,6 @@ export const getStaticProps: GetStaticProps = async () => {
           popularAnimes: animes || null
       },
 
-      revalidate: 60 * 60 * 24 * 2 // 1 Dia
+      revalidate: 60 * 60 * 24 * 7 // 1 Dia
   }
 }

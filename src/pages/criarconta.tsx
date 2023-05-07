@@ -1,16 +1,15 @@
-import { FormEvent, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
 
+import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import { Button } from "../components/Button"
-import { Toast } from "../components/Toast"
+import { Loading } from "../components/Loading";
 
 import { useAuth } from "../hooks/useAuth"
-import { useForm, Resolver } from "react-hook-form";
 import style from "../styles/Login.module.scss"
-import { Loading } from "../components/Loading";
 
 interface ICreateUser {
     email: string, 
@@ -29,7 +28,6 @@ const createUserFormSchema = yup.object().shape({
 
 export default function SingUp() {
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState("")
 
     const { register, handleSubmit, formState:{ errors } } = useForm({
         resolver: yupResolver(createUserFormSchema)
@@ -40,12 +38,13 @@ export default function SingUp() {
 
     async function handleCreateAccount(data: ICreateUser) {
         setLoading(true)
-        setError("")
 
-        const user = await createAccount(data)
-
-        if (user instanceof Error) {
-            setError(user.message)
+        try {
+            const user = await createAccount(data)
+            console.log(user)
+        } catch (error) {
+            // Ocorreu algum erro na requisição
+            console.log(error)   
         }
 
         setLoading(false)
@@ -53,14 +52,6 @@ export default function SingUp() {
     errors?.name && errors.name.message?.toString()
     return (
         <main className={style.login}>
-            {error}
-            { error && (
-                <Toast title="Error" onClose={() => setError("")}>
-                    <>
-                    <span>{error}</span>
-                    </>
-                </Toast>
-            )}
             
             <div className={style.login__container}>
                     <h1>Kyuden | Criar conta</h1>
@@ -108,7 +99,7 @@ export default function SingUp() {
                         </Button>
                     </form>
 
-                    <p>Já tem uma conta? <Link href="/entrar"><a>Entrar aqui</a></Link></p>
+                    <p>Já tem uma conta? <Link href="/entrar">Entrar aqui</Link></p>
             </div>
         </main>
     )

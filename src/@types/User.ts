@@ -10,10 +10,10 @@ export interface IUser {
     email: string;
     displayName: string;
     createAt: string;
-    watchedEpisodes: {};
-    watchedAnimes: {};
-    myListAnimes: {};
-    myListfriends: {};
+    watchedEpisodes: [];
+    watchedAnimes: [];
+    myListAnimes: [];
+    myListfriends: [];
     watchingEpisodes: {
         assistedTime: number;
         id: string

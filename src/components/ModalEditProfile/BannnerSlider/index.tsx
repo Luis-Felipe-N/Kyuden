@@ -11,7 +11,7 @@ import { Navigation } from 'swiper';
 import { useState } from 'react';
 import { ImCheckboxChecked } from "react-icons/im";
 import { Skeleton } from "../../Skeleton";
-import { createRangeArrayByNumber } from "../../../utils/Array";
+import { createRangeArrayByNumber } from "../../../utils/array";
 
 interface IBannerSliderProps {
     onSelectBanner: (url: string) => void

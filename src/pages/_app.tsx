@@ -5,11 +5,14 @@ import { Footer } from '../components/Footer'
 
 import { AuthenticationProvider } from '../context/AuthenticationContext'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { ToastProvider } from '../components/Toast'
 import { useEffect } from 'react'
 import nProgress from 'nprogress'
+
 import '../styles/loadingBar.css';
+import "../styles/toast.scss";
+
 import { Router } from 'next/router'
+import { ToastContainer } from 'react-toastify'
 const queryClient = new QueryClient()
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -29,15 +32,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
   }, []);
   return (
-    <ToastProvider>
       <AuthenticationProvider>
       <QueryClientProvider client={queryClient}>
         <Header />
         <Component {...pageProps} />  
         <Footer />
+        <ToastContainer />
       </QueryClientProvider>
       </AuthenticationProvider>
-    </ToastProvider>
   )
 }
 
