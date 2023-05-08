@@ -1,6 +1,11 @@
-export function Loading() {
+interface ILoadingProps {
+    width?: number;
+    height?: number;
+}
+
+export function Loading({ width, height }: ILoadingProps) {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{padding: "5px"}} width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{padding: "5px"}} width={width || "100%"} height={height || "100%"} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
             <g>
             <animateTransform attributeName="transform" type="rotate" values="360 50 50;0 50 50" keyTimes="0;1" dur="1s" repeatCount="indefinite" calcMode="spline" keySplines="0.5 0 0.5 1" begin="-0.1s"></animateTransform>
             <circle cx="50" cy="50" r="39.891" stroke="#805ad5" strokeWidth="14.4" fill="none" strokeDasharray="0 300">

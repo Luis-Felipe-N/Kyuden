@@ -42,6 +42,7 @@ export function EpisodeCard({episode, anime}: INextEpisodeProps) {
                             src={episode.image}
                             width={305}
                             height={190}
+                            unoptimized
                             alt={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
                             title={anime ? `Thumbnail do episode ${episode.title} do anime ${anime.title}` : `Thumbnail do episode ${episode.title}`}
                         />

@@ -37,8 +37,10 @@ export function EpisodeCardWatched({episode, anime}: INextEpisodeProps) {
 
     const assistedTimeInPercentage = (Number(getWatchedEpisode?.assistedTime) * 100) / episode.duration
 
-
+    if (assistedTimeInPercentage > 95 || assistedTimeInPercentage < 5) return null
+    
     function handleSetEpsiode() {
+        console.log(assistedTimeInPercentage)
         if (!episodeVideoRef?.current || !linkStream) return
 
         episodeVideoRef.current.src = linkStream
@@ -66,7 +68,7 @@ export function EpisodeCardWatched({episode, anime}: INextEpisodeProps) {
     }
     
     return (
-        <Link onMouseEnter={handlePlayerEpisode} onMouseLeave={handleRemovePlayer} className={style.episode} href={`/episodio/${episode.id}`}>
+        <Link onMouseEnter={handlePlayerEpisode} onMouseLeave={handleRemovePlayer} onFocus={handlePlayerEpisode} onBlur={handleRemovePlayer} className={style.episode} href={`/episodio/${episode.id}`}>
                 <div className={style.episode__cover}>
                     <div className={style.episode__cover_play}>
                         <FaPlay />

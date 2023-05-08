@@ -92,6 +92,14 @@
             gap: 1rem;
             grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
         }
+
+        &_loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 10rem;
+        }
     }
 }
 

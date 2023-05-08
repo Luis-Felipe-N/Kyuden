@@ -10,6 +10,7 @@ import { api } from '../service/api'
 import style from '../styles/Search.module.scss'
 
 import { motion as m } from 'framer-motion'
+import { Loading } from '../components/Loading'
 
 interface IResultsSearch {
     animes: IAnimes[];
@@ -76,10 +77,10 @@ export default function Search({ popularAnimes }: ISearchProps) {
 
             { loading ? (
                 <section className={`${style.search__resultsContainer} container`}>
-                    <h3>Buscando</h3>
+                    <h3>Buscando...</h3>
 
-                    <div  className={`${style.search__resultsContainer_animes} container`}>
-                        
+                    <div  className={`${style.search__resultsContainer_loading} container`}>
+                        <Loading width={100}/>
                     </div>
                 </section>  
             ) : results ? (
