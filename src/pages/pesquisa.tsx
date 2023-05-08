@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
-import { useState } from 'react'
+import { ChangeEvent, UIEvent, useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { IAnimes } from '../@types/Anime'
 import { Button } from '../components/Button'
@@ -24,20 +24,21 @@ interface ISearchProps {
 
 let timeOutSearch: any;
 
+const ANIMEPERVIEW = 30
+
 export default function Search({ popularAnimes }: ISearchProps) {
     const [termSearch, setTermSearch] = useState('')
     const [loading, setLoading] = useState(false)
     const [results, setResults] = useState<IResultsSearch>()
 
-
     function handleTermSearch() {
         setLoading(true)
         clearTimeout(timeOutSearch)
         timeOutSearch = setTimeout(async () => {
-            const { data } = await api.get(`/animes?keyword=${termSearch}&take=12`)
+            const { data } = await api.get(`/animes?keyword=${termSearch}&take=${ANIMEPERVIEW}`)
             setResults({...data})
             setLoading(false)
-        }, 500);
+        }, 700);
     }
 
     return (
