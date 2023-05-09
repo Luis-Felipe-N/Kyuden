@@ -43,6 +43,9 @@ export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProp
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+  
+
+  const { data: animeHero } = await api.get('/animes/hanayamata')
   const { data } = await api.get('/animes/popular')
   const { data: animeGenreAction } =  await api.get(`animes/genre/Ação?take=20`)
   const { data: animeGenreTerror } =  await api.get(`animes/genre/Terror?take=20`)
@@ -51,9 +54,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const { animes } = data
 
+  // console.log(animeHeroa)
   return {
       props: {
-          animeHero: animes[7] || null,
+          animeHero: animeHero.anime,
           animesGenres: [
             {
               name: "Aventura",

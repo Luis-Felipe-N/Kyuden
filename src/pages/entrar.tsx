@@ -13,12 +13,13 @@ import { Input } from "../components/Forms/Input";
 import { IUserLoginCredentials } from "../context/AuthenticationContext";
 import { Loading } from "../components/Loading";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 
 
 const loginFormSchema = yup.object().shape({
-    email: yup.string().required("E-mail obrigatório").email("O campo precisa ser um email válido"),
-    password: yup.string().required("Senha obrigatória").min(6, 'Senha de no minímo 6 caracteres'),
+    email: yup.string().required("E-mail obrigatório").email("Por favor, insira um endereço de email válido"),
+    password: yup.string().required("Senha obrigatória").min(6, 'Sua senha deve conter pelo menos 6 caracteres'),
 });
   
 
@@ -35,11 +36,15 @@ export default function SingIn() {
     function handleCreateAccount(credentials: IUserLoginCredentials) {
         setLoading(true)
         login(credentials).then(res => {
-            if (res instanceof Error) {
-                console.log(res)
+            if (!(res instanceof Error)) {
+                router.push('/perfil')
             }
+            if (res instanceof Error) {
+                if (res.message === 'auth/wrong-password' || res.message === 'auth/user-not-found' ) {
+                    toast.error('Senha ou usuário incorreto. Por favor, tente novamente.')
+                }
+            } 
 
-            router.push('/perfil')
             setLoading(false)
         }).catch(err => {
             console.log(err)

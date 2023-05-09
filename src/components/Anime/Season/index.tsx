@@ -48,7 +48,7 @@ export function Season({anime, firstSeason}: ISeasonProps) {
                         <Skeleton key={item} height={200} />
                     ))
                 ) : !!data ? (
-                    data.map(episode => (
+                    data.filter(episode => !!episode.duration).map(episode => episode.duration && (
                         <EpisodeCard key={episode.id} episode={episode} anime={anime} />
                     ))
                 ) : (

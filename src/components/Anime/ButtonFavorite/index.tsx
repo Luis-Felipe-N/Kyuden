@@ -8,10 +8,11 @@ import { arrangeAndAddAttributes } from "../../../utils/object"
 import style from './style.module.scss'
 
 interface IButtonFavoriteProps {
-    anime: IAnimes
+    anime: IAnimes;
+    hasText?: boolean;
 }
 
-export function ButtonFavorite({anime}: IButtonFavoriteProps) {
+export function ButtonFavorite({anime, hasText = false}: IButtonFavoriteProps) {
     const { user } = useAuth()
     const { checkAnimeIsFavorite } = useAnime()
 
@@ -21,13 +22,13 @@ export function ButtonFavorite({anime}: IButtonFavoriteProps) {
         <>
             <button
                 className={style.buttonFavorite}
-                aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
-                title={`Adicionar o anime ${anime.title} aos favoritos`}
+                aria-label={`Adicionar o anime ${anime.title} aos seus favoritos`}
+                title={`Adicionar o anime ${anime.title} aos seus favoritos`}
                 onClick={handleAddFavoriteAnime}
              >
                 <FaHeart size={17} />
             </button>
-            <strong>Favoritar</strong>
+            { hasText && <strong>Favoritar</strong>}
         </>
     )
 
@@ -36,8 +37,10 @@ export function ButtonFavorite({anime}: IButtonFavoriteProps) {
             updateUserData(user.uid, {
                 myListAnimes: arrangeAndAddAttributes(user.myListAnimes, anime.slug)
             }).then(res => {
-                toast.success(`Anime adicionado aos favoritos`)
+                toast.success(`Anime adicionado aos seus favoritos`)
             })
+        } else {
+            toast.warn(`Faça login para adicionar este anime aos seus favoritos.`)
         }
     }
 
@@ -45,12 +48,12 @@ export function ButtonFavorite({anime}: IButtonFavoriteProps) {
         <>
             <button
                 className={`${style.buttonFavorite} ${style.buttonFavorite__favorite}`}
-                aria-label={`Adicionar o anime ${anime.title} aos favoritos`}
-                title={`Adicionar o anime ${anime.title} aos favoritos`}
+                aria-label={`Remover o anime ${anime.title} dos seus favoritos`}
+                title={`Remover o anime ${anime.title} dos seus favoritos`}
             >
                 <FaHeart size={17} />
             </button>
-            <strong>Remover dos Favoritos</strong>
+            { hasText && <strong>Remover dos Favoritos</strong>}
         </>
     )
 }

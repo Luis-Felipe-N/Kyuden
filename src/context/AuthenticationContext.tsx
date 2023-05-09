@@ -84,7 +84,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
       return user
     })
     .catch((error) => {
-      return new Error(error)
+      return new Error(error.code)
     });
   }
 
@@ -105,7 +105,7 @@ export function AuthenticationProvider({ children }: IAuthenticationProviderProp
         getUserData(uid, setUser)
       })
       .catch((error: any) => {
-        return new Error(error)
+        return new Error(error.code)
       });
     })
   }

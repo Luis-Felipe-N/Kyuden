@@ -29,15 +29,13 @@ export function EpisodeCardWatched({episode, anime}: INextEpisodeProps) {
         if (!user) return null
 
         const watchedEpisodeData = getWatchedEpisodeData(user, episode)
-        console.log({watchedEpisodeData})
+        // console.log({watchedEpisodeData})
         if (!watchedEpisodeData) return null
 
         return watchedEpisodeData
     }, [episode, user, getWatchedEpisodeData])
 
     const assistedTimeInPercentage = (Number(getWatchedEpisode?.assistedTime) * 100) / episode.duration
-
-    if (assistedTimeInPercentage > 95 || assistedTimeInPercentage < 5) return null
     
     function handleSetEpsiode() {
         console.log(assistedTimeInPercentage)
@@ -66,6 +64,8 @@ export function EpisodeCardWatched({episode, anime}: INextEpisodeProps) {
 
         episodeVideoRef.current.src = ''
     }
+
+    console.log('aaaaaaaaaaaaaaaaaaaaaaa')
     
     return (
         <Link onMouseEnter={handlePlayerEpisode} onMouseLeave={handleRemovePlayer} onFocus={handlePlayerEpisode} onBlur={handleRemovePlayer} className={style.episode} href={`/episodio/${episode.id}`}>

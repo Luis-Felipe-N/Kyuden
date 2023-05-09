@@ -8,11 +8,11 @@ import { motion as m } from "framer-motion";
 
 import style from './style.module.scss'
 import { useRef } from "react"
+import { ButtonFavorite } from "../Anime/ButtonFavorite"
 
 interface IHeroProps {
     anime: IAnimes
 }
-
 
 export function Hero({ anime }: IHeroProps) {
 
@@ -61,13 +61,7 @@ export function Hero({ anime }: IHeroProps) {
                         <h1>{anime.title}</h1>
                         <p>{anime.description}</p>
                         <div className={style.containerBtns}>
-                            <ButtonIcon
-                                title={`Adicionar ${anime.title} na minha lista`}
-                                aria-label={`Adicionar ${anime.title} na minha lista`}
-                                className={style.btnAddList}
-                            >
-                                <FaPlus />
-                            </ButtonIcon>
+                            <ButtonFavorite anime={anime}/>
                             <Button aschild="true">
                                 <Link href={`/anime/${anime.slug}`}>
                                     <FaPlay />
