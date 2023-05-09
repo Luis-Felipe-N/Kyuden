@@ -2,24 +2,19 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import Image from "next/image"
 import Head from "next/head"
 import Link from "next/link"
-import { useCallback, useEffect, useRef, useState } from "react"
 import { FaShare } from "react-icons/fa"
-import { FiDownload } from "react-icons/fi"
 import { IAnimes, IEpisodesAnime } from "../../@types/Anime"
 import { Button } from "../../components/Button"
 import { Comments } from "../../components/Comments"
 import { Skeleton } from "../../components/Skeleton"
-import { getUrlBaseVideo } from "../../components/utils/getUrlBaseVideo"
-import { useEpisode } from "../../hooks/useEpisode"
 import { api } from "../../service/api"
 
 import style from "../../styles/Episode.module.scss"
-import { IStreamsBlogger } from "../../types"
-import { useRouter } from "next/router"
-import { updateUserData } from "../../service/firebase"
-import { useAuth } from "../../hooks/useAuth"
-import { arrangeAndAddObject } from "../../utils/object"
 import { NextEpisode } from "../../components/Episode/nextEpisode"
+import { Player } from "../../components/Episode/Player"
+import { formatDate } from "../../utils/date"
+import { useRouter } from "next/router"
+import { toast } from "react-toastify"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
@@ -28,70 +23,20 @@ interface IEpisodeProps {
 }
 
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
-    const [streams, setStreams] = useState<IStreamsBlogger[]>()
 
-    console.count("Page count")
+    const { asPath} = useRouter()
 
-    const { user } = useAuth()
+    function handleCopyLink() {
+        const origin =
+        typeof window !== 'undefined' && window.location.origin
+            ? window.location.origin
+            : '';
 
-    const router   = useRouter()
-    const refVideo = useRef<HTMLVideoElement>(null)
-
-    const { getWatchedEpisodeData } = useEpisode()
-
-    const watchedEpisodeData = user && episode ? getWatchedEpisodeData(user, episode) : null;
-
-    const savePreviosTime = useCallback(() => {
-        if (refVideo.current !== null) {
-            if (user) {
-                updateUserData(user.uid, {
-                    watchingEpisodes: arrangeAndAddObject(user.watchingEpisodes || {}, {
-                        id: episode.id,
-                        assistedTime: refVideo.current.currentTime,
-                        updatedAt: ''
-                    }, episode.id)
-                })
-            }
-        }
-    }, [refVideo, episode, user])
-
-    useEffect(() => {
-        if (!!refVideo.current && watchedEpisodeData) {
-            console.log(watchedEpisodeData)
-            refVideo.current.currentTime = watchedEpisodeData.assistedTime
-        }
-    }, [watchedEpisodeData])
-
-    function formatDate(date: Date) {
-        const dateFormated = new Date(date).toLocaleDateString("pt-BR", {
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-        })
-
-        return dateFormated
+    const URL = `${origin}${asPath}`;
+        navigator.clipboard.writeText(origin + asPath)
+        .then(res => toast.success('O link do episódio foi copiado para que você possa compartilhá-lo'))
+        .catch(res => toast.error('Desculpe, nao foi possível compartilha o episódio'))
     }
-
-    useEffect(() => {
-        const getUrlBase = async () => {
-            if (episode?.linkEmbed) {
-                const data = await getUrlBaseVideo(episode.linkEmbed)
-                setStreams(data)
-            }
-        }
-
-        getUrlBase()
-    }, [episode?.linkEmbed])
-
-
-
-    useEffect(() => {    
-        router.events.on("routeChangeStart", savePreviosTime);
-    
-        return () => {
-          router.events.off("routeChangeStart", savePreviosTime);
-        };
-      }, [router.events, savePreviosTime]);
 
     return (
         <>
@@ -105,17 +50,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                 <>
                     <section className={style.episode__epvideo}>
                         
-                            { streams ? (
-                                <video ref={refVideo} controls autoPlay>
-                                    <source src={streams[streams.length - 1].play_url} type="video/mp4" /> 
-                                    HTML5 Video .
-                                    <a style={{width: '200px'}} href={streams[streams.length - 1].play_url} download>Download video</a> . 
-                                </video>
-                            ) : (
-                                <div className={style.episode__iframe}>
-                                    <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
-                                </div>
-                            )}
+                        <Player episode={episode} />
                         <div className={style.episode__info}>
                            <div className={style.episode__info_ep}>
                                 <h3>{episode.title}</h3>
@@ -133,25 +68,12 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                                         </div>
                                     </div>
                                 </Link>
-                                <span>Lançado em {formatDate(episode.uploaded_at)}</span>
+                                <time>Lançado em {formatDate(episode.uploaded_at)}</time>
                            </div>
 
                            <div className={style.episode__info_options}>
-                            {
-                                streams && (
-                                    <Button
-                                        title="Baixar episódio"
-                                        aria-label="Baixar episódio"
-                                        aschild="true"
-                                    >
-                                        <a href={streams[streams.length - 1].play_url} download={episode.title}>
-                                            <FiDownload size={20} />
-                                            Baixar
-                                        </a>
-                                    </Button>
-                                )
-                            }
                                 <Button
+                                    onClick={handleCopyLink}
                                     title="Compartilhar episódio"
                                     aria-label="Compartilhar episódio"
                                 >

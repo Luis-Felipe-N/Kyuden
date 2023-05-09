@@ -9,3 +9,13 @@ export function formartDistanceDate(date: Date) {
 
     return dateFormated
 }
+
+export function formatDate(date: Date) {
+    const dateFormated = new Date(date).toLocaleDateString("pt-BR", {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+    })
+
+    return dateFormated
+}

@@ -10,6 +10,8 @@ import { Loading } from "../components/Loading";
 
 import { useAuth } from "../hooks/useAuth"
 import style from "../styles/Login.module.scss"
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 interface ICreateUser {
     email: string, 
@@ -21,13 +23,14 @@ interface ICreateUser {
 const createUserFormSchema = yup.object().shape({
     // userName: yup.string().required('Usuário é obrigatório').min(6, 'Senha de no minímo 6 caracteres'),
     name: yup.string().required('Nome é obrigatório'),
-    email: yup.string().required("E-mail obrigatório").email("O campo precisa ser um email válido"),
-    password: yup.string().required("Senha obrigatória").min(6, 'Senha de no minímo 6 caracteres'),
+    email: yup.string().required("E-mail obrigatório").email("Por favor, insira um endereço de email válido"),
+    password: yup.string().required("Senha obrigatória").min(6, 'Sua senha deve conter pelo menos 6 caracteres'),
 });
   
 
 export default function SingUp() {
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
     const { register, handleSubmit, formState:{ errors } } = useForm({
         resolver: yupResolver(createUserFormSchema)
@@ -41,7 +44,15 @@ export default function SingUp() {
 
         try {
             const user = await createAccount(data)
-            console.log(user)
+
+            if (!(user instanceof Error) && user) {
+                router.push('/perfil')
+            }
+
+            
+            if (user instanceof Error && user.message === 'auth/email-already-in-use') {
+                toast.error('Email já está em uso')
+            }
         } catch (error) {
             // Ocorreu algum erro na requisição
             console.log(error)   
