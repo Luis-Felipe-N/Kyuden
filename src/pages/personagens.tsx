@@ -45,7 +45,7 @@ export default function Personagens() {
             ) : data?.data ? (
                 data.data.map(a => (
                     <div className={style.card} key={a.mal_id}>
-                        <div width={207} height={314} className={style.card__containerImg}>
+                        <div  className={style.card__containerImg}>
                             <Image width={207} height={314} src={a.images.jpg.image_url} alt={`Imagem do personagem `} />
                         </div>
                         <strong>{a.name}</strong>
