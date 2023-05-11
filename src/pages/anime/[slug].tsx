@@ -19,13 +19,21 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
 
     return (
         <>
-            {anime && (
+            {anime ? (
                 <Head>
                     <title>
                         Kyuden :: {anime.title}
                     </title>
                     
                     <meta name="description" content={anime.description} />
+                </Head>
+            ) : (
+                <Head>
+                    <title>
+                        Kyuden :: Anime
+                    </title>
+                    
+                    {/* <meta name="description" content={anime.description} /> */}
                 </Head>
             )}
             <main className={style.anime}>
