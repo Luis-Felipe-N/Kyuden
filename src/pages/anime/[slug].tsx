@@ -161,7 +161,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async ({ }) => {
-    const { data } = await api.get(`/animes/?take=1`)
+    const { data } = await api.get(`/animes/?take=363`)
 
     const animes = data.animes.map((anime: IAnimes) => {
         return {
