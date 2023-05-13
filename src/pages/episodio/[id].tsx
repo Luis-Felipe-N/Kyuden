@@ -112,15 +112,17 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: [],
-        fallback: true
+        fallback: "blocking"
     }
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
     const id = params?.id
+    console.log(id)
+
     try {
         const { data } = await api.get(`/animes/episode/${id}`)
-
+        console.log(data)
         return {
             props: {
                 ...data
@@ -128,6 +130,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
             revalidate: 60
         }
     } catch (error) {
+        console.log(error)
         return {
             notFound: true
         }

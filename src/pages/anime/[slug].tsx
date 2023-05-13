@@ -88,7 +88,6 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
 
 export const getStaticPaths: GetStaticPaths = async ({ }) => {
     const { data } = await api.get(`/animes/`)
-    console.log("DATA ANIME: ", data)
 
     const animes = data.animes.map((anime: IAnimes) => {
         return {
@@ -111,7 +110,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
         const anime: IAnimes = data.anime
 
-        console.log(data.anime)
 
         return {
             props: {
