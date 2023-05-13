@@ -78,6 +78,6 @@ export const getStaticProps: GetStaticProps = async () => {
           ],
           popularAnimes: animes || null
       },
-      revalidate: 60 // 1 Dia
+      revalidate: 60 * 60 * 24 * 7 // 1 Dia
   }
 }

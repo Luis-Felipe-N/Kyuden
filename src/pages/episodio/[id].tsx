@@ -27,12 +27,9 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     const { asPath} = useRouter()
 
     function handleCopyLink() {
-        const origin =
-        typeof window !== 'undefined' && window.location.origin
-            ? window.location.origin
-            : '';
+        const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
 
-    const URL = `${origin}${asPath}`;
+        const URL = `${origin}${asPath}`;
         navigator.clipboard.writeText(origin + asPath)
         .then(res => toast.success('O link do episódio foi copiado para que você possa compartilhá-lo'))
         .catch(res => toast.error('Desculpe, nao foi possível compartilha o episódio'))
