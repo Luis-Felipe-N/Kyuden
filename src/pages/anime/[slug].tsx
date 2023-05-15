@@ -179,8 +179,8 @@ export const getStaticPaths: GetStaticPaths = async ({ }) => {
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
     const slug = params?.slug
-    try {
-        const { data } = await api.get(`/animes/${slug}`)
+
+        const { data } = await api.get(`/animes/${slug}`, {baseURL: process.env.API_BASEURL})
 
         const anime: IAnimes = data.anime
 
@@ -190,11 +190,5 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
                 firstSeason: anime.seasons[0].id
             },
             revalidate: 60 * 60 * 24 * 7 // 1 Dia
-        }
-    } catch (error) {
-        return {
-            notFound: true
-        }
-    }
-    
+        }    
 }
