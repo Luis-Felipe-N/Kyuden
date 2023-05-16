@@ -115,22 +115,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
     const id = params?.id
-    console.log(id)
-
-    try {
-        const { data } = await api.get(`/animes/episode/${id}`)
-        console.log(data)
-        return {
-            props: {
-                ...data
-            },
-            revalidate: 60
-        }
-    } catch (error) {
-        console.log(error)
-        return {
-            notFound: true
-        }
-    }
     
+    const { data } = await api.get(`/animes/episode/${id}`)
+    console.log(data)
+    return {
+        props: {
+            ...data
+        },
+        revalidate: 60
+    }
 }
