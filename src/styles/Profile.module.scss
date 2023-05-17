@@ -103,8 +103,8 @@
         }
 
         &_container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 2rem;
         }
 
@@ -126,6 +126,12 @@
             }
         }
     }
+}
+
+.profile__loading {
+    display: grid;
+    height: calc(100vh - 5rem);
+    place-items: center;
 }
 
 @media (max-width: 600px) {

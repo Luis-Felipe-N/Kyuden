@@ -1,4 +1,5 @@
 import Head from "next/head"
+import { useState } from "react"
 import { useQuery } from "react-query"
 import { IAnimes, IEpisodesAnime } from "../@types/Anime"
 import { Avatar } from "../components/Avatar"
@@ -7,19 +8,18 @@ import { Loading } from "../components/Loading"
 import { ModalEditProfile } from "../components/ModalEditProfile"
 import { Skeleton } from "../components/Skeleton"
 import { useAuth } from "../hooks/useAuth"
+import useWindowDimesions from "../hooks/useWindowDimensions"
 import { api } from "../service/api"
 
 import style from "../styles/Profile.module.scss"
+import { convertRGBObjectToString, getPalette, RGB } from "../utils/paletteExtraction"
 
 export default function Perfil() {
     const { user, loadingUser } = useAuth()
+    const [width, ] = useWindowDimesions()
 
     const myListAnimes = user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : []
-    const watchedAnimes = user?.watchedAnimes ? Object.entries(user.watchedAnimes).map(([,episodeId]) => episodeId) : []
-
-    function createRangeArrayByNumber(number: number) {
-        return [...Array(number).keys()]
-    }
+    const watchedAnimes = user?.watchingEpisodes ? Object.entries(user.watchingEpisodes).map(([,episodeId]) => episodeId) : []
 
     const { isLoading: myListAnimesLoading, error: myListAnimesError, data: myListAnimesData, isFetching: myListAnimesFetching } = useQuery({
         queryKey: ['myListAnimesData'],
@@ -33,15 +33,19 @@ export default function Perfil() {
     })
 
     if (loadingUser) return (
-        <main className={style.profile}>
+        <main className={style.profile__loading}>
             <Head>
                 <title>
                     Kyuden :: Perfil
                 </title>
             </Head>
-            <Loading />
+            <Loading width={200} />
         </main>
     )
+
+    function createRangeArrayByNumber(number: number) {
+        return [...Array(number).keys()]
+    }
 
     return (
         <main className={style.profile}>
@@ -52,18 +56,25 @@ export default function Perfil() {
                         Kyuden :: {user.displayName}
                     </title>
                 </Head>
-                <section className={style.profile__banner} style={{backgroundImage: `linear-gradient(0deg, rgb(23, 25, 35) 0%, rgba(23, 25, 35, 0.91) 8%, rgba(23, 25, 35, 0.84) 18%, rgba(23, 25, 35, 0.66) 26%, rgba(0, 212, 255, 0) 61%), url(${user.banner})`}}>
+                <section 
+                    className={style.profile__banner} 
+                    style={
+                        {
+                            backgroundImage: `linear-gradient(0deg, rgb(23, 25, 35) 0%, rgba(23, 25, 35, 0.91) 8%, rgba(23, 25, 35, 0.84) 18%, rgba(23, 25, 35, 0.66) 26%, rgba(0, 212, 255, 0) 61%), url(${width > 700 ? user.banner : user.avatar})`
+                        }
+                    }>
                         <div className={style.profile__banner_container}>
                             <div>
                             <ModalEditProfile />
                             </div>
 
                             <div>
-                                {user?.avatar ? (
+
+                                {width > 700 && (user?.avatar ? (
                                     <Avatar hasBorder className={style.profile__banner_avatar} src={user?.avatar} fallback={user.displayName[0]} />
                                 ) : (
                                     <Avatar className={style.profile__banner_avatar} fallback={user.displayName[0]} />
-                                )}
+                                ))}
                                 <div>
                                     <h1>{user?.displayName}</h1>
                                     <small>{user.email}</small>
@@ -80,7 +91,7 @@ export default function Perfil() {
                         <h1>Animes</h1>
                         <ul>
                             <li>Favoritos ({myListAnimes.length})</li>
-                            <li>Assistidos</li>
+                            <li>Assistindo</li>
                         </ul>
                     </div>
                     <div className={style.profile__animes_container}>
