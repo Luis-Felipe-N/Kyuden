@@ -7,13 +7,15 @@ import { updateUserData } from "../../../service/firebase";
 import { arrangeAndAddObject } from "../../../utils/object";
 import { getUrlBaseVideo } from "../../utils/getUrlBaseVideo";
 
+import style from './style.module.scss'
+import { PlayerVideo } from "../PlayerVideo";
+
 interface IPlayerProps {
     episode: IEpisodesAnime;
 }
 
 export function Player({ episode }: IPlayerProps) {
 
-    console.count('player')
     const playerRef = useRef<HTMLVideoElement>(null)
 
     const { user } = useAuth()
@@ -37,13 +39,6 @@ export function Player({ episode }: IPlayerProps) {
         }
     }, [playerRef, episode, user])
 
-    
-    // useEffect(() => {
-    //     if (!!playerRef.current && watchedEpisodeData) {
-    //         playerRef.current.currentTime = watchedEpisodeData.assistedTime
-    //     }
-    // }, [watchedEpisodeData])
-
     useEffect(() => {    
         router.events.on("routeChangeStart", savePreviosTime);
     
@@ -62,6 +57,8 @@ export function Player({ episode }: IPlayerProps) {
 
                     if (watchedEpisodeData) {
                         playerRef.current.currentTime = watchedEpisodeData.assistedTime
+                    } else {
+                        playerRef.current.currentTime = 0
                     }
                 }
             }
@@ -71,8 +68,9 @@ export function Player({ episode }: IPlayerProps) {
     }, [episode.linkEmbed, watchedEpisodeData])
     
     return (
-        <video ref={playerRef} controls autoPlay>
-        </video>
+        <PlayerVideo url="https://edisciplinas.usp.br/pluginfile.php/5196097/mod_resource/content/1/Teste.mp4" />
+        // <video ref={playerRef} controls autoPlay className={`${style.player} ${style.player__loading}`}>
+        // </video>
         // { streams ? (
         // ) : (
         //     <div className={style.episode__iframe}>

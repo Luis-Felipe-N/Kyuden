@@ -1,0 +1,37 @@
+.containerVolume {
+    position: relative;
+    display: inherit;
+    
+    .volume {
+        visibility: hidden;
+        opacity: 0;
+        transition: 2s opacity bottom;
+        height: 0;
+        bottom: 1.5rem;
+
+        border-radius: 5px;
+        position: absolute;
+        transform: rotate(-90deg) ;
+        transform-origin: left;
+        left: .5rem;
+
+        background-color: var(--gray-700-alpha);
+
+        display: flex;
+        align-items: center;
+
+        input {
+            height: 1px;
+            width: 100%;
+        }
+    }
+
+    .volume.showVolumeControls {
+        width: 5rem;
+        padding: 0 1rem;
+        bottom: 2.5rem;
+        height: 2rem;
+        visibility: visible;
+        opacity: 1;
+    }
+}

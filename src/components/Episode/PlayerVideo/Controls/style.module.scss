@@ -1,0 +1,42 @@
+.controls {
+    z-index: 10;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 10%, rgba(0,0,0,0));
+    padding: 1rem;
+    
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    max-width: 100%;
+
+    gap: 1rem;
+
+    > div {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .duration {
+        color: var(--gray-50);
+        font-family: Poppins;
+        font-size: .8rem;
+        white-space: nowrap;
+        width: 4rem;
+    }
+
+    button {
+        background-color: transparent;
+        border: 0;
+        color: var(--gray-50);
+        line-height: 0;
+        cursor: pointer;
+    }
+
+    .options {
+        display: flex;
+        gap: .5rem;
+    }
+}

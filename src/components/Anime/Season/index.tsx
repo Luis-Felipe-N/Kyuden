@@ -48,7 +48,7 @@ export function Season({anime, firstSeason}: ISeasonProps) {
                         <Skeleton key={item} height={200} />
                     ))
                 ) : !!data ? (
-                    data.filter(episode => !!episode.duration).sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0)).map(episode => episode.duration && (
+                    data.filter(episode => !!episode.duration).sort((a, b) => a.title.charCodeAt(0) + b.title.charCodeAt(0)).map(episode => episode.duration && (
                         <EpisodeCard key={episode.id} episode={episode} anime={anime} />
                     ))
                 ) : (
