@@ -1,17 +1,25 @@
 import { memo } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
+import { useVideo } from "../../../../../hooks/useVideo";
 
-interface IButtonPlayProps {
-    isPlaying: boolean;
-    onTogglePauseVideo: () => void
-}
+function ButtonPlayElement() {
+    const { videoEl, playerState } = useVideo()
 
-function ButtonPlayElement({isPlaying, onTogglePauseVideo}: IButtonPlayProps) {
+    function onTogglePauseVideo() {
+        if (!videoEl) return
+
+        if (playerState.isPlaying) {
+            videoEl.pause()
+        } else {
+            videoEl.play()
+        }
+    }
+
     return (
         <button 
                 onClick={onTogglePauseVideo}
             >
-                { isPlaying ? (
+                { playerState.isPlaying ? (
                     <FaPause size={20} />
                     ) : (
                     <FaPlay size={20} />

@@ -1,21 +1,28 @@
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef } from "react";
+import { forwardRef, ReactNode, useCallback, useEffect, useRef } from "react";
 import { IEpisodesAnime } from "../../../@types/Anime"
+import { VideoProvider } from "../../../context/VideoContext";
 import { useAuth } from "../../../hooks/useAuth";
 import { useEpisode } from "../../../hooks/useEpisode";
 import { updateUserData } from "../../../service/firebase";
 import { arrangeAndAddObject } from "../../../utils/object";
 import { getUrlBaseVideo } from "../../utils/getUrlBaseVideo";
+import { Controls } from "./Controls";
 
 import style from './style.module.scss'
-import { PlayerVideo } from "../PlayerVideo";
+
 
 interface IPlayerProps {
     episode: IEpisodesAnime;
 }
 
-export function Player({ episode }: IPlayerProps) {
+interface IInnerPlayerProps  {
+    children: ReactNode;
+    episode: IEpisodesAnime;
+    className: string;
+}
 
+const InnerPlayer = forwardRef<HTMLVideoElement, IInnerPlayerProps>(({children, episode, ...props}, ref) => {
     const playerRef = useRef<HTMLVideoElement>(null)
 
     const { user } = useAuth()
@@ -24,6 +31,7 @@ export function Player({ episode }: IPlayerProps) {
     const { getWatchedEpisodeData } = useEpisode()
 
     const watchedEpisodeData = user && episode ? getWatchedEpisodeData(user, episode) : null;
+
 
     const savePreviosTime = useCallback(() => {
         if (playerRef.current !== null) {
@@ -52,7 +60,6 @@ export function Player({ episode }: IPlayerProps) {
             if (episode.linkEmbed && playerRef.current) {
                 const data = await getUrlBaseVideo(episode.linkEmbed)
                 if (data) {
-                    console.log(data)
                     playerRef.current.src = data[data.length - 1].play_url
 
                     if (watchedEpisodeData) {
@@ -66,16 +73,22 @@ export function Player({ episode }: IPlayerProps) {
 
         getUrlBase()
     }, [episode.linkEmbed, watchedEpisodeData])
-    
     return (
-        <PlayerVideo url="https://edisciplinas.usp.br/pluginfile.php/5196097/mod_resource/content/1/Teste.mp4" />
-        // <video ref={playerRef} controls autoPlay className={`${style.player} ${style.player__loading}`}>
-        // </video>
-        // { streams ? (
-        // ) : (
-        //     <div className={style.episode__iframe}>
-        //         <iframe src={episode.linkEmbed} frameBorder="0"></iframe>
-        //     </div>
-        // )}
+        <VideoProvider videoRef={playerRef}>
+            <video autoPlay ref={playerRef} {...props}></video>
+            {children}
+        </VideoProvider>
+    )
+})
+
+InnerPlayer.displayName = "InnerPlayer"
+
+export function Player({ episode }: IPlayerProps) {    
+    return (
+        <div className={style.player}>
+            <InnerPlayer episode={episode} className={style.videoPlayer}>
+                <Controls />
+            </InnerPlayer>
+        </div>
     )
 }

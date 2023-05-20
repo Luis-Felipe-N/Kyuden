@@ -10,7 +10,7 @@ interface ISliderRadixUIProps extends SliderRadiux.SliderProps {
 }
 
 export function SliderRadixUIElement({ value, handleChangeValue, ...props }: ISliderRadixUIProps){
-    console.log("Rerender")
+
     if (value) {
         return (
             <SliderRadiux.Root 

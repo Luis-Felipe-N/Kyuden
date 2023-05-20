@@ -1,5 +1,5 @@
 import Head from "next/head"
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useQuery } from "react-query"
 import { IAnimes, IEpisodesAnime } from "../@types/Anime"
 import { Avatar } from "../components/Avatar"
@@ -18,10 +18,10 @@ export default function Perfil() {
     const { user, loadingUser } = useAuth()
     const [width, ] = useWindowDimesions()
 
-    const myListAnimes = user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : []
+    const myListAnimes = useMemo(() => user?.myListAnimes ? Object.entries(user.myListAnimes).map(([,animeSlug]) => animeSlug) : [], [user?.myListAnimes])
     const watchedAnimes = user?.watchingEpisodes ? Object.entries(user.watchingEpisodes).map(([,episodeId]) => episodeId) : []
 
-    const { isLoading: myListAnimesLoading, error: myListAnimesError, data: myListAnimesData, isFetching: myListAnimesFetching } = useQuery({
+    const { isLoading: myListAnimesLoading, error: myListAnimesError, data: myListAnimesData, isFetching: myListAnimesFetching, refetch } = useQuery({
         queryKey: ['myListAnimesData'],
         queryFn: async (): Promise<IAnimes[]> =>{
             const { data } = await api.post('animes/', {
@@ -31,6 +31,10 @@ export default function Perfil() {
             return data.animes
         },
     })
+
+    useEffect(() => {
+        refetch()
+    }, [myListAnimes, refetch])
 
     if (loadingUser) return (
         <main className={style.profile__loading}>
@@ -47,6 +51,7 @@ export default function Perfil() {
         return [...Array(number).keys()]
     }
 
+    
     return (
         <main className={style.profile}>
             { user && (

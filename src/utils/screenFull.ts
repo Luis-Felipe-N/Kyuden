@@ -56,7 +56,7 @@ const methodMap = [
       if (!methodList) continue;
   
       const exitFullscreenMethod = methodList[1];
-      if (exitFullscreenMethod in document) {
+      if (typeof window !== "undefined" && exitFullscreenMethod in window.document) {
         for (const [index, method] of methodList.entries()) {
           returnValue[unprefixedMethods[index]] = method;
         }

@@ -1,5 +1,27 @@
 .player {
-    &__loagin {
-        background-color: red;
+    position: relative;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    
+    .videoPlayer {
+        overflow: hidden;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        // aspect-ratio: 16 / 9;    
+        border-radius: 10px;
+        cursor: pointer;
     }
+
+    .containerControls.showControls, .containerControls:hover {
+        visibility: visible;
+        opacity: 1;
+    }
+
+        .containerControls {
+        visibility: hidden;
+        opacity: 0;
+        transition: .5s;
+    }    
 }

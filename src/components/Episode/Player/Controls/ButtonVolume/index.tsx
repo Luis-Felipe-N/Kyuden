@@ -1,24 +1,27 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { FaVolumeUp } from "react-icons/fa";
-import { SliderRadixUI } from "../../../../SliderRadixUI";
+// import { Us } from "../../../../hooks/useClickOutSide";
 import style from './style.module.scss'
+import { useVideo } from "../../../../../hooks/useVideo";
 import { useClickOutSide } from "../../../../../hooks/useClickOutSide";
+import { SliderRadixUI } from "../../../../SliderRadixUI";
 
-interface IButtonVolumeProps {
-    onChangeVolume: (value: number) => void;
-}
 
-function ButtonVolumeElement({ onChangeVolume }: IButtonVolumeProps) {
-    const [ volume, setVolume ] = useState(100)
+
+function ButtonVolumeElement() {
     const [ showVolumeControls, setShowVolumeControls ] = useState(false)
     const controlsVolumeRef = useRef<HTMLDivElement>(null)
     const { onClickOutSide } = useClickOutSide()
 
-    useEffect(() => {
-        onChangeVolume(volume)
-    }, [volume, onChangeVolume])
+    const { playerState, videoEl } = useVideo()
 
-    if (showVolumeControls && controlsVolumeRef.current) {
+    function handleVolume(value: number[]) {
+        if (!videoEl) return
+        console.log(playerState.volume)
+        videoEl.volume = Number(...value) 
+    }
+
+    if (showVolumeControls && controlsVolumeRef) {
         onClickOutSide(controlsVolumeRef, showVolumeControls, () => {
             setShowVolumeControls(false)
         })
@@ -34,13 +37,13 @@ function ButtonVolumeElement({ onChangeVolume }: IButtonVolumeProps) {
 
             <div className={showVolumeControls ? `${style.volume} ${style.showVolumeControls}`: style.volume}>
                 <SliderRadixUI
-                    // value={[volume]}
-                    handleChangeValue={([value]) => setVolume(value)}
+                    value={[playerState.volume]}
+                    handleChangeValue={handleVolume}
                     min={0} 
                     max={1} 
                     step={0.1} 
-                    defaultValue={[1]}
-                    aria-label="Tempo de video"
+                    // defaultValue={[1]}
+                    aria-label="Volume do video"
                 />
             </div>
         </div>
