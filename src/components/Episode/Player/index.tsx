@@ -8,6 +8,7 @@ import { updateUserData } from "../../../service/firebase";
 import { arrangeAndAddObject } from "../../../utils/object";
 import { getUrlBaseVideo } from "../../utils/getUrlBaseVideo";
 import { Controls } from "./Controls";
+import { LoadingPlayer } from "./LoadingPlayer";
 
 import style from './style.module.scss'
 
@@ -24,6 +25,7 @@ interface IInnerPlayerProps  {
 
 const InnerPlayer = forwardRef<HTMLVideoElement, IInnerPlayerProps>(({children, episode, ...props}, ref) => {
     const playerRef = useRef<HTMLVideoElement>(null)
+    const containerPlayerRef = useRef<HTMLDivElement>(null)
 
     const { user } = useAuth()
     const router   = useRouter()
@@ -31,7 +33,6 @@ const InnerPlayer = forwardRef<HTMLVideoElement, IInnerPlayerProps>(({children, 
     const { getWatchedEpisodeData } = useEpisode()
 
     const watchedEpisodeData = user && episode ? getWatchedEpisodeData(user, episode) : null;
-
 
     const savePreviosTime = useCallback(() => {
         if (playerRef.current !== null) {
@@ -73,22 +74,25 @@ const InnerPlayer = forwardRef<HTMLVideoElement, IInnerPlayerProps>(({children, 
 
         getUrlBase()
     }, [episode.linkEmbed, watchedEpisodeData])
+
     return (
-        <VideoProvider videoRef={playerRef}>
-            <video autoPlay ref={playerRef} {...props}></video>
-            {children}
+        <VideoProvider videoRef={playerRef} containerPlayerRef={containerPlayerRef}>
+            <div ref={containerPlayerRef} className={style.player}>
+                <video autoPlay ref={playerRef} {...props}></video>
+                {children}
+            </div>
         </VideoProvider>
     )
 })
 
 InnerPlayer.displayName = "InnerPlayer"
 
-export function Player({ episode }: IPlayerProps) {    
+export function Player({ episode }: IPlayerProps) {   
+
     return (
-        <div className={style.player}>
-            <InnerPlayer episode={episode} className={style.videoPlayer}>
-                <Controls />
-            </InnerPlayer>
-        </div>
+        <InnerPlayer episode={episode} className={style.videoPlayer}>
+            <Controls />
+            <LoadingPlayer />
+        </InnerPlayer>
     )
 }

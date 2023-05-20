@@ -5,52 +5,56 @@ export interface IPlayerVideo {
   isMuted: boolean;
   percentage: number;
   durationTime: number;
+  volume: number;
+  currentTime: number;
   speed: number;
-  isFullScreen: boolean
+  isFullScreen: boolean;
+  isLoading: boolean;
+  isFinished: boolean
 }
 
 
 interface IVideoContext {
   videoEl: HTMLVideoElement | undefined;
-  playerState: IPlayerVideo
+  playerState: IPlayerVideo;
+  containerPlayerEl: HTMLDivElement | undefined;
+  handleFullScreenChange: (value: boolean) => void;
 }
 
 interface IVideoProviderProps {
   children: ReactNode;
   videoRef: RefObject<HTMLVideoElement>;
-}
-
-export interface IPlayerVideo {
-  isPlaying: boolean;
-  isMuted: boolean;
-  percentage: number;
-  durationTime: number;
-  volume: number;
-  currentTime: number;
-  speed: number;
-  isFullScreen: boolean
+  containerPlayerRef: RefObject<HTMLDivElement>;
 }
 
 export const VideoContext = createContext({} as IVideoContext)
 
-export function VideoProvider({ children, videoRef }: IVideoProviderProps) {
+export function VideoProvider({ children, videoRef, containerPlayerRef }: IVideoProviderProps) {
   const [videoEl, setVideoEl] = useState<HTMLVideoElement>()
+  const [containerPlayerEl, setCcontainerPlayerEl] = useState<HTMLDivElement>()
   const [playerState, setPlayerState] = useState<IPlayerVideo>({
       percentage: 0,
       durationTime: 0,
       currentTime: 0,
-      volume: 0,
+      volume: 1,
       speed: 1,
       isPlaying: false,
       isMuted: false,
-      isFullScreen: false
+      isFullScreen: false,
+      isLoading: true,
+      isFinished: false
   })
 
   const updateState = useCallback((state: Partial<IPlayerVideo>) => {
-
     setPlayerState((prev) => ({...prev, ...state}))
-
   }, [])
+
+  const handleFullScreenChange = (value: boolean) => {
+    console.log(value)
+    updateState({
+      isFullScreen: value
+    });
+  };
 
   useEffect(() => {
     if (!videoRef.current) return
@@ -59,17 +63,25 @@ export function VideoProvider({ children, videoRef }: IVideoProviderProps) {
   }, [videoRef])
 
   useEffect(() => {
+    if (!containerPlayerRef.current) return
+
+    setCcontainerPlayerEl(containerPlayerRef.current)
+  }, [containerPlayerRef])
+
+  useEffect(() => {
     if (!videoEl) return
 
     const handlePlay = () => {
       updateState({
-        isPlaying: true
+        isPlaying: true,
+        isLoading: false
       });
     };
 
     const handlePause = () => {
       updateState({
-        isPlaying: false
+        isPlaying: false,
+        isLoading: false
       });
     };
 
@@ -77,7 +89,8 @@ export function VideoProvider({ children, videoRef }: IVideoProviderProps) {
       updateState({
         percentage: (videoEl.currentTime / videoEl.duration) * 100,
         durationTime: videoEl.duration,
-        currentTime: videoEl.currentTime
+        currentTime: videoEl.currentTime,
+        isLoading: false
       });
     };
 
@@ -87,21 +100,45 @@ export function VideoProvider({ children, videoRef }: IVideoProviderProps) {
       });
     };
 
+    const handleLoadedData = () => {
+      updateState({
+        isLoading: false
+      });
+    };
+
+    const handleWaiting = () => {
+      updateState({
+        isLoading: true
+      });
+    };
+
+    const handleEnded = () => {
+      updateState({
+        isPlaying: false,
+        isFinished: true
+      });
+    };
+
     videoEl.addEventListener("play", handlePlay)
     videoEl.addEventListener("pause", handlePause)
     videoEl.addEventListener("timeupdate", handleTimeUpdate)
     videoEl.addEventListener("volumechange", handleVolumeChange)
-
+    videoEl.addEventListener('loadeddata', handleLoadedData);
+    videoEl.addEventListener('waiting', handleWaiting);
+    videoEl.addEventListener('ended', handleEnded);
     return () => {
       videoEl.removeEventListener("play", handlePlay)   
       videoEl.removeEventListener("pause", handlePause)
       videoEl.removeEventListener("timeupdate", handleTimeUpdate)
       videoEl.removeEventListener("volumechange", handleVolumeChange)
+      videoEl.removeEventListener('loadeddata', handleLoadedData);
+      videoEl.removeEventListener('waiting', handleWaiting);
+      videoEl.removeEventListener('ended', handleEnded);
     }
 
   }, [videoEl, updateState])
 
-  return (<VideoContext.Provider value={{ videoEl, playerState }}>
+  return (<VideoContext.Provider value={{ videoEl, playerState, containerPlayerEl, handleFullScreenChange }}>
     {children}
 </VideoContext.Provider>)
 }

@@ -1,9 +1,9 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
 import { useVideo } from "../../../../../hooks/useVideo";
 
 function ButtonPlayElement() {
-    const { videoEl, playerState } = useVideo()
+    const { videoEl, containerPlayerEl, playerState } = useVideo()
 
     function onTogglePauseVideo() {
         if (!videoEl) return
@@ -14,6 +14,15 @@ function ButtonPlayElement() {
             videoEl.play()
         }
     }
+
+    useEffect(() => {
+        if (!videoEl) return 
+
+        videoEl.addEventListener("click", onTogglePauseVideo)
+        return () => {
+            videoEl.removeEventListener("click", onTogglePauseVideo)   
+        }
+    })
 
     return (
         <button 

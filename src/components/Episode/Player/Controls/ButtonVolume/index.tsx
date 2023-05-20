@@ -17,7 +17,7 @@ function ButtonVolumeElement() {
 
     function handleVolume(value: number[]) {
         if (!videoEl) return
-        console.log(playerState.volume)
+        
         videoEl.volume = Number(...value) 
     }
 
@@ -29,12 +29,6 @@ function ButtonVolumeElement() {
 
     return (
         <div className={style.containerVolume} ref={controlsVolumeRef}>
-            <button
-                onClick={() => setShowVolumeControls(!showVolumeControls)}
-            >
-                <FaVolumeUp size={20} />
-            </button>
-
             <div className={showVolumeControls ? `${style.volume} ${style.showVolumeControls}`: style.volume}>
                 <SliderRadixUI
                     value={[playerState.volume]}
@@ -42,10 +36,15 @@ function ButtonVolumeElement() {
                     min={0} 
                     max={1} 
                     step={0.1} 
-                    // defaultValue={[1]}
+                    defaultValue={[1]}
                     aria-label="Volume do video"
                 />
             </div>
+            <button
+                onClick={() => setShowVolumeControls(!showVolumeControls)}
+            >
+                <FaVolumeUp size={20} />
+            </button>
         </div>
     )
 }

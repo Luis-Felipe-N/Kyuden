@@ -7,13 +7,13 @@
     cursor: pointer;
   
     &[data-orientation="horizontal"] {
-      height: 20;
+      height: 1rem;
     }
   
     &[data-orientation="vertical"] {
       flex-direction: column;
-      width: 20;
-      height: 100;
+      width: 1rem;
+      height: 6.25rem;
     }
 
     &__track {
@@ -25,8 +25,8 @@
 
         border-radius: 9999px;
       
-        &[data-orientation="horizontal"] { height: 3px };
-        &[data-orientation="vertical"] { width: 3px }
+        &[data-orientation="horizontal"] { height: .1875rem };
+        &[data-orientation="vertical"] { width: .1875rem }
     }
 
     &__range {
@@ -40,8 +40,8 @@
     &__thumb {
         background-color: var(--gray-50);
         
-        width: 20px;
-        height: 20px;
+        width: 1rem;
+        height: 1rem;
         display: block;
         border-radius: 100%;
     }

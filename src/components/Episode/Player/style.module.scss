@@ -1,16 +1,16 @@
 .player {
     position: relative;
-    margin: 1rem;
     display: flex;
     align-items: center;
+    border-radius: var(--border-radius);
     
     .videoPlayer {
         overflow: hidden;
         max-width: 100%;
         width: 100%;
         height: auto;
-        // aspect-ratio: 16 / 9;    
-        border-radius: 10px;
+        aspect-ratio: 16 / 9;    
+        border-radius: var(--border-radius);
         cursor: pointer;
     }
 
