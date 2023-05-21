@@ -1,4 +1,5 @@
 import { createContext, ReactNode, RefObject, useCallback, useEffect, useState } from "react";
+import { IEpisodesAnime } from "../@types/Anime";
 
 export interface IPlayerVideo {
   isPlaying: boolean;
@@ -19,17 +20,19 @@ interface IVideoContext {
   playerState: IPlayerVideo;
   containerPlayerEl: HTMLDivElement | undefined;
   handleFullScreenChange: (value: boolean) => void;
+  episode: IEpisodesAnime;
 }
 
 interface IVideoProviderProps {
   children: ReactNode;
+  episode: IEpisodesAnime;
   videoRef: RefObject<HTMLVideoElement>;
   containerPlayerRef: RefObject<HTMLDivElement>;
 }
 
 export const VideoContext = createContext({} as IVideoContext)
 
-export function VideoProvider({ children, videoRef, containerPlayerRef }: IVideoProviderProps) {
+export function VideoProvider({ children, videoRef, episode, containerPlayerRef }: IVideoProviderProps) {
   const [videoEl, setVideoEl] = useState<HTMLVideoElement>()
   const [containerPlayerEl, setCcontainerPlayerEl] = useState<HTMLDivElement>()
   const [playerState, setPlayerState] = useState<IPlayerVideo>({
@@ -74,14 +77,16 @@ export function VideoProvider({ children, videoRef, containerPlayerRef }: IVideo
     const handlePlay = () => {
       updateState({
         isPlaying: true,
-        isLoading: false
+        isFinished: false,
+        // isLoading: false
       });
     };
 
     const handlePause = () => {
       updateState({
         isPlaying: false,
-        isLoading: false
+        isFinished: false,
+        // isLoading: false
       });
     };
 
@@ -126,6 +131,7 @@ export function VideoProvider({ children, videoRef, containerPlayerRef }: IVideo
     videoEl.addEventListener('loadeddata', handleLoadedData);
     videoEl.addEventListener('waiting', handleWaiting);
     videoEl.addEventListener('ended', handleEnded);
+  
     return () => {
       videoEl.removeEventListener("play", handlePlay)   
       videoEl.removeEventListener("pause", handlePause)
@@ -138,7 +144,7 @@ export function VideoProvider({ children, videoRef, containerPlayerRef }: IVideo
 
   }, [videoEl, updateState])
 
-  return (<VideoContext.Provider value={{ videoEl, playerState, containerPlayerEl, handleFullScreenChange }}>
+  return (<VideoContext.Provider value={{ videoEl, playerState, containerPlayerEl, handleFullScreenChange, episode }}>
     {children}
 </VideoContext.Provider>)
 }

@@ -1,6 +1,5 @@
 import { memo, useRef, useState } from "react";
 import { FaVolumeUp } from "react-icons/fa";
-// import { Us } from "../../../../hooks/useClickOutSide";
 import style from './style.module.scss'
 import { useVideo } from "../../../../../hooks/useVideo";
 import { useClickOutSide } from "../../../../../hooks/useClickOutSide";

@@ -25,9 +25,17 @@ export function KeepWatching() {
         },
     })
 
-    console.log({watchinEpisodesData})
-
     if (!user && !watchinEpisodesData) return null
+
+    function checkEpisodeFinished(episode: IEpisodesAnime) {
+        const episodeWatched = user?.watchingEpisodes.find(e => e.id === episode.id)
+
+        if (episodeWatched?.assistedTime) {
+            return episode.duration - episodeWatched?.assistedTime >= 50 ? true : false
+        }
+
+        return false
+    }
 
     return (
         <section className={style.keepWatching}>
@@ -37,7 +45,7 @@ export function KeepWatching() {
                 spaceBetween={10}
             >            
                 {
-                    watchinEpisodesData?.map(episode => (
+                    watchinEpisodesData?.filter(episode => checkEpisodeFinished(episode)).map(episode => (
                         <SwiperSlide key={episode.id}>
                             <EpisodeCardWatched episode={episode} />
                         </SwiperSlide>

@@ -76,7 +76,7 @@ const InnerPlayer = forwardRef<HTMLVideoElement, IInnerPlayerProps>(({children, 
     }, [episode.linkEmbed, watchedEpisodeData])
 
     return (
-        <VideoProvider videoRef={playerRef} containerPlayerRef={containerPlayerRef}>
+        <VideoProvider episode={episode} videoRef={playerRef} containerPlayerRef={containerPlayerRef}>
             <div ref={containerPlayerRef} className={style.player}>
                 <video autoPlay ref={playerRef} {...props}></video>
                 {children}

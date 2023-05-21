@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useVideo } from "../../../../hooks/useVideo";
 import { convertSecondInMinute } from "../../../../utils/convertSecondInMinute";
 import { ButtoFullScreen } from "./ButtoFullScreen";
+import { ButtonPassEpisode } from "./ButtonPassEpisode";
 import { ButtonPlay } from "./ButtonPlay";
 import { ButtonVolume } from "./ButtonVolume";
 import { Slider } from "./Slider";
@@ -67,6 +68,7 @@ export function Controls() {
                 <div className={style.options}>
                     <ButtonVolume />
                     <ButtoFullScreen />
+                    <ButtonPassEpisode />
                 </div>
             </div>
         </div>

@@ -1,0 +1,18 @@
+.btnPassEpisode {
+    height: 2rem;
+    border-radius: 5px;
+
+    transition: .2s;
+
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 0 1rem;
+
+    background-color: rgba($color: #fff, $alpha: .8) !important;
+    color: var(--gray-700) !important;
+
+    &:hover {
+        background-color: rgba($color: #fff, $alpha: .1);
+    }
+}

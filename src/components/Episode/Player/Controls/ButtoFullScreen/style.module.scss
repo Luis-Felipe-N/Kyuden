@@ -1,0 +1,11 @@
+.btn {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 100%;
+
+    transition: .2s;
+
+    &:hover {
+        background-color: rgba($color: #fff, $alpha: .1);
+    }
+}

@@ -18,7 +18,7 @@ export function Slider(){
                 handleChangeValue={handleChangePercentage}
                 min={0} 
                 max={100} 
-                step={0.01} 
+                step={1} 
                 aria-label="Tempo de video"
             />
         </>

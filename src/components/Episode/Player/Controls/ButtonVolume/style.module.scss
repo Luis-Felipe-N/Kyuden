@@ -3,9 +3,18 @@
     display: inherit;
 
     display: flex;
+    align-items: center;
+    justify-content: center;
     height: 2rem;
+    width: 2rem;
+    border-radius: 100%;
 
-    
+    transition: .2s;
+
+    &:hover {
+        background-color: rgba($color: #fff, $alpha: .1);
+    }
+
     .volume {
         visibility: hidden;
         opacity: 0;
@@ -17,7 +26,7 @@
 
         border-radius: 5px;
         position: absolute;
-        right: 0;
+        right: 1.5rem;
 
 
         display: flex;
@@ -29,10 +38,10 @@
         }
     }
 
-    .volume.showVolumeControls {
+    .volume.showVolumeControls, &:hover .showVolumeControls {
         width: 7rem;
         padding: 0 1rem;
-        right: 1rem;
+        right: 2rem;
         visibility: visible;
         opacity: 1;
     }

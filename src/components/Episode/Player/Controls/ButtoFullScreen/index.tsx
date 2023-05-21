@@ -1,8 +1,10 @@
 import { memo, useCallback } from "react";
-import { AiOutlineExpand, AiOutlineCompress } from "react-icons/ai";
+import { FaCompress, FaExpand } from "react-icons/fa";
 import { useVideo } from "../../../../../hooks/useVideo";
 import { isMobile } from "../../../../../utils/checkDevice";
 import screenfull from "../../../../../utils/screenFull";
+
+import style from './style.module.scss'
 
 function ButtoFullScreenElement() {
     const { containerPlayerEl, playerState, handleFullScreenChange } = useVideo()
@@ -30,12 +32,26 @@ function ButtoFullScreenElement() {
 
     return (
         <button 
-                onClick={handleToggleFullscreen}
+              className={style.btn}
+              onClick={handleToggleFullscreen}
+              title={
+                 playerState.isFullScreen ? (
+                  'Sair do modo tela cheia'
+                ) : (
+                  'Tela cheia'
+              )}
+
+              aria-label={
+                playerState.isFullScreen ? (
+                 'Sair do modo de tela cheia'
+               ) : (
+                 'Entrar no modo de Tela cheia'
+             )}
             >
               { playerState.isFullScreen ? (
-                  <AiOutlineCompress size={20}/>
+                  <FaCompress size={20}/>
                 ) : (
-                  <AiOutlineExpand size={20} />
+                  <FaExpand size={20} />
               )}
             </button>
     )

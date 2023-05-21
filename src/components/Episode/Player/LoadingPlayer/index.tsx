@@ -7,7 +7,6 @@ import style from './style.module.scss'
 function LoadingPlayerElement() {
     const { playerState } = useVideo()
 
-
     if (playerState.isLoading) return (
         <div className={style.loadingPlayer}>
                 <Loading width={70} />

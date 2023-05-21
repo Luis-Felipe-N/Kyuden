@@ -64,8 +64,6 @@ export function EpisodeCardWatched({episode, anime}: INextEpisodeProps) {
 
         episodeVideoRef.current.src = ''
     }
-
-    console.log('aaaaaaaaaaaaaaaaaaaaaaa')
     
     return (
         <Link onMouseEnter={handlePlayerEpisode} onMouseLeave={handleRemovePlayer} onFocus={handlePlayerEpisode} onBlur={handleRemovePlayer} className={style.episode} href={`/episodio/${episode.id}`}>
