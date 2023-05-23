@@ -45,12 +45,18 @@ export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProp
 export const getStaticProps: GetStaticProps = async () => {
   
 
-  const { data: animeHero } = await api.get('/animes/ousama-ranking')
+  const { data: animeHero } = await api.get('/animes/kimetsu-no-yaiba')
   const { data } = await api.get('/animes/popular')
   const { data: animeGenreAction } =  await api.get(`animes/genre/Ação?take=20`)
-  const { data: animeGenreTerror } =  await api.get(`animes/genre/Terror?take=20`)
+  const { data: animeGenreFiccaoCientifica } =  await api.get(`animes/genre/Ficção científica?take=20`)
+  const { data: animeGenreEsporte } =  await api.get(`animes/genre/Esporte?take=20`)
+  const { data: animeGenreMagia } =  await api.get(`animes/genre/Magia?take=20`)
+  const { data: animeGenreEscolar } =  await api.get(`animes/genre/Escolar?take=20`)
   const { data: animeGenreAdventure } =  await api.get(`animes/genre/Aventura?take=20`)
   const { data: animeGenreComedy } =  await api.get(`animes/genre/Comédia?take=20`)
+  const { data: animeGenreMilitar } =  await api.get(`animes/genre/Militar?take=20`)
+  const { data: animeGenreMusical } =  await api.get(`animes/genre/Musical?take=20`)
+  
 
   const { animes } = data
 
@@ -72,9 +78,30 @@ export const getStaticProps: GetStaticProps = async () => {
               animes: animeGenreAction.animes || null
             },
             {
-              name: "Terror",
-              animes: animeGenreTerror.animes || null
+              name: "Ficção científica",
+              animes: animeGenreFiccaoCientifica.animes || null
             },
+            {
+              name: "Esporte",
+              animes: animeGenreEsporte.animes || null
+            },
+            {
+              name: "Magia",
+              animes: animeGenreMagia.animes || null
+            },
+            {
+              name: "Escolar",
+              animes: animeGenreEscolar.animes || null
+            },
+            {
+              name: "Militar",
+              animes: animeGenreMilitar.animes || null
+            },
+            {
+              name: "Musical",
+              animes: animeGenreMusical.animes || null
+            }
+            
           ],
           popularAnimes: animes || null
       },
