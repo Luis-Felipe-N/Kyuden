@@ -28,50 +28,52 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     return (
         <>
             {anime ? (
-                <NextSeo
-                title={anime.title}
-                description={anime.description}
-                canonical={URL}
-                openGraph={{
-                    url: URL,
-                    title: anime.title,
-                    description: anime.description,
-                    locale: 'PT_BR',
-                    images: [
-                    {
-                        url: anime.cover || anime.post,
-                        width: 177.78,
-                        height: 100,
-                        alt: `Imagem de banner do anime ${anime.title}`,
-                        type: 'image/png',
-                    },
-                    {
-                        url: anime.cover || anime.post,
-                        width: 177.78,
-                        height: 100,
-                        alt: `Imagem de banner do anime ${anime.title}`,
-                        type: 'image/png',
-                    },
-                    { url: anime.cover || anime.post },
-                    { url: anime.cover || anime.post },
-                    ],
-                    site_name: anime.title,
-                }}
-                twitter={{
-                    handle: '@handle',
-                    site: '@site',
-                    cardType: 'summary_large_image',
-                }} 
-                />
+                <Head>
+                    <NextSeo
+                    title={anime.title}
+                    description={anime.description}
+                    canonical={URL}
+                    openGraph={{
+                        url: URL,
+                        title: anime.title,
+                        description: anime.description,
+                        locale: 'PT_BR',
+                        images: [
+                        {
+                            url: anime.cover || anime.post,
+                            width: 177.78,
+                            height: 100,
+                            alt: `Imagem de banner do anime ${anime.title}`,
+                            type: 'image/png',
+                        },
+                        {
+                            url: anime.cover || anime.post,
+                            width: 177.78,
+                            height: 100,
+                            alt: `Imagem de banner do anime ${anime.title}`,
+                            type: 'image/png',
+                        },
+                        { url: anime.cover || anime.post },
+                        { url: anime.cover || anime.post },
+                        ],
+                        site_name: anime.title,
+                    }}
+                    twitter={{
+                        handle: '@handle',
+                        site: '@site',
+                        cardType: 'summary_large_image',
+                    }} 
+                    />
+                </Head>
             ) : (
                 <Head>
                     <NextSeo
-                    title="Kyuden: A sua casa para animes."
+                    title="Kyuden: A sua casa de animes."
                     description="Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos."
                     canonical={URL}
                     openGraph={{
                         url: URL,
-                        title: "Kyuden: A sua casa para animes.",
+                        title: "Kyuden: A sua casa de animes.",
                         description: "Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos.",
                         locale: 'PT_BR',
                         images: [
@@ -92,7 +94,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                         { url:'./banner.png' },
                         { url:'./banner.png' },
                         ],
-                        site_name: "Kyuden: A sua casa para animes.",
+                        site_name: "Kyuden: A sua casa de animes.",
                     }}
                     twitter={{
                         handle: '@handle',

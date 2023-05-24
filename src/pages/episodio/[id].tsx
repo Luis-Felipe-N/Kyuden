@@ -15,6 +15,7 @@ import { Player } from "../../components/Episode/Player"
 import { formatDate } from "../../utils/date"
 import { useRouter } from "next/router"
 import { toast } from "react-toastify"
+import { NextSeo } from "next-seo"
 
 interface IEpisodeProps {
     episode: IEpisodesAnime,
@@ -24,24 +25,97 @@ interface IEpisodeProps {
 
 export default function Episodio({ episode, remainingEpisodes, anime }: IEpisodeProps) {
 
-    const { asPath} = useRouter()
+    const { asPath } = useRouter()
+
+    const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+
+    const URL = `${origin}${asPath}`;
 
     function handleCopyLink() {
-        const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
-
-        const URL = `${origin}${asPath}`;
-        navigator.clipboard.writeText(origin + asPath)
+        navigator.clipboard.writeText(URL)
         .then(res => toast.success('O link do episódio foi copiado para que você possa compartilhá-lo'))
         .catch(res => toast.error('Desculpe, nao foi possível compartilha o episódio'))
     }
 
     return (
         <>
-        <Head>
-            { anime && (
-                <title>Kyuden :: {episode.title} do {anime.title}</title>
-            )} 
-        </Head>
+         {episode ? (
+                <Head>
+                    <NextSeo
+                    title={episode.title}
+                    description={`${episode.title} do anime ${anime.title}`}
+                    canonical={URL}
+                    openGraph={{
+                        url: URL,
+                        title: episode.title,
+                        description: `${episode.title} do anime ${anime.title}`,
+                        locale: 'PT_BR',
+                        images: [
+                        {
+                            url: episode.image,
+                            width: 177.78,
+                            height: 100,
+                            alt: `Imagem de capa do anime ${episode.title} ${episode.title}`,
+                            type: 'image/png',
+                        },
+                        {
+                            url: episode.image,
+                            width: 177.78,
+                            height: 100,
+                            alt: `Imagem de capa do anime ${episode.title} ${episode.title}`,
+                            type: 'image/png',
+                        },
+                        { url: episode.image },
+                        { url: episode.image },
+                        ],
+                        site_name: episode.title,
+                    }}
+                    twitter={{
+                        handle: '@handle',
+                        site: '@site',
+                        cardType: 'summary_large_image',
+                    }} 
+                    />
+                </Head>
+            ) : (
+                <Head>
+                    <NextSeo
+                    title="Kyuden: A sua casa de animes."
+                    description="Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos."
+                    canonical={URL}
+                    openGraph={{
+                        url: URL,
+                        title: "Kyuden: A sua casa de animes.",
+                        description: "Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos.",
+                        locale: 'PT_BR',
+                        images: [
+                        {
+                            url: './banner.png',
+                            width: 177.78,
+                            height: 100,
+                            alt: `Imagem de banner do site Kyuden`,
+                            type: 'image/png',
+                        },
+                        {
+                            url: './banner.png',
+                            width: 177.78,
+                            height: 100,
+                            alt: `Imagem de banner do site Kyuden`,
+                            type: 'image/png',
+                        },
+                        { url:'./banner.png' },
+                        { url:'./banner.png' },
+                        ],
+                        site_name: "Kyuden: A sua casa de animes.",
+                    }}
+                    twitter={{
+                        handle: '@handle',
+                        site: '@site',
+                        cardType: 'summary_large_image',
+                    }} 
+                    />
+                </Head>
+            )}
         <main className={`${style.episode} container`}>
             { episode ? (
                 <>
