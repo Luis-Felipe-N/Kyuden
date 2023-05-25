@@ -1,6 +1,6 @@
 .search {
     margin-block: 2rem;
-    padding: 0 15px;
+    padding: 0 15px 2rem;
 
     &__input {
         position: relative;
@@ -75,6 +75,31 @@
             top: 0;
             bottom: 0;
             height: 100%;
+        }
+    }
+
+    &__genres {
+        padding: 0;
+        
+        &_item {
+            cursor: pointer;
+            transition: .2s;
+            padding: .2rem 1rem;
+            border-radius: 1rem;
+
+            font-weight: 600;
+            border: 2px solid var(--gray-400);
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+
+            &:hover {
+                border-color: var(--primary-700);
+            }
+
+            &:focus {
+                background-color: var(--primary-700);
+            }
         }
     }
     

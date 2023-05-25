@@ -47,7 +47,7 @@ export function Navigation({ setStateMenu, stateMenu }: INavigationProps) {
           </ActiveLink>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item className={style.item}>
+        {/* <NavigationMenu.Item className={style.item}>
           <ActiveLink activeClassName={style.active} href="/doacao" onClick={handleCloseMenu}>
             <>
               <span className={style.item__icon}>
@@ -56,7 +56,7 @@ export function Navigation({ setStateMenu, stateMenu }: INavigationProps) {
               Doação
             </>
           </ActiveLink>
-        </NavigationMenu.Item>
+        </NavigationMenu.Item> */}
 
         <NavigationMenu.Item className={style.item}>
           <ActiveLink activeClassName={style.active} href="/pesquisa" onClick={handleCloseMenu}>
