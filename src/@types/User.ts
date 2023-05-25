@@ -15,6 +15,7 @@ export interface IUser {
     myListAnimes: [];
     myListfriends: [];
     watchingEpisodes: {
+        updatedAt: number;
         assistedTime: number;
         id: string;
     }[];

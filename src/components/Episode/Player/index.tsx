@@ -41,7 +41,7 @@ const InnerPlayer = forwardRef<HTMLVideoElement, IInnerPlayerProps>(({children, 
                     watchingEpisodes: arrangeAndAddObject(user.watchingEpisodes || {}, {
                         id: episode.id,
                         assistedTime: playerRef.current.currentTime,
-                        updatedAt: ''
+                        updatedAt: new Date().getTime()
                     }, episode.id)
                 })
             }

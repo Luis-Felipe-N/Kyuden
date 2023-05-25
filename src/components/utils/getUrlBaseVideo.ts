@@ -1,9 +1,10 @@
-import axios from "axios"
+import axios, { CancelTokenSource } from "axios"
 import { IStreamsBlogger } from "../../types";
 
-export async function getUrlBaseVideo(link: string): Promise<IStreamsBlogger[] | undefined> {
+export async function getUrlBaseVideo(link: string, signal: CancelTokenSource | false = false): Promise<IStreamsBlogger[] | undefined> {
     try {
         const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_DOMAINURL}/api/extractor`, {
+            cancelToken: signal,
             data: {
                 linkEmbed: link,
                 userAgent: window.navigator.userAgent

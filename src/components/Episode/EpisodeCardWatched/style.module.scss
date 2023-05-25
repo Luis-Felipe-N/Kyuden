@@ -57,13 +57,12 @@
 
     video {
         border-radius: var(--border-radius);
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        max-width: 100%;
-        max-height: calc(100% + 10px);
+        width: 305px;
+        height: 190px;
+        transition: .2s;
+        border-radius: var(--border-radius);
+        width: 100%;
+        object-fit: cover;
     }
 }
 

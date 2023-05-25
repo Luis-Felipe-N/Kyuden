@@ -12,7 +12,7 @@ export function KeepWatching() {
 
     const episodeIDs = user?.watchingEpisodes.filter(episode => {
         if (episode.assistedTime > 0) return episode
-    }).map(epsiode => epsiode.id)
+    }).sort((a, b) => +(a.updatedAt > b.updatedAt) || +(a.updatedAt === b.updatedAt) - 1).map(epsiode => epsiode.id)
 
     const { isLoading: watchinEpisodesLoading, error: watchinEpisodesError, data: watchinEpisodesData, isFetching: watchinEpisodesFetching } = useQuery({
         queryKey: ['myListAnimesData'],
