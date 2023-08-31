@@ -28,8 +28,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
     return (
         <>
             {anime ? (
-                <Head>
-                    <NextSeo
+                <NextSeo
                     title={anime.title}
                     description={anime.description}
                     canonical={URL}
@@ -63,11 +62,9 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                         site: '@site',
                         cardType: 'summary_large_image',
                     }} 
-                    />
-                </Head>
+                />
             ) : (
-                <Head>
-                    <NextSeo
+                <NextSeo
                     title="Kyuden: A sua casa de animes."
                     description="Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos."
                     canonical={URL}
@@ -101,8 +98,7 @@ export default function Anime({anime, firstSeason}: IAnimePageProps) {
                         site: '@site',
                         cardType: 'summary_large_image',
                     }} 
-                    />
-                </Head>
+                />
             )}
             <main className={style.anime}>
                 { anime && (

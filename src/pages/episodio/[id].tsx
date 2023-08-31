@@ -40,10 +40,9 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
     return (
         <>
          {episode ? (
-                <Head>
-                    <NextSeo
-                    title={episode.title}
-                    description={`${episode.title} do anime ${anime.title}`}
+                <NextSeo
+                    title={`${episode.title} ${anime.title} | Kyuden`}
+                    description={`${episode.title} do anime ${anime.title} | ${anime.description}`}
                     canonical={URL}
                     openGraph={{
                         url: URL,
@@ -76,9 +75,9 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         cardType: 'summary_large_image',
                     }} 
                     />
-                </Head>
+                
             ) : (
-                <Head>
+                
                     <NextSeo
                     title="Kyuden: A sua casa de animes."
                     description="Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos."
@@ -114,7 +113,7 @@ export default function Episodio({ episode, remainingEpisodes, anime }: IEpisode
                         cardType: 'summary_large_image',
                     }} 
                     />
-                </Head>
+                
             )}
         <main className={`${style.episode} container`}>
             { episode ? (

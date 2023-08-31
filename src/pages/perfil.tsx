@@ -53,6 +53,82 @@ export default function Perfil() {
 
     
     return (
+        <>
+        {user ? (
+            <NextSeo
+                    title={`Perfil ${user.displayName} | Kyuden`}
+                    description={`Perfil do ${user.displayName} no site Kyuden`}
+                    canonical={URL}
+                    openGraph={{
+                        url: URL,
+                        title: `Perfil ${user.displayName} | Kyuden`,
+                        description: `Perfil do ${user.displayName} no site Kyuden`,
+                        locale: 'PT_BR',
+                        images: [
+                        {
+                            url: user.avatar,
+                            width: 50,
+                            height: 50,
+                            alt: `Imagem de perfil do ${user.displayName}`,
+                            type: 'image/png',
+                        },
+                        {
+                            url: user.avatar,
+                            width: 50,
+                            height: 50,
+                            alt: `Imagem de perfil do ${user.displayName}`,
+                            type: 'image/png',
+                        },
+                        { url: user.avatar },
+                        { url: user.avatar },
+                        ],
+                        site_name: 'Kyuden',
+                    }}
+                    twitter={{
+                        handle: '@handle',
+                        site: '@site',
+                        cardType: 'summary_large_image',
+                    }} 
+                    />
+                
+            ) : (
+            <NextSeo
+                title="Kyuden: A sua casa de animes."
+                description="Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos."
+                canonical={URL}
+                openGraph={{
+                    url: URL,
+                    title: "Kyuden: A sua casa de animes.",
+                    description: "Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos.",
+                    locale: 'PT_BR',
+                    images: [
+                    {
+                        url: './banner.png',
+                        width: 177.78,
+                        height: 100,
+                        alt: `Imagem de banner do site Kyuden`,
+                        type: 'image/png',
+                    },
+                    {
+                        url: './banner.png',
+                        width: 177.78,
+                        height: 100,
+                        alt: `Imagem de banner do site Kyuden`,
+                        type: 'image/png',
+                    },
+                    { url:'./banner.png' },
+                    { url:'./banner.png' },
+                    ],
+                    site_name: "Kyuden: A sua casa de animes.",
+                }}
+                twitter={{
+                    handle: '@handle',
+                    site: '@site',
+                    cardType: 'summary_large_image',
+                }} 
+            />
+        )}
+        </>
         <main className={style.profile}>
             { user && (
                 <>

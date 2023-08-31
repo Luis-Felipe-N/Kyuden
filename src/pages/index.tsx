@@ -26,10 +26,42 @@ export default function Home({animeHero, animesGenres, popularAnimes}: IHomeProp
   
   return (
     <>
-    <Head>
-      <title>Kyuden :: Inicio</title>
-      
-    </Head>
+    
+      <NextSeo
+      title="Início | Kyuden."
+      description="Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos."
+      canonical={URL}
+      openGraph={{
+          url: URL,
+          title: "Kyuden: A sua casa de animes.",
+          description: "Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos.",
+          locale: 'PT_BR',
+          images: [
+          {
+              url: './banner.png',
+              width: 177.78,
+              height: 100,
+              alt: `Imagem de banner do site Kyuden`,
+              type: 'image/png',
+          },
+          {
+              url: './banner.png',
+              width: 177.78,
+              height: 100,
+              alt: `Imagem de banner do site Kyuden`,
+              type: 'image/png',
+          },
+          { url:'./banner.png' },
+          { url:'./banner.png' },
+          ],
+          site_name: "Kyuden: A sua casa de animes.",
+      }}
+      twitter={{
+          handle: '@handle',
+          site: '@site',
+          cardType: 'summary_large_image',
+      }} 
+      />
     <main className={style.home}>
       <Hero anime={animeHero}/>
       <PopularAnimes animes={popularAnimes} />
