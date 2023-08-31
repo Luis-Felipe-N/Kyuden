@@ -1,60 +1,71 @@
-import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useState } from 'react'
+import { useQuery } from 'react-query'
 import { IAnimes, IEpisodesAnime } from '../../../@types/Anime'
-import { api } from '../../../service/api';
-import { createRangeArrayByNumber } from '../../../utils/array';
-import { EpisodeCard } from '../../Episode/EpisodeCard';
+import { api } from '../../../service/api'
+import { createRangeArrayByNumber } from '../../../utils/array'
+import { EpisodeCard } from '../../Episode/EpisodeCard'
 import { SelectSeason } from '../../SelectSeason'
-import { Skeleton } from '../../Skeleton';
+import { Skeleton } from '../../Skeleton'
 import style from './style.module.scss'
 
 interface ISeasonProps {
-    anime: IAnimes;
-    firstSeason: string;
+  anime: IAnimes
+  firstSeason: string
 }
 
-export function Season({anime, firstSeason}: ISeasonProps) {
-    const [currentSeason, setCurrentSeason] = useState<string | null>(firstSeason)
+export function Season({ anime, firstSeason }: ISeasonProps) {
+  const [currentSeason, setCurrentSeason] = useState<string | null>(firstSeason)
 
-    function getNextSeasonAnimes(season: string | null): Promise<IEpisodesAnime[]> | undefined {
-        if (!season) return undefined
+  function getNextSeasonAnimes(
+    season: string | null,
+  ): Promise<IEpisodesAnime[]> | undefined {
+    if (!season) return undefined
 
-        return api.get(`/animes/season/${currentSeason}/episodes`).then(res => res.data.episodes)
-    }
+    return api
+      .get(`/animes/season/${currentSeason}/episodes`)
+      .then((res) => res.data.episodes)
+  }
 
-    const {
-        isLoading,
-        data,
-        isFetching,
-      } = useQuery({
-        queryKey: ['episodes', currentSeason],
-        queryFn: () => getNextSeasonAnimes(currentSeason),
-        keepPreviousData : true
-      })
+  const { isLoading, data, isFetching } = useQuery({
+    queryKey: ['episodes', currentSeason],
+    queryFn: () => getNextSeasonAnimes(currentSeason),
+    keepPreviousData: true,
+  })
 
-    function handleChangeSeason(value: string) {
-        setCurrentSeason(value)
-    }
+  function handleChangeSeason(value: string) {
+    setCurrentSeason(value)
+  }
 
-    return (
-        <div className={style.season}>
-            <div className={style.season__header}>
-                <SelectSeason seasons={anime.seasons}  onChangeSeason={handleChangeSeason}/>
-            </div>
+  return (
+    <div className={style.season}>
+      <div className={style.season__header}>
+        <SelectSeason
+          seasons={anime.seasons}
+          onChangeSeason={handleChangeSeason}
+        />
+      </div>
 
-            <div className={style.season__episodes}>
-                { isLoading || isFetching ? (
-                    createRangeArrayByNumber(8).map(item => (
-                        <Skeleton key={item} height={200} />
-                    ))
-                ) : !!data ? (
-                    data.filter(episode => !!episode.duration).sort((a, b) => a.title.charCodeAt(0) + b.title.charCodeAt(0)).map(episode => episode.duration && (
-                        <EpisodeCard key={episode.id} episode={episode} anime={anime} />
-                    ))
-                ) : (
-                    "Sem episódios"
-                )}
-        </div>
-        </div>
-    )
+      <div className={style.season__episodes}>
+        {isLoading || isFetching
+          ? createRangeArrayByNumber(8).map((item) => (
+              <Skeleton key={item} height={200} />
+            ))
+          : data
+          ? data
+              .filter((episode) => !!episode.duration)
+              .sort((a, b) => a.title.charCodeAt(0) + b.title.charCodeAt(0))
+              .map(
+                (episode) =>
+                  episode.duration && (
+                    <EpisodeCard
+                      key={episode.id}
+                      episode={episode}
+                      anime={anime}
+                    />
+                  ),
+              )
+          : 'Sem episódios'}
+      </div>
+    </div>
+  )
 }

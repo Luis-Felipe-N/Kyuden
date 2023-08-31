@@ -1,23 +1,23 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from 'react'
 
-export default function useWindowDimesions() {
-    const [hasWindow, seHasWindow] = useState(false)
-    useEffect(() => seHasWindow(true), [])
+export default function useWindowDimensions() {
+  const [hasWindow, seHasWindow] = useState(false)
+  useEffect(() => seHasWindow(true), [])
 
-    const getDimesions = useCallback(() => {
-        const width = hasWindow && window.innerWidth
-        const height = hasWindow && window.innerHeight
+  const getDimensions = useCallback(() => {
+    const width = hasWindow && window.innerWidth
+    const height = hasWindow && window.innerHeight
 
-        return [width, height]
-    }, [hasWindow])
+    return [width, height]
+  }, [hasWindow])
 
-    const [windowDimesions, setWindowDimesions] = useState(getDimesions())
+  const [windowDimensions, setWindowDimensions] = useState(getDimensions())
 
-    useEffect(() => {
-        if (hasWindow) {
-            setWindowDimesions(getDimesions())
-        }
-    }, [hasWindow, getDimesions])
+  useEffect(() => {
+    if (hasWindow) {
+      setWindowDimensions(getDimensions())
+    }
+  }, [hasWindow, getDimensions])
 
-    return windowDimesions
+  return windowDimensions
 }

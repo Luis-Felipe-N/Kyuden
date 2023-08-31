@@ -1,3 +1,1 @@
-export function useInfiniteScroll() {
-
-}
+export function useInfiniteScroll() {}

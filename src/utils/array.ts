@@ -1,3 +1,3 @@
 export function createRangeArrayByNumber(number: number) {
-    return [...Array(number).keys()]
+  return [...Array(number).keys()]
 }
