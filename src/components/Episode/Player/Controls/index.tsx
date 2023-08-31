@@ -56,14 +56,12 @@ export function Controls() {
     return (
         <>
         <div ref={controlsRef} className={`${style.controls} ${!showControls ? style.hidden : ''}`}>
-            
             <Slider/>
             <div>
                 <span className={style.duration}>
                     {playerState.currentTime ? convertSecondInMinute(playerState.currentTime) : '00:00'} / {playerState.durationTime ? convertSecondInMinute(playerState.durationTime) : '00:00'}
                 </span>
                 <ButtonPlay />
-
 
                 <div className={style.options}>
                     <ButtonVolume />

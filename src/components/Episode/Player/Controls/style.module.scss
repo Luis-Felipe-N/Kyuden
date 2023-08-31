@@ -30,9 +30,11 @@
 
     > div {
         margin-top: .5rem;
-        display: flex;
+        display: grid;
         align-items: center;
         justify-content: space-between;
+
+        grid-template-columns: repeat(3, 1fr);
     }
 
     .duration {
@@ -54,6 +56,10 @@
     .options {
         display: flex;
         gap: .5rem;
+
+        > div {
+            margin-left: auto;
+        }
     }
 }
 
