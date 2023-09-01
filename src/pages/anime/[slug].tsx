@@ -31,12 +31,12 @@ export default function Anime({ anime, firstSeason }: IAnimePageProps) {
     <>
       {anime ? (
         <NextSeo
-          title={anime.title}
+          title={`${anime.title} | Kyuden`}
           description={anime.description}
           canonical={URL}
           openGraph={{
             url: URL,
-            title: anime.title,
+            title: `${anime.title} | Kyuden`,
             description: anime.description,
             locale: 'PT_BR',
             images: [

@@ -63,7 +63,7 @@ export default function Perfil() {
     return (
       <main className={style.profile__loading}>
         <Head>
-          <title>Kyuden :: Perfil</title>
+          <title>Perfil | Kyuden</title>
         </Head>
         <Loading width={200} />
       </main>

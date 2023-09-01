@@ -202,7 +202,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = params?.id
 
   const { data } = await api.get(`/animes/episode/${id}`)
-  console.log(data)
+  
   return {
     props: {
       ...data,

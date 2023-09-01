@@ -72,7 +72,6 @@ export function Comments({ episode }: ICommentsProps) {
     if (episode.id) {
       getCommentsEpisode(episode.id)
         .then((res) => {
-          console.log(res)
           setComments(res)
         })
         .catch((res) => {

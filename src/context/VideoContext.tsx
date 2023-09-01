@@ -64,7 +64,7 @@ export function VideoProvider({
   }, [])
 
   const handleFullScreenChange = (value: boolean) => {
-    console.log(value)
+    
     updateState({
       isFullScreen: value,
     })

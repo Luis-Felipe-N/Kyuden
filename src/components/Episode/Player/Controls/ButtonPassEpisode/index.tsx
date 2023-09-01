@@ -6,11 +6,11 @@ import { useVideo } from '../../../../../hooks/useVideo'
 import { api } from '../../../../../service/api'
 
 import style from './style.module.scss'
+import { Button } from '../../../../Button'
 
 function ButtonPassEpisodeElement() {
-  const { playerState, episode, videoEl } = useVideo()
+  const { playerState, episode } = useVideo()
   const { getNextEpisode } = useEpisode()
-
   const { push } = useRouter()
 
   const nextEpisode = useCallback(async () => {
@@ -19,26 +19,27 @@ function ButtonPassEpisodeElement() {
     const { data } = await api.get(
       `animes/season/${episode.season_id}/episodes/`,
     )
-    console.log(data.episodes)
+
     if (!data.episodes) return
 
     const nextEp = getNextEpisode(data.episodes, episode)
+
+    console.log(nextEp)
 
     if (!nextEp) return
 
     push(`${nextEp.id}`)
   }, [episode, getNextEpisode, push])
 
-  console.log(playerState.durationTime, playerState.currentTime)
   const twentySecondsMissing =
     playerState.durationTime - playerState.currentTime <= 200
 
   if (twentySecondsMissing && playerState.durationTime > 0)
     return (
-      <button className={style.btnPassEpisode} onClick={nextEpisode}>
+      <Button className={style.btnPassEpisode} onClick={nextEpisode}>
         Próximo episódio
         <FaPlay />
-      </button>
+      </Button>
     )
 
   return null

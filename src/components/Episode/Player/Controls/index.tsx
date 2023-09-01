@@ -58,6 +58,8 @@ export function Controls() {
         ref={controlsRef}
         className={`${style.controls} ${!showControls ? style.hidden : ''}`}
       >
+            <ButtonPassEpisode />
+
         <Slider />
         <div>
           <span className={style.duration}>
@@ -74,7 +76,6 @@ export function Controls() {
           <div className={style.options}>
             <ButtonVolume />
             <ButtonFullScreen />
-            <ButtonPassEpisode />
           </div>
         </div>
       </div>

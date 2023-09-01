@@ -28,8 +28,6 @@ export default function Personagens() {
     keepPreviousData: true,
   })
 
-  console.log(data)
-
   return (
     <main className={style.characters}>
       {isLoading ? (

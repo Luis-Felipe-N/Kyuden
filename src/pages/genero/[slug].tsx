@@ -20,8 +20,6 @@ export default function Anime({}: IAnimePageProps) {
 
   const genreSlug = router.asPath
 
-  console.log(genreSlug)
-
   useEffect(() => {
     document.addEventListener('scroll', () => {})
   }, [])

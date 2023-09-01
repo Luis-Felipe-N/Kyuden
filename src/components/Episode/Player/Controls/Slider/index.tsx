@@ -8,7 +8,9 @@ export function Slider() {
     if (!videoEl) return
 
     const newDuration = (videoEl.duration / 100) * Number(...value)
-    videoEl.currentTime = newDuration
+    if (newDuration) {
+      videoEl.currentTime = newDuration
+    }
   }
 
   return (

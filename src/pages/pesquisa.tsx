@@ -337,7 +337,7 @@ export default function Search({ popularAnimes }: ISearchProps) {
   return (
     <>
       <Head>
-        <title>Kyuden :: Busca</title>
+        <title>Pesquisa | Kyuden</title>
       </Head>
       <main className={style.search}>
         <div className={`container ${style.search__input}`}>

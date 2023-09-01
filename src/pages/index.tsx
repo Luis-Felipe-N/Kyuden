@@ -38,7 +38,7 @@ export default function Home({
   return (
     <>
       <NextSeo
-        title="Início | Kyuden."
+        title="Início | Kyuden"
         description="Kyuden é um site dedicado a todos os fãs de anime. Com uma vasta coleção de animes populares e clássicos."
         canonical={URL}
         openGraph={{

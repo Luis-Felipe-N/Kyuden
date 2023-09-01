@@ -13,8 +13,6 @@ export function NavigationUser() {
 
   const [width] = useWindowDimensions()
 
-  console.log(width)
-
   return (
     <NavigationMenu.Root className={style.navigation}>
       <NavigationMenu.List className={style.list}>

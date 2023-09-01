@@ -5,6 +5,7 @@ import { isMobile } from '../../../../../utils/checkDevice'
 import screenfull from '../../../../../utils/screenFull'
 
 import style from './style.module.scss'
+import { Button } from '../../../../Button'
 
 function ButtonFullScreenElement() {
   const { containerPlayerEl, playerState, handleFullScreenChange } = useVideo()
@@ -30,7 +31,7 @@ function ButtonFullScreenElement() {
   }, [playerState.isFullScreen, containerPlayerEl, handleFullScreenChange])
 
   return (
-    <button
+    <Button
       className={style.btn}
       onClick={handleToggleFullscreen}
       title={
@@ -47,7 +48,7 @@ function ButtonFullScreenElement() {
       ) : (
         <FaExpand size={20} />
       )}
-    </button>
+    </Button>
   )
 }
 
