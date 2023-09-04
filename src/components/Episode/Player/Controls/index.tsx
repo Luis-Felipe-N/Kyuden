@@ -58,7 +58,7 @@ export function Controls() {
         ref={controlsRef}
         className={`${style.controls} ${!showControls ? style.hidden : ''}`}
       >
-            <ButtonPassEpisode />
+        <ButtonPassEpisode />
 
         <Slider />
         <div>

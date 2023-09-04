@@ -31,10 +31,10 @@ function ButtonPassEpisodeElement() {
     push(`${nextEp.id}`)
   }, [episode, getNextEpisode, push])
 
-  const twentySecondsMissing =
-    playerState.durationTime - playerState.currentTime <= 200
+  const OneMinuteLeft =
+    playerState.durationTime - playerState.currentTime <= 60
 
-  if (twentySecondsMissing && playerState.durationTime > 0)
+  if (OneMinuteLeft && playerState.durationTime > 0)
     return (
       <Button className={style.btnPassEpisode} onClick={nextEpisode}>
         Próximo episódio

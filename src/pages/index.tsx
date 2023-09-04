@@ -94,8 +94,6 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data: animeHero } = await api.get('/animes/chainsaw-man')
-
   const { data } = await api.get('/animes/popular')
   const { data: animeGenreAction } = await api.get(`animes/genre/Ação?take=20`)
   const { data: animeGenreFiccaoCientifica } = await api.get(
@@ -125,7 +123,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      animeHero: animeHero.anime || null,
+      animeHero: animes[0] || null,
       animesGenres: [
         {
           name: 'Aventura',

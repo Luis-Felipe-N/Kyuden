@@ -102,6 +102,20 @@
             }
         }
     }
+
+    &__resultsNotFound {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        strong {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding: 5rem 0;
+        }
+    }
     
     &__resultsContainer {
         margin-block: 2rem;
