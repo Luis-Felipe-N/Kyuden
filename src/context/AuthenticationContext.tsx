@@ -84,7 +84,7 @@ export function AuthenticationProvider({
     email,
     password,
     name,
-    username,
+    _,
   }: ICreateUser): Promise<User | Error> {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -123,7 +123,7 @@ export function AuthenticationProvider({
     return setPersistence(auth, browserSessionPersistence).then(() => {
       return signInWithEmailAndPassword(auth, email, password)
         .then(async (userCredential: any) => {
-          const { uid, ...user } = userCredential.user
+          const { uid, _ } = userCredential.user
           getUserData(uid, setUser)
         })
         .catch((error: any) => {

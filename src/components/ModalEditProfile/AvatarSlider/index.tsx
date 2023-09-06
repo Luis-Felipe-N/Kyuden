@@ -55,14 +55,12 @@ export function AvatarSlider({ onSelectAvatar }: IAvatarSliderProps) {
     }
   }
 
-  const {
-    data: avatarSuggestion,
-    fetchNextPage: fetchNextPageAvatar,
-  } = useInfiniteQuery({
-    queryKey: ['avatarSuggestion'],
-    queryFn: ({ pageParam }) => handleFetchDataAvatar(pageParam),
-    getNextPageParam: (lastPage, pages) => pages.length + 1,
-  })
+  const { data: avatarSuggestion, fetchNextPage: fetchNextPageAvatar } =
+    useInfiniteQuery({
+      queryKey: ['avatarSuggestion'],
+      queryFn: ({ pageParam }) => handleFetchDataAvatar(pageParam),
+      getNextPageParam: (lastPage, pages) => pages.length + 1,
+    })
 
   return (
     <>

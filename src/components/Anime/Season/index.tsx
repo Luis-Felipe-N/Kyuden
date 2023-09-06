@@ -23,7 +23,19 @@ export function Season({ anime, firstSeason }: ISeasonProps) {
 
     return api
       .get(`/animes/season/${currentSeason}/episodes`)
-      .then((res) => res.data.episodes)
+      .then((res): IEpisodesAnime[] =>
+        res.data.episodes.sort((a: IEpisodesAnime, b: IEpisodesAnime) => {
+          const titleA = new Number(a.title.replace('Episodio ', ''))
+          const titleB = new Number(b.title.replace('Episodio ', ''))
+          console.log(titleA, titleB)
+          if (titleA < titleB) {
+            return -1
+          }
+          if (titleA > titleB) {
+            return 1
+          }
+        }),
+      )
   }
 
   const { isLoading, data, isFetching } = useQuery({
@@ -53,7 +65,6 @@ export function Season({ anime, firstSeason }: ISeasonProps) {
           : data
           ? data
               .filter((episode) => !!episode.duration)
-              .sort((a, b) => a.title.charCodeAt(0) + b.title.charCodeAt(0))
               .map(
                 (episode) =>
                   episode.duration && (

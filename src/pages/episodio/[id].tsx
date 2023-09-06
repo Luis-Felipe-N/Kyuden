@@ -29,7 +29,19 @@ export default function Episodio({
   anime,
 }: IEpisodeProps) {
   const { asPath } = useRouter()
+  const remainingEpisodesSorted = remainingEpisodes.sort((a, b) => {
+    const titleA = new Number(a.title.replace('Episodio ', ''))
+    const titleB = new Number(b.title.replace('Episodio ', ''))
 
+    if (titleA < titleB) {
+      return -1
+    }
+    if (titleA > titleB) {
+      return 1
+    }
+
+    return 0
+  })
   const origin =
     typeof window !== 'undefined' && window.location.origin
       ? window.location.origin
@@ -167,7 +179,7 @@ export default function Episodio({
             <aside className={style.episode__remainingEpisodes}>
               <NextEpisode
                 episode={episode}
-                remainingEpisodes={remainingEpisodes}
+                remainingEpisodes={remainingEpisodesSorted}
               />
             </aside>
           </>
@@ -202,7 +214,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = params?.id
 
   const { data } = await api.get(`/animes/episode/${id}`)
-  
+
   return {
     props: {
       ...data,

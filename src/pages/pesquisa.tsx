@@ -11,7 +11,6 @@ import { api } from '../service/api'
 
 import style from '../styles/Search.module.scss'
 
-
 interface IResultsSearch {
   animes: IAnimes[]
   totalAnimes: number
@@ -86,25 +85,20 @@ export default function Search({ popularAnimes }: ISearchProps) {
           <section className={`${style.search__resultsContainer} container`}>
             <h3>Resultados ({results.totalAnimes})</h3>
 
-              {results.animes.length ? (
-                <div
-                  className={`${style.search__resultsContainer_animes} container`}
-                >
+            {results.animes.length ? (
+              <div
+                className={`${style.search__resultsContainer_animes} container`}
+              >
                 {results.animes.map((anime) => (
                   <CardAnime key={anime.slug} anime={anime} />
                 ))}
-                  </div>
-              ) : (
-                <div className={style.search__resultsNotFound}>
-                  <strong>Nenhum resultado para {termSearch}</strong>
-                  <Image 
-                    src="/notfound.gif"
-                    alt=""
-                    width={498}
-                    height={498}
-                  />
-                </div>
-              )}
+              </div>
+            ) : (
+              <div className={style.search__resultsNotFound}>
+                <strong>Nenhum resultado para {termSearch}</strong>
+                <Image src="/notfound.gif" alt="" width={498} height={498} />
+              </div>
+            )}
           </section>
         ) : (
           <section className={`${style.search__resultsContainer} container`}>

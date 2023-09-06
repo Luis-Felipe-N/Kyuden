@@ -66,7 +66,6 @@ export default function SingUp() {
       }
     } catch (error) {
       // Ocorreu algum erro na requisição
-      
     }
 
     setLoading(false)

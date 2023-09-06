@@ -12,7 +12,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  
   if (req.method === 'POST') {
     try {
       const { linkEmbed, userAgent } = req.body.data

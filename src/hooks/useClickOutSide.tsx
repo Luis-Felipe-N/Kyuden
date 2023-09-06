@@ -1,5 +1,4 @@
 import { RefObject } from 'react'
-import { ref } from 'yup'
 
 export function useClickOutSide() {
   const onClickOutSide = (

@@ -31,8 +31,7 @@ function ButtonPassEpisodeElement() {
     push(`${nextEp.id}`)
   }, [episode, getNextEpisode, push])
 
-  const OneMinuteLeft =
-    playerState.durationTime - playerState.currentTime <= 60
+  const OneMinuteLeft = playerState.durationTime - playerState.currentTime <= 60
 
   if (OneMinuteLeft && playerState.durationTime > 0)
     return (

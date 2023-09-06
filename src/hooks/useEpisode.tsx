@@ -1,6 +1,5 @@
-import { useMemo } from 'react'
 import { IEpisodesAnime } from '../@types/Anime'
-import { IProviderUserInfo, IUser } from '../@types/User'
+import { IUser } from '../@types/User'
 
 interface IWatchedEpisodeData {
   id: string
@@ -16,7 +15,7 @@ export function useEpisode() {
     currentEpisode: IEpisodesAnime,
   ) {
     const indexCurrentEp = episodes.findIndex(
-      (ep) => currentEpisode.id == ep.id,
+      (ep) => currentEpisode.id === ep.id,
     )
 
     if (indexCurrentEp >= episodes.length - 1) {

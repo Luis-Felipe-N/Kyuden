@@ -20,9 +20,7 @@ export function KeepWatching() {
     )
     .map((epsiode) => epsiode.id)
 
-  const {
-    data: watchingEpisodesData,
-  } = useQuery({
+  const { data: watchingEpisodesData } = useQuery({
     queryKey: ['myListAnimesData'],
     queryFn: async (): Promise<IEpisodesAnime[]> => {
       const { data } = await api.post('animes/episodes/', {
