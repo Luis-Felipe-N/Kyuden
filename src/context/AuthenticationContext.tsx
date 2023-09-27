@@ -84,7 +84,7 @@ export function AuthenticationProvider({
     email,
     password,
     name,
-    _,
+    username,
   }: ICreateUser): Promise<User | Error> {
     return createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
